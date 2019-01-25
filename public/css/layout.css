@@ -1,0 +1,36 @@
+#entire-page{
+  background-color: white;
+  width: 600px;
+  border: 1px solid black;
+  margin: 0 auto;
+}
+
+header{
+  text-align: center;
+  font-size: 300%;
+  border-bottom: 1px solid black;
+}
+
+nav{
+  border-bottom: 1px solid black;
+}
+
+nav ul{
+  padding: 5px;
+  margin: 0;
+}
+
+nav ul li{
+  display: inline;
+}
+
+main{
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
+
+footer{
+  text-align: center;
+  font-style: italic;
+  padding: 3px;
+}
