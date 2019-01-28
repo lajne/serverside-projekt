@@ -1,9 +1,6 @@
 # Serverside-projekt
 Project to create a library app.
 
-Good to know:
-https://shift.infinite.red/npm-vs-yarn-cheat-sheet-8755b092e5cc
-
 
 **Basic git commands**
 
