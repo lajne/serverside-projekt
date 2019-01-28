@@ -34,3 +34,32 @@ footer{
   font-style: italic;
   padding: 3px;
 }
+
+/* Topnav */
+.topnav {
+  background-color: grey;
+  overflow: hidden;
+}
+
+.topnav a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: yellow;
+  color: black;
+}
+
+.topnav-right {
+  float: right;
+}
