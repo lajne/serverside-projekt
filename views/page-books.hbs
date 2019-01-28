@@ -7,17 +7,19 @@
 </form>
 {{#if books.length}}
   {{#each books}}
-    <div style="border: 1px solid black;">
+    <div class="item">
       <a href="/books/edit/{{id}}">{{title}}</a>
     </div>
   {{/each}}
+  <button>Create book</button>
 {{else}}
   {{#if book.length}}
     {{#each book}}
-      <div style="border: 1px solid black;">
+      <div class="item">
         <a href="/books/edit/{{id}}">{{title}}</a>
       </div>
     {{/each}}
+    <button>Create book</button>
   {{else}}
     <div>
       <p>There is no books atm..</p>
