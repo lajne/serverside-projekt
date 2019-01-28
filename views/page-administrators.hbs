@@ -1,1 +1,14 @@
 <h1>ADMINS</h1>
+{{#if admins.length}}
+  {{#each admins}}
+  <div style="border: 1px solid black;">
+    <a href="/admins/edit/{{id}}">{{username}}</a>
+  </div>
+  {{/each}}
+  <button>Create new!</button>
+{{else}}
+  <div>
+    <p>There is no admins atm..</p>
+    <button>Create new!</button>
+  </div>
+{{/if}}
