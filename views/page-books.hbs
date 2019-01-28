@@ -1,18 +1,27 @@
 <h1>BOOKS</h1>
-<div >
-  <label for="book-search">Search: </label>
-  <input type="search" id="book-search" name="q" aria-label="Search for books">
-  <button>Go!</button>
-</div>
+<form action="/books/search/" method="GET">
+  <div>
+    Search <input type="text" name="bookSearch">
+    <input type="submit" value="Go!">
+  </div>
+</form>
 {{#if books.length}}
   {{#each books}}
-  <div style="border: 1px solid black;">
-    <a href="/books/edit/{{id}}">{{title}}</a>
-  </div>
+    <div style="border: 1px solid black;">
+      <a href="/books/edit/{{id}}">{{title}}</a>
+    </div>
   {{/each}}
 {{else}}
-<div>
-  <p>There is no books atm..</p>
-  <button>Create book</button>
-</div>
+  {{#if book.length}}
+    {{#each book}}
+      <div style="border: 1px solid black;">
+        <a href="/books/edit/{{id}}">{{title}}</a>
+      </div>
+    {{/each}}
+  {{else}}
+    <div>
+      <p>There is no books atm..</p>
+      <button>Create book</button>
+    </div>
+  {{/if}}
 {{/if}}
