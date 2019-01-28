@@ -71,6 +71,20 @@ const authors = [{
   publisher: "Bonniers"
 }]
 
+const admins = [{
+  id: 1,
+  username: "kalleadmin",
+  password: "kalle123"
+}, {
+  id: 2,
+  username: "janneadmin",
+  password: "janne123"
+}, {
+  id: 3,
+  username: "gurraadmin",
+  password: "gurra123"
+}]
+
 app.engine('hbs', expressHandlebars({
  defaultLayout: 'main',
  extname: '.hbs'
@@ -97,7 +111,10 @@ app.get('/books', function(request, response){
  })
 
  app.get('/admins', function(request, response){
-  response.render("page-administrators.hbs")
+   const model = {
+     admins: admins
+   }
+  response.render("page-administrators.hbs", model)
  })
 
  app.get('/login', function(request, response){
@@ -126,6 +143,17 @@ app.get('/books', function(request, response){
   }
 
   response.render("page-editauthors.hbs", model)
+ })
+
+ app.get('/admins/edit/:id', function(request, response){
+  const id = request.params.id
+  const admin = admins.find(b => b.id == id)
+
+  const model = {
+    admin: admin
+  }
+
+  response.render("page-editadministrators.hbs", model)
  })
  
 app.listen(8080)
