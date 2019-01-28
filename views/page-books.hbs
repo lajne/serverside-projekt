@@ -4,6 +4,15 @@
   <input type="search" id="book-search" name="q" aria-label="Search for books">
   <button>Go!</button>
 </div>
+{{#if books.length}}
+  {{#each books}}
+  <div style="border: 1px solid black;">
+    <a href="/books/edit/{{id}}">{{title}}</a>
+  </div>
+  {{/each}}
+{{else}}
 <div>
+  <p>There is no books atm..</p>
   <button>Create book</button>
 </div>
+{{/if}}
