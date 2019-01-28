@@ -81,3 +81,17 @@ main{
 .loginBox #loginButton{
   margin-top: 1em;
 }
+
+/* authors */
+
+.item{
+  background-color: cornflowerblue;
+  border: 1px solid black;
+  width: 15em;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.item a{
+  color: black;
+}
