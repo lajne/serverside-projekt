@@ -1,9 +1,8 @@
-{{#if book}}
-  <div><h1>{{book.title}}</h1></div>
-  <div>{{book.author}}</div>
-  <div>{{book.abstract}}</div>
-  <div>{{book.isbn}}</div>
-  <button>Edit</button>
-{{else}}
-  <p>Book does not exist yet!</p>
-{{/if}}
+
+<form method="POST" action="">
+  title: <input name="title"><br>
+  author: <input name="author"><br>
+  abstract: <input name="abstract"><br>
+  isbn: <input name="isbn"><br>
+  <input type="submit" value="Save changes">
+</form>
