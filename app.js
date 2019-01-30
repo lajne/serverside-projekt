@@ -178,12 +178,42 @@ app.get('/books', function(request, response){
       filteredBooksByTitle.push(book)
     }
   }
-  console.log("Filtered array: " + JSON.stringify(filteredBooksByTitle, null, 2))
+  console.log("Filtered book-array: " + JSON.stringify(filteredBooksByTitle, null, 2))
   const model = {
     books: filteredBooksByTitle
   }
-  console.log("Filtered object: " + JSON.stringify(model, null, 2))
+  console.log("Filtered book-object: " + JSON.stringify(model, null, 2))
   response.render("page-books.hbs", model)
  })
+
+ app.get('/authors/search', function(request, response){
+  const searchTerm = request.query.authorSearch
+
+  response.redirect("/authors/search/" + searchTerm)
+})
+
+app.get('/authors/search/:searchTerm', function(request, response){
+ const searchTerm = request.params.searchTerm
+
+ if(searchTerm == "") {
+   const model = {
+     authors: authors
+   }
+   response.render("page-authors.hbs", model)  
+ }
+
+ let filteredAuthorsByName = []
+ for(let author of authors) {
+   if(author.surname.toLowerCase().match(searchTerm.toLowerCase()) || author.lastname.toLowerCase().match(searchTerm.toLowerCase())){
+    filteredAuthorsByName.push(author)
+   }
+ }
+  console.log("Filtered author-array: " + JSON.stringify(filteredAuthorsByName, null, 2))
+  const model = {
+      authors: filteredAuthorsByName
+    }
+ console.log("Filtered author-object: " + JSON.stringify(model, null, 2))
+ response.render("page-authors.hbs", model)
+})
  
 app.listen(8080)

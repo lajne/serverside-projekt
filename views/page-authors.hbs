@@ -1,9 +1,10 @@
 <h1>AUTHORS</h1>
-<div >
-  <label for="author-search">Search: </label>
-  <input type="search" id="author-search" name="q" aria-label="Search for authors">
-  <button>Go!</button>
-</div>
+<form action="/authors/search/" method="GET">
+  <div>
+    Search <input type="text" name="authorSearch">
+    <input type="submit" value="Go!">
+  </div>
+</form>
 {{#if authors.length}}
   {{#each authors}}
   <div class="item">
@@ -12,8 +13,17 @@
   {{/each}}
   <button>Create author</button>
 {{else}}
-<div>
-  <p>There is no authors atm..</p>
-  <button>Create author</button>
-</div>
+  {{#if author.length}} 
+    {{#each author}}
+      <div class="item">
+        <a href="/authors/edit/{{id}}">{{surname}} {{lastname}}</a>
+      </div>
+    {{/each}}
+    <button>Create author</button>
+  {{else}}
+    <div>
+      <p>There is no authors atm..</p>
+      <button>Create author</button>
+    </div>
+  {{/if}}
 {{/if}}
