@@ -2,13 +2,13 @@
 {{#if admins.length}}
   {{#each admins}}
   <div class="item">
-    <a href="/admins/edit/{{id}}">{{username}}</a>
+    <a href="/admins/{{id}}">{{username}}</a>
   </div>
   {{/each}}
-  <button>Create new!</button>
+  <button onclick="window.location.href='/admins/create'">Create new!</button>
 {{else}}
   <div>
     <p>There is no admins atm..</p>
-    <button>Create new!</button>
+    <button onclick="window.location.href='/admins/create'">Create new!</button>
   </div>
 {{/if}}
