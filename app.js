@@ -131,7 +131,11 @@ app.get('/books', function(request, response){
      book: book
    }
 
-  response.render("page-editbooks.hbs", model)
+  response.render("page-viewbooks.hbs", model)
+ })
+
+ app.get("/page-editbooks", function(request, response){
+   response.render("page-editbooks.hbs")
  })
 
  app.get('/authors/edit/:id', function(request, response){
@@ -142,7 +146,7 @@ app.get('/books', function(request, response){
     author: author
   }
 
-  response.render("page-editauthors.hbs", model)
+  response.render("page-viewauthors.hbs", model)
  })
 
  app.get('/admins/edit/:id', function(request, response){
@@ -153,7 +157,7 @@ app.get('/books', function(request, response){
     admin: admin
   }
 
-  response.render("page-editadministrators.hbs", model)
+  response.render("page-viewadministrators.hbs", model)
  })
 
  app.get('/books/search', function(request, response){
