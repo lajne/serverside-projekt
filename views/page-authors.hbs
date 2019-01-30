@@ -11,7 +11,7 @@
     <a href="/authors/{{id}}">{{surname}} {{lastname}}</a>
   </div>
   {{/each}}
-  <button>Create author</button>
+  <button onclick="window.location.href='/authors/create'">Create author</button>
 {{else}}
   {{#if author.length}} 
     {{#each author}}

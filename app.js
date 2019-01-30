@@ -116,7 +116,7 @@ app.get('/books', function(request, response){
    const model = {
      admins: admins
    }
-  response.render("page-administrators.hbs", model)
+  response.render("page-admins.hbs", model)
  })
 
  app.get('/login', function(request, response){
@@ -154,19 +154,19 @@ app.get('/books', function(request, response){
       admin: admin
     }
     
-    response.render("page-viewadministrators.hbs", model)
+    response.render("page-viewadmins.hbs", model)
   })
   
   app.get("/books/:id/edit", function(request, response){
-    response.render("page-editbooks.hbs")
+    response.render("page-editbook.hbs")
   })
 
   app.get("/authors/:id/edit", function(request, response){
-    response.render("page-editauthors.hbs")
+    response.render("page-editauthor.hbs")
   })
 
   app.get("/admins/:id/edit", function(request, response){
-    response.render("page-editadministrators.hbs")
+    response.render("page-editadmin.hbs")
   })
 
   app.get("/books/create", function(request, response){
@@ -178,7 +178,7 @@ app.get('/books', function(request, response){
   })
 
   app.get("/admins/create", function(request, response){
-    response.render("page-createadministrator.hbs")
+    response.render("page-createadmin.hbs")
   })
 
  app.get('/books/search', function(request, response){
