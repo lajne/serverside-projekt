@@ -3,7 +3,7 @@
   <div>{{book.author}}</div>
   <div>{{book.abstract}}</div>
   <div>{{book.isbn}}</div>
-  <button onclick="window.location.href='/page-editbooks'">Edit</button>
+  <button onclick="window.location.href='/books/{{book.id}}/edit'">Edit</button>
 {{else}}
   <p>Book does not exist yet!</p>
 {{/if}}

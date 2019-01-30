@@ -123,7 +123,7 @@ app.get('/books', function(request, response){
   response.render("page-login.hbs")
  })
 
- app.get('/books/edit/:id', function(request, response){
+ app.get('/books/:id', function(request, response){
    const id = request.params.id
    const book = books.find(b => b.id == id)
 
@@ -134,31 +134,52 @@ app.get('/books', function(request, response){
   response.render("page-viewbooks.hbs", model)
  })
 
- app.get("/page-editbooks", function(request, response){
-   response.render("page-editbooks.hbs")
- })
+ 
+ app.get('/authors/:id', function(request, response){
+   const id = request.params.id
+   const author = authors.find(b => b.id == id)
+   
+   const model = {
+     author: author
+    }
+    
+    response.render("page-viewauthors.hbs", model)
+  })
+  
+  app.get('/admins/:id', function(request, response){
+    const id = request.params.id
+    const admin = admins.find(b => b.id == id)
+    
+    const model = {
+      admin: admin
+    }
+    
+    response.render("page-viewadministrators.hbs", model)
+  })
+  
+  app.get("/books/:id/edit", function(request, response){
+    response.render("page-editbooks.hbs")
+  })
 
- app.get('/authors/edit/:id', function(request, response){
-  const id = request.params.id
-  const author = authors.find(b => b.id == id)
+  app.get("/authors/:id/edit", function(request, response){
+    response.render("page-editauthors.hbs")
+  })
 
-  const model = {
-    author: author
-  }
+  app.get("/admins/:id/edit", function(request, response){
+    response.render("page-editadministrators.hbs")
+  })
 
-  response.render("page-viewauthors.hbs", model)
- })
+  app.get("/books/create", function(request, response){
+    response.render("page-createbook.hbs")
+  })
 
- app.get('/admins/edit/:id', function(request, response){
-  const id = request.params.id
-  const admin = admins.find(b => b.id == id)
+  app.get("/authors/create", function(request, response){
+    response.render("page-createauthor.hbs")
+  })
 
-  const model = {
-    admin: admin
-  }
-
-  response.render("page-viewadministrators.hbs", model)
- })
+  app.get("/admins/create", function(request, response){
+    response.render("page-createadministrator.hbs")
+  })
 
  app.get('/books/search', function(request, response){
    const searchTerm = request.query.bookSearch

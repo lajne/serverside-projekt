@@ -8,7 +8,7 @@
 {{#if authors.length}}
   {{#each authors}}
   <div class="item">
-    <a href="/authors/edit/{{id}}">{{surname}} {{lastname}}</a>
+    <a href="/authors/{{id}}">{{surname}} {{lastname}}</a>
   </div>
   {{/each}}
   <button>Create author</button>
@@ -16,14 +16,14 @@
   {{#if author.length}} 
     {{#each author}}
       <div class="item">
-        <a href="/authors/edit/{{id}}">{{surname}} {{lastname}}</a>
+        <a href="/authors/{{id}}">{{surname}} {{lastname}}</a>
       </div>
     {{/each}}
-    <button>Create author</button>
+    <button onclick="window.location.href='/authors/create'">Create author</button>
   {{else}}
     <div>
       <p>There is no authors atm..</p>
-      <button>Create author</button>
+      <button onclick="window.location.href='/authors/create'">Create author</button>
     </div>
   {{/if}}
 {{/if}}
