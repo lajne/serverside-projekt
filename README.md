@@ -1,6 +1,11 @@
 # Serverside-projekt
 Project to create a library app.
 
+**To run the application**
+
+- `cd to /web-application`
+- Commandline run: `docker-compose up --build` to start the application. `CTRL + C` to stop it.
+
 
 **Basic git commands**
 
