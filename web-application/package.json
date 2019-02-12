@@ -19,7 +19,8 @@
   "homepage": "https://github.com/lajne/serverside-projekt#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "sequelize": "^4.42.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
