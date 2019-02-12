@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const authorRepo = require('../../data-access-layer/db')
 
 const authors = [{
   id: 1,
@@ -39,10 +40,17 @@ const authors = [{
 }]
 
 router.get('/', function(request, response){
-  const model = {
+  /* const model = {
     authors: authors
-  }
-response.render("page-authors.hbs", model)
+  } */
+  authorRepo.findAll(function(errors, authors){
+    console.log(errors, authors)
+    const model = {
+      errors: errors,
+      authors: authors
+    }
+    response.render("page-authors.hbs", model)
+  })
 })
 
 router.get("/create", function(request, response){
