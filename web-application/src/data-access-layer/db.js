@@ -1,9 +1,17 @@
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('mysql:library-mysql.sql', 'root', 'thePassword', {
-  dialect: 'mysql'
+const sequelize = new Sequelize('webAppDatabase', 'root', 'theRootPassword', {
+  host: 'database',
+  dialect: 'mysql',
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
 })
 
-sequelize
+setTimeout(function(){
+  sequelize
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
@@ -12,10 +20,22 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-  const Authors = sequelize.define('authors', {
-    firstName: Sequelize.TEXT,
-    lastName: Sequelize.TEXT,
-    birthYear: Sequelize.TEXT,
+}, 5000)
+
+// id, createdat, updatedat  === false
+
+  const Authors = sequelize.define('Authors', {
+    Id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    FirstName: Sequelize.TEXT,
+    LastName: Sequelize.TEXT,
+    BirthYear: Sequelize.TEXT,
+  }, {
+    timestamps: false,
+
   });
 
   /* exports.Author.findAll().then(function(allHumans){
