@@ -38,7 +38,6 @@ router.get('/', function(request, response){
     books: books
   }
 
-  console.log("Not filtered: " + JSON.stringify(model, null, 2))
   response.render("page-books.hbs", model)
 })
 
@@ -63,11 +62,9 @@ router.get('/search/:searchTerm', function(request, response){
       filteredBooksByTitle.push(book)
     }
   }
-  console.log("Filtered book-array: " + JSON.stringify(filteredBooksByTitle, null, 2))
   const model = {
     books: filteredBooksByTitle
   }
-  console.log("Filtered book-object: " + JSON.stringify(model, null, 2))
   response.render("page-books.hbs", model)
 })
 
@@ -84,6 +81,7 @@ router.get('/:id', function(request, response){
   const model = {
     book: book
   }
+  console.log("book by id" + JSON.stringify(model, null, 2))
 
   response.render("page-viewbooks.hbs", model)
 })

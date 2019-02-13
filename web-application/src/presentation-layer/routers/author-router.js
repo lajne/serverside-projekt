@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const authorRepo = require('../../data-access-layer/db')
+const authorRepo = require('../../data-access-layer/author-repository')
 
 const authors = [{
   id: 1,
@@ -39,15 +39,12 @@ const authors = [{
   publisher: "Bonniers"
 }]
 
+//  DONE
 router.get('/', function(request, response){
-  /* const model = {
-    authors: authors
-  } */
-  authorRepo.findAll(function(authors){
+  authorRepo.getAllAuthors(function(authors){
     const model = {
       authors: authors
     }
-    console.log("stringified", JSON.stringify(model, null, 2))
     response.render("page-authors.hbs", model)
   })
 })
@@ -88,15 +85,16 @@ router.get('/search', function(request, response){
   response.redirect("/authors/search/" + searchTerm)
 })
 
+//  DONE
 router.get('/:id', function(request, response){
   const id = request.params.id
-  const author = authors.find(b => b.id == id)
-  
-  const model = {
-    author: author
-  }
 
-  response.render("page-viewauthors.hbs", model)
+  authorRepo.getAuthorById(id, function(author){
+    const model = {
+      author: author
+    }
+    response.render("page-viewauthors.hbs", model)
+  })
 })
 
 router.get("/:id/edit", function(request, response){
