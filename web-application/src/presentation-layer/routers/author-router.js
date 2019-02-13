@@ -43,12 +43,11 @@ router.get('/', function(request, response){
   /* const model = {
     authors: authors
   } */
-  authorRepo.findAll(function(errors, authors){
-    console.log(errors, authors)
+  authorRepo.findAll(function(authors){
     const model = {
-      errors: errors,
       authors: authors
     }
+    console.log("stringified", JSON.stringify(model, null, 2))
     response.render("page-authors.hbs", model)
   })
 })

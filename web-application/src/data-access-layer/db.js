@@ -10,7 +10,6 @@ const sequelize = new Sequelize('webAppDatabase', 'root', 'theRootPassword', {
   },
 })
 
-setTimeout(function(){
   sequelize
   .authenticate()
   .then(() => {
@@ -20,13 +19,12 @@ setTimeout(function(){
     console.error('Unable to connect to the database:', err);
   });
 
-}, 5000)
-
 // id, createdat, updatedat  === false
 
-  const Authors = sequelize.define('Authors', {
+  const authors = sequelize.define('Authors', {
     Id: {
       type: Sequelize.INTEGER,
+      allowNull: false,
       autoIncrement: true,
       primaryKey: true
     },
@@ -34,8 +32,8 @@ setTimeout(function(){
     LastName: Sequelize.TEXT,
     BirthYear: Sequelize.TEXT,
   }, {
-    timestamps: false,
-
+    createdAt: false,
+    updatedAt: false
   });
 
   /* exports.Author.findAll().then(function(allHumans){
@@ -43,11 +41,17 @@ setTimeout(function(){
   }) */
 
   exports.findAll = function(callback) {
-    Authors.findAll().then(function(error, authors){
+    authors.findAll({
+      where: {
+        Id: {
+          [Sequelize.Op.between]: [100, 120]
+        }
+      }
+    }).then(function(authors, error){
       if(error) {
         callback(['databaseerror'], null)
       } else {
-        callback([], authors[0])
+        callback(authors)
       }
     })
   }

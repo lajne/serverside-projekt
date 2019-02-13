@@ -8,7 +8,7 @@
 {{#if authors.length}}
   {{#each authors}}
   <div class="item">
-    <a href="/authors/{{id}}">{{surname}} {{lastname}}</a>
+    <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
   </div>
   {{/each}}
   <button onclick="window.location.href='/authors/create'">Create author</button>
@@ -16,7 +16,7 @@
   {{#if author.length}} 
     {{#each author}}
       <div class="item">
-        <a href="/authors/{{id}}">{{surname}} {{lastname}}</a>
+        <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
       </div>
     {{/each}}
     <button onclick="window.location.href='/authors/create'">Create author</button>
