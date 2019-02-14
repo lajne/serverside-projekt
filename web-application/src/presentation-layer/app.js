@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 const accountRouter = require('./routers/account-router')
 const adminRouter = require('./routers/admin-router')
@@ -18,6 +19,12 @@ app.engine('hbs', expressHandlebars({
 }))
 
 app.use(express.static(path.join(__dirname, 'public')))
+
+// Parse bodies of requests written in
+// x-www-form-urlencoded format.
+app.use(bodyParser.urlencoded({
+	extended: false
+}))
 
 app.use('/accounts', accountRouter)
 app.use('/admins', adminRouter)

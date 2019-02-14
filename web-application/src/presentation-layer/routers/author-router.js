@@ -49,34 +49,47 @@ router.get('/', function(request, response){
   })
 })
 
+//DONE 
 router.get("/create", function(request, response){
   response.render("page-createauthor.hbs")
+})
+
+// DONE
+router.post("/create", function(request, response){
+  const firstName = request.body.firstname
+  const lastName = request.body.lastname
+  const birthYear = request.body.birthyear
+
+  console.log("Fname: " + firstName + " Lname: " + lastName + " year: " + birthYear)
+
+  const author = {
+    firstName: firstName,
+    lastName: lastName,
+    birthYear: birthYear
+  }
+  authorRepo.createAuthor(author, function(msg){
+    console.log("response: " + JSON.stringify(msg, null, 2))
+
+    /* 
+          Here we wan't to maybe tell and show the user that we successfully created
+          an author. :ppPppP
+    */
+  })
 })
 
 router.get('/search/:searchTerm', function(request, response){
   const searchTerm = request.params.searchTerm
 
-  if(searchTerm == "") {
+  authorRepo.getAuthorBySearch(searchTerm, function(authors){
     const model = {
       authors: authors
     }
-    response.render("page-authors.hbs", model)  
-    return
-  }
-
-  let filteredAuthorsByName = []
-  for(let author of authors) {
-    if(author.surname.toLowerCase().match(searchTerm.toLowerCase()) || 
-    author.lastname.toLowerCase().match(searchTerm.toLowerCase())){
-        filteredAuthorsByName.push(author)
-    }
-  }
-  console.log("Filtered author-array: " + JSON.stringify(filteredAuthorsByName, null, 2))
-  const model = {
-      authors: filteredAuthorsByName
-    }
-  console.log("Filtered author-object: " + JSON.stringify(model, null, 2))
-  response.render("page-authors.hbs", model)
+    response.render("page-authors.hbs", model)
+    /*
+    Om man söker flera gånger efter varandra så lägger den till 
+    "/author/search/ + /author/search/ + osv.." 
+    */
+  })
 })
 
 router.get('/search', function(request, response){
