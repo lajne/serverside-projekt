@@ -5,25 +5,16 @@
     <input type="submit" value="Go!">
   </div>
 </form>
-{{#if authors.length}}
+{{#if authors.length}} 
   {{#each authors}}
-  <div class="item">
-    <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
-  </div>
+    <div class="item">
+      <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
+    </div>
   {{/each}}
   <button onclick="window.location.href='/authors/create'">Create author</button>
 {{else}}
-  {{#if author.length}} 
-    {{#each author}}
-      <div class="item">
-        <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
-      </div>
-    {{/each}}
+  <div>
+    <p>There is no authors atm..</p>
     <button onclick="window.location.href='/authors/create'">Create author</button>
-  {{else}}
-    <div>
-      <p>There is no authors atm..</p>
-      <button onclick="window.location.href='/authors/create'">Create author</button>
-    </div>
-  {{/if}}
+  </div>
 {{/if}}

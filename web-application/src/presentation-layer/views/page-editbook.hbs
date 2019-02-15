@@ -1,8 +1,10 @@
 
-<form method="POST" action="">
-  title: <input name="title"><br>
-  author: <input name="author"><br>
-  abstract: <input name="abstract"><br>
-  isbn: <input name="isbn"><br>
+<form method="POST" action="/books/{{isbn}}/edit">
+  ISBN: <input name="isbn"><br>
+  Title: <input name="title"><br>
+  SignId: <input name="signid"><br>
+  PublicationYear: <input name="publicationyear"><br>
+  PublicationInfo: <input name="publicationinfo"><br>
+  Pages: <input name="pages"><br>
   <input type="submit" value="Save changes">
 </form>

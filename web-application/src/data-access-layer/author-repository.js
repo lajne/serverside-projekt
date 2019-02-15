@@ -1,6 +1,6 @@
 const db = require('./db')
 
-const authors = db.sequelize.define('Authors', {
+const Authors = db.sequelize.define('Authors', {
   Id: {
     type: db.Sequelize.INTEGER,
     allowNull: false,
@@ -16,12 +16,12 @@ const authors = db.sequelize.define('Authors', {
 });
 
 exports.getAllAuthors = function(callback) {
-  authors.findAll({
-    where: {
+  Authors.findAll({
+    /* where: {
       Id: {
         [db.Sequelize.Op.gt]: 600
       }
-    }
+    } */
   }).then(function(authors, error){
     if(error) {
       callback(['databaseerror'], null)
@@ -33,7 +33,7 @@ exports.getAllAuthors = function(callback) {
 
 exports.createAuthor = function(author, callback) {
   console.log("author: " + JSON.stringify(author, null, 2))
-  authors.create({
+  Authors.create({
     FirstName: author.firstName,
     LastName: author.lastName,
     BirthYear: author.birthYear
@@ -45,8 +45,21 @@ exports.createAuthor = function(author, callback) {
   })
 }
 
+exports.editAuthor = function(author, callback) {
+  console.log("author: " + JSON.stringify(author, null, 2))
+  Authors.update({
+    FirstName: author.firstName,
+    LastName: author.lastName,
+    BirthYear: author.birthYear
+  }, {
+    where: {Id: author.authorId}
+  }).then(function(updatedAuthor){
+    callback(updatedAuthor)
+  })
+}
+
 exports.getAuthorById = function(authorId, callback) {
-  authors.findAll({
+  Authors.findAll({
     where: {
       Id: authorId
     }
@@ -59,8 +72,8 @@ exports.getAuthorById = function(authorId, callback) {
   })
 }
 
-exports.getAuthorBySearch = function(searchTerm, callback) {
-  authors.findAll({
+exports.getAuthorsBySearch = function(searchTerm, callback) {
+  Authors.findAll({
     where: {
       [db.Sequelize.Op.or]: [{FirstName: searchTerm}, {LastName: searchTerm}]
     }

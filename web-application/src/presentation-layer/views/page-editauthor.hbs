@@ -1,8 +1,6 @@
-<form method="POST" action="">
-  surname: <input name="surname"><br>
-  lastname: <input name="lastname"><br>
-  birthdate: <input name="birthdate"><br>
-  birthplace: <input name="birthplace"><br>
-  publisher: <input name="publisher"><br>
+<form method="POST" action="/authors/{{id}}/edit">
+  firstname: <input type="text" name="firstname"><br>
+  lastname: <input type="text" name="lastname"><br>
+  birthyear: <input type="text" name="birthyear"><br>
   <input type="submit" value="Save changes">
 </form>

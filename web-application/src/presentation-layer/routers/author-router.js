@@ -2,43 +2,6 @@ const express = require('express')
 const router = express.Router()
 const authorRepo = require('../../data-access-layer/author-repository')
 
-const authors = [{
-  id: 1,
-  surname: "Anders",
-  lastname: "Andersson",
-  birthdate: "1962-11-24",
-  birthplace: "London",
-  publisher: "Bonniers"
-}, {
-  id: 2,
-  surname: "Anders",
-  lastname: "Svensson",
-  birthdate: "1963-11-24",
-  birthplace: "London",
-  publisher: "Publishers CO"
-}, {
-  id: 3,
-  surname: "Anders",
-  lastname: "Gregersson",
-  birthdate: "1964-11-24",
-  birthplace: "London",
-  publisher: "ABC Bokförlag ÖB"
-}, {
-  id: 4,
-  surname: "Anders",
-  lastname: "Björnsson",
-  birthdate: "1965-11-24",
-  birthplace: "London",
-  publisher: "Svenssons"
-}, {
-  id: 5,
-  surname: "Anders",
-  lastname: "Goggenheim",
-  birthdate: "1966-11-24",
-  birthplace: "Deutchland",
-  publisher: "Bonniers"
-}]
-
 //  DONE
 router.get('/', function(request, response){
   authorRepo.getAllAuthors(function(authors){
@@ -49,7 +12,7 @@ router.get('/', function(request, response){
   })
 })
 
-//DONE 
+//  DONE 
 router.get("/create", function(request, response){
   response.render("page-createauthor.hbs")
 })
@@ -69,7 +32,6 @@ router.post("/create", function(request, response){
   }
   authorRepo.createAuthor(author, function(msg){
     console.log("response: " + JSON.stringify(msg, null, 2))
-
     /* 
           Here we wan't to maybe tell and show the user that we successfully created
           an author. :ppPppP
@@ -77,13 +39,15 @@ router.post("/create", function(request, response){
   })
 })
 
+//  Done, almost
 router.get('/search/:searchTerm', function(request, response){
   const searchTerm = request.params.searchTerm
 
-  authorRepo.getAuthorBySearch(searchTerm, function(authors){
+  authorRepo.getAuthorsBySearch(searchTerm, function(authors){
     const model = {
       authors: authors
     }
+    console.log("URL: " + request.url)
     response.render("page-authors.hbs", model)
     /*
     Om man söker flera gånger efter varandra så lägger den till 
@@ -91,7 +55,7 @@ router.get('/search/:searchTerm', function(request, response){
     */
   })
 })
-
+//  Done
 router.get('/search', function(request, response){
   const searchTerm = request.query.authorSearch
 
@@ -109,9 +73,36 @@ router.get('/:id', function(request, response){
     response.render("page-viewauthors.hbs", model)
   })
 })
-
+// DONE
 router.get("/:id/edit", function(request, response){
-  response.render("page-editauthor.hbs")
+  const id = request.params.id
+  const obj = {
+    id: id
+  }
+  response.render("page-editauthor.hbs", obj)
+})
+
+//  Done, almost
+router.post("/:id/edit", function(request, response){
+  const id = request.params.id
+  const firstName = request.body.firstname
+  const lastName = request.body.lastname
+  const birthYear = request.body.birthyear
+
+  const author = {
+    id: id,
+    firstName: firstName,
+    lastName: lastName,
+    birthYear: birthYear
+  }
+
+  authorRepo.editAuthor(author, function(msg){
+    console.log("response: " + JSON.stringify(msg, null, 2))
+    /* 
+          Here we wan't to maybe tell and show the user that we successfully created
+          an author. :ppPppP
+    */
+  })
 })
 
 module.exports = router
