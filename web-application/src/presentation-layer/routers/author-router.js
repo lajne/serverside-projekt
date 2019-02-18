@@ -1,78 +1,47 @@
 const express = require('express')
 const router = express.Router()
-
-const authors = [{
-  id: 1,
-  surname: "Anders",
-  lastname: "Andersson",
-  birthdate: "1962-11-24",
-  birthplace: "London",
-  publisher: "Bonniers"
-}, {
-  id: 2,
-  surname: "Anders",
-  lastname: "Svensson",
-  birthdate: "1963-11-24",
-  birthplace: "London",
-  publisher: "Publishers CO"
-}, {
-  id: 3,
-  surname: "Anders",
-  lastname: "Gregersson",
-  birthdate: "1964-11-24",
-  birthplace: "London",
-  publisher: "ABC Bokförlag ÖB"
-}, {
-  id: 4,
-  surname: "Anders",
-  lastname: "Björnsson",
-  birthdate: "1965-11-24",
-  birthplace: "London",
-  publisher: "Svenssons"
-}, {
-  id: 5,
-  surname: "Anders",
-  lastname: "Goggenheim",
-  birthdate: "1966-11-24",
-  birthplace: "Deutchland",
-  publisher: "Bonniers"
-}]
+const authorRepo = require('../../data-access-layer/author-repository')
 
 router.get('/', function(request, response){
-  const model = {
-    authors: authors
-  }
-response.render("page-authors.hbs", model)
+  authorRepo.getAllAuthors(function(authors){
+    const model = {
+      authors: authors
+    }
+    response.render("page-authors.hbs", model)
+  })
 })
 
 router.get("/create", function(request, response){
   response.render("page-createauthor.hbs")
 })
 
+router.post("/create", function(request, response){
+  const author = {
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    birthYear: request.body.birthYear
+  }
+  authorRepo.createAuthor(author, function(msg){
+    /* 
+          Here we wan't to maybe tell and show the user that we successfully created
+          an author. :ppPppP
+    */
+  })
+})
+
 router.get('/search/:searchTerm', function(request, response){
   const searchTerm = request.params.searchTerm
 
-  if(searchTerm == "") {
+  authorRepo.getAuthorsBySearch(searchTerm, function(authors){
     const model = {
       authors: authors
     }
-    response.render("page-authors.hbs", model)  
-    return
-  }
-
-  let filteredAuthorsByName = []
-  for(let author of authors) {
-    if(author.surname.toLowerCase().match(searchTerm.toLowerCase()) || 
-    author.lastname.toLowerCase().match(searchTerm.toLowerCase())){
-        filteredAuthorsByName.push(author)
-    }
-  }
-  console.log("Filtered author-array: " + JSON.stringify(filteredAuthorsByName, null, 2))
-  const model = {
-      authors: filteredAuthorsByName
-    }
-  console.log("Filtered author-object: " + JSON.stringify(model, null, 2))
-  response.render("page-authors.hbs", model)
+    response.render("page-authors.hbs", model)
+    /*
+    Om man söker flera gånger efter varandra så lägger den till 
+    "/author/search/ + /author/search/ + osv.." 
+    */
+  })
 })
 
 router.get('/search', function(request, response){
@@ -83,17 +52,41 @@ router.get('/search', function(request, response){
 
 router.get('/:id', function(request, response){
   const id = request.params.id
-  const author = authors.find(b => b.id == id)
-  
-  const model = {
-    author: author
-  }
 
-  response.render("page-viewauthors.hbs", model)
+  authorRepo.getAuthorById(id, function(author){
+    const model = {
+      author: author
+    }
+    response.render("page-viewauthors.hbs", model)
+  })
 })
 
 router.get("/:id/edit", function(request, response){
-  response.render("page-editauthor.hbs")
+  const id = request.params.id
+  
+  authorRepo.getAuthorById(id, function(author) {
+    const model = {
+      author: author
+    }
+    response.render("page-editauthor.hbs", model)
+  })
+})
+
+router.post("/:id/edit", function(request, response){
+  const author = {
+    id: request.params.id,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    birthYear: request.body.birthYear
+  }
+
+  authorRepo.editAuthor(author, function(msg){
+    console.log("response: " + JSON.stringify(msg, null, 2))
+    /* 
+          Here we wan't to maybe tell and show the user that we successfully created
+          an author. :ppPppP
+    */
+  })
 })
 
 module.exports = router

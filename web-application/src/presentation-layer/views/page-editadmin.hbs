@@ -1,5 +1,5 @@
-<form method="POST" action="">
-  username: <input name="username"><br>
-  password: <input name="password"><br>
+<form method="POST" action="/admins/{{admin.id}}/edit">
+  Username: <input name="username" value="{{admin.Username}}"><br>
+  Password: <input name="password" value="{{admin.Password}}"><br>
   <input type="submit" value="Save changes">
 </form>

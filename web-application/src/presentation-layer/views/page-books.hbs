@@ -8,22 +8,13 @@
 {{#if books.length}}
   {{#each books}}
     <div class="item">
-      <a href="/books/{{id}}">{{title}}</a>
+      <a href="/books/{{ISBN}}">{{Title}}</a>
     </div>
   {{/each}}
   <button onclick="window.location.href='/books/create'">Create book</button>
 {{else}}
-  {{#if book.length}}
-    {{#each book}}
-      <div class="item">
-        <a href="/books/{{id}}">{{title}}</a>
-      </div>
-    {{/each}}
+  <div>
+    <p>There is no books atm..</p>
     <button onclick="window.location.href='/books/create'">Create book</button>
-  {{else}}
-    <div>
-      <p>There is no books atm..</p>
-      <button onclick="window.location.href='/books/create'">Create book</button>
-    </div>
-  {{/if}}
+  </div>
 {{/if}}

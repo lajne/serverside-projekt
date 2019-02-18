@@ -1,6 +1,11 @@
 # Serverside-projekt
 Project to create a library app.
 
+**To run the application**
+
+1. Change directory to: `/serverside-projekt` (the project folder).
+2. Commandline run: `docker-compose up --build` to start the application. `CTRL + C` to stop it.
+
 
 **Basic git commands**
 

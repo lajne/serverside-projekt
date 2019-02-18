@@ -1,9 +1,11 @@
 {{#if book}}
-  <div><h1>{{book.title}}</h1></div>
-  <div>{{book.author}}</div>
-  <div>{{book.abstract}}</div>
-  <div>{{book.isbn}}</div>
-  <button onclick="window.location.href='/books/{{book.id}}/edit'">Edit</button>
+  <div>{{book.ISBN}}</div>
+  <div>{{book.Title}}</div>
+  <div>{{book.SignId}}</div>
+  <div>{{book.PublicationYear}}</div>
+  <div>{{book.PublicationInfo}}</div>
+  <div>{{book.Pages}}</div>
+  <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
 {{else}}
   <p>Book does not exist yet!</p>
 {{/if}}
