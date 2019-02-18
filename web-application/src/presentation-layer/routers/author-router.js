@@ -25,7 +25,6 @@ router.post("/create", function(request, response){
     birthYear: request.body.birthYear
   }
   authorRepo.createAuthor(author, function(msg){
-    console.log("response: " + JSON.stringify(msg, null, 2))
     /* 
           Here we wan't to maybe tell and show the user that we successfully created
           an author. :ppPppP
@@ -41,7 +40,6 @@ router.get('/search/:searchTerm', function(request, response){
     const model = {
       authors: authors
     }
-    console.log("URL: " + request.url)
     response.render("page-authors.hbs", model)
     /*
     Om man söker flera gånger efter varandra så lägger den till 
@@ -70,10 +68,13 @@ router.get('/:id', function(request, response){
 // DONE
 router.get("/:id/edit", function(request, response){
   const id = request.params.id
-  const obj = {
-    id: id
-  }
-  response.render("page-editauthor.hbs", obj)
+  
+  authorRepo.getAuthorById(id, function(author) {
+    const model = {
+      author: author
+    }
+    response.render("page-editauthor.hbs", model)
+  })
 })
 
 //  Done, almost

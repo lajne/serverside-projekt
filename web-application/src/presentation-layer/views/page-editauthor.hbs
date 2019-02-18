@@ -1,6 +1,6 @@
-<form method="POST" action="/authors/{{id}}/edit">
-  firstname: <input type="text" name="firstname"><br>
-  lastname: <input type="text" name="lastname"><br>
-  birthyear: <input type="text" name="birthyear"><br>
+<form method="POST" action="/authors/{{author.Id}}/edit">
+  firstname: <input type="text" name="firstName" value="{{author.FirstName}}"><br>
+  lastname: <input type="text" name="lastName" value="{{author.LastName}}"><br>
+  birthyear: <input type="text" name="birthYear" value="{{author.BirthYear}}"><br>
   <input type="submit" value="Save changes">
 </form>

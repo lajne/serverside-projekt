@@ -41,10 +41,14 @@ router.get('/:id', function(request, response){
 })
 
 router.get("/:id/edit", function(request, response) {
-  const obj = {
-    id: request.params.id
-  }
-  response.render("page-editadmin.hbs", obj)
+  const id = request.params.id
+  
+  adminRepo.getAdminById(id, function(admin) {
+    const model = {
+      admin: admin
+    }
+    response.render("page-editadmin.hbs", model)
+  })
 })
 
 router.post("/:id/edit", function(request, response){

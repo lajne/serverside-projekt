@@ -28,7 +28,6 @@ router.post("/create", function(request, response){
   bookRepo.createBook(book, function(msg){
     console.log("response: " + JSON.stringify(msg, null, 2))
   })
-
 })
 
 router.get('/search/:searchTerm', function(request, response){
@@ -59,10 +58,14 @@ router.get('/:isbn', function(request, response){
 })
 
 router.get("/:isbn/edit", function(request, response){
-  const obj = {
-    isbn: request.params.isbn
-  }
-  response.render("page-editbook.hbs", obj)
+  const isbn = request.params.isbn
+
+  bookRepo.getBookByISBN(isbn, function(book){
+    const model = {
+      book: book
+    }
+    response.render("page-editbook.hbs", model)
+  })
 })
 
 router.post("/:isbn/edit", function(request, response){
@@ -70,8 +73,8 @@ router.post("/:isbn/edit", function(request, response){
     isbn: request.body.isbn,
     title : request.body.title,
     signId : request.body.signId,
-    publicationYear : request.body.publicationyear,
-    publicationInfo : request.body.publicationinfo,
+    publicationYear : request.body.publicationYear,
+    publicationInfo : request.body.publicationInfo,
     pages : request.body.pages
   }
 
