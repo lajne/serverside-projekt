@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const authorRepo = require('../../data-access-layer/author-repository')
 
-//  DONE
 router.get('/', function(request, response){
   authorRepo.getAllAuthors(function(authors){
     const model = {
@@ -12,12 +11,10 @@ router.get('/', function(request, response){
   })
 })
 
-//  DONE 
 router.get("/create", function(request, response){
   response.render("page-createauthor.hbs")
 })
 
-// DONE
 router.post("/create", function(request, response){
   const author = {
     firstName: request.body.firstName,
@@ -32,7 +29,6 @@ router.post("/create", function(request, response){
   })
 })
 
-//  Done, almost
 router.get('/search/:searchTerm', function(request, response){
   const searchTerm = request.params.searchTerm
 
@@ -47,14 +43,13 @@ router.get('/search/:searchTerm', function(request, response){
     */
   })
 })
-//  Done
+
 router.get('/search', function(request, response){
   const searchTerm = request.query.authorSearch
 
   response.redirect("/authors/search/" + searchTerm)
 })
 
-//  DONE
 router.get('/:id', function(request, response){
   const id = request.params.id
 
@@ -65,7 +60,7 @@ router.get('/:id', function(request, response){
     response.render("page-viewauthors.hbs", model)
   })
 })
-// DONE
+
 router.get("/:id/edit", function(request, response){
   const id = request.params.id
   
@@ -77,7 +72,6 @@ router.get("/:id/edit", function(request, response){
   })
 })
 
-//  Done, almost
 router.post("/:id/edit", function(request, response){
   const author = {
     id: request.params.id,

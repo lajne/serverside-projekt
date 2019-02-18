@@ -24,7 +24,6 @@ router.post("/create", function(request, response){
   adminRepo.createAdmin(admin, function(msg){
     console.log("response: " + JSON.stringify(msg, null, 2))
   })
-  // response.render("page-createadmin.hbs")
 })
 
 router.get('/:id', function(request, response){
@@ -61,8 +60,6 @@ router.post("/:id/edit", function(request, response){
   adminRepo.editAdmin(admin, function(msg) {
     console.log("response: " + JSON.stringify(msg, null, 2))
   })
-
-  // response.render("page-editadmin.hbs")
 })
 
 module.exports = router
