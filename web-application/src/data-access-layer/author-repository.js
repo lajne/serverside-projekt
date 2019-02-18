@@ -52,7 +52,7 @@ exports.editAuthor = function(author, callback) {
     LastName: author.lastName,
     BirthYear: author.birthYear
   }, {
-    where: {Id: author.authorId}
+    where: {Id: author.id}
   }).then(function(updatedAuthor){
     callback(updatedAuthor)
   })

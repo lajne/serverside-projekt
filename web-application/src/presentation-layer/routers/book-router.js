@@ -2,38 +2,6 @@ const express = require('express')
 const router = express.Router()
 const bookRepo = require('../../data-access-layer/book-repository')
 
-const books = [{
-  id: 1,
-    title: "Book about A",
-    author: "Anders Andersson",
-    abstract: "Lorem Ipsum ............",
-    isbn: "1234567890"
-  }, {
-    id: 2,
-    title: "Book about B",
-    author: "Anders Andersson",
-    abstract: "Lorem Ipsum ............",
-    isbn: "1134567890"
-  }, {
-    id: 3,
-    title: "Book about C",
-    author: "Anders Andersson",
-    abstract: "Lorem Ipsum ............",
-    isbn: "1334567890"
-  }, {
-    id: 4,
-    title: "Book about D",
-    author: "Anders Andersson",
-    abstract: "Lorem Ipsum ............",
-    isbn: "1434567890"
-  } , {
-    id: 5,
-    title: "Book about E",
-    author: "Anders Andersson",
-    abstract: "Lorem Ipsum ............",
-    isbn: "1534567890"
-}]
-
 router.get('/', function(request, response){
   bookRepo.getAllBooks(function(books){
     const model = {
