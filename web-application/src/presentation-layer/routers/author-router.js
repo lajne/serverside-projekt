@@ -19,16 +19,10 @@ router.get("/create", function(request, response){
 
 // DONE
 router.post("/create", function(request, response){
-  const firstName = request.body.firstname
-  const lastName = request.body.lastname
-  const birthYear = request.body.birthyear
-
-  console.log("Fname: " + firstName + " Lname: " + lastName + " year: " + birthYear)
-
   const author = {
-    firstName: firstName,
-    lastName: lastName,
-    birthYear: birthYear
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    birthYear: request.body.birthYear
   }
   authorRepo.createAuthor(author, function(msg){
     console.log("response: " + JSON.stringify(msg, null, 2))
@@ -84,16 +78,11 @@ router.get("/:id/edit", function(request, response){
 
 //  Done, almost
 router.post("/:id/edit", function(request, response){
-  const id = request.params.id
-  const firstName = request.body.firstname
-  const lastName = request.body.lastname
-  const birthYear = request.body.birthyear
-
   const author = {
-    id: id,
-    firstName: firstName,
-    lastName: lastName,
-    birthYear: birthYear
+    id: request.params.id,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    birthYear: request.body.birthYear
   }
 
   authorRepo.editAuthor(author, function(msg){
