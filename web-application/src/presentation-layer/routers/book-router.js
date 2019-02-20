@@ -11,6 +11,10 @@ router.get('/', function(request, response){
   })
 })
 
+router.get('/page/:index', function(request, response){
+  
+})
+
 router.get("/create", function(request, response){
   response.render("page-createbook.hbs")
 })

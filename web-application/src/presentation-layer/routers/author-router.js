@@ -4,11 +4,34 @@ const authorRepo = require('../../data-access-layer/author-repository')
 
 router.get('/', function(request, response){
   authorRepo.getAllAuthors(function(authors){
-    const model = {
+    let model = {
       authors: authors
     }
-    response.render("page-authors.hbs", model)
+
+    const authorsPerPage = 10
+    let index = 0
+    let currentPage = 1
+    let authorsForPage = []
+
+    for(let author of model.authors) {
+      if(index < authorsPerPage) {
+        // authorsForPage.push(author)
+        console.log(index)
+        author.pageIndex = currentPage
+        index++
+      } else {
+        index = 0
+        currentPage++
+      }
+      console.log(JSON.stringify(author, null, 2))
+      console.log("Page: " + author.pageIndex)
+    }
+    // response.render("page-authors.hbs", model)
   })
+})
+
+router.get('/page/:index', function(request, response){
+
 })
 
 router.get("/create", function(request, response){

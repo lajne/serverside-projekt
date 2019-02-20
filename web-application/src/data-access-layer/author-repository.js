@@ -17,11 +17,11 @@ const Authors = db.sequelize.define('Authors', {
 
 exports.getAllAuthors = function(callback) {
   Authors.findAll({
-    /* where: {
+     where: {
       Id: {
         [db.Sequelize.Op.gt]: 600
       }
-    } */
+    } 
   }).then(function(authors, error){
     if(error) {
       callback(['databaseerror'], null)
