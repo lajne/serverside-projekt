@@ -1,19 +1,21 @@
 const db = require('./db')
 
-const Authors = db.sequelize.define('Authors', {
-  Id: {
-    type: db.Sequelize.INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  FirstName: db.Sequelize.TEXT,
-  LastName: db.Sequelize.TEXT,
-  BirthYear: db.Sequelize.TEXT,
-}, {
-  createdAt: false,
-  updatedAt: false
-});
+// const Authors = db.sequelize.define('Authors', {
+//   Id: {
+//     type: db.Sequelize.INTEGER,
+//     allowNull: false,
+//     autoIncrement: true,
+//     primaryKey: true
+//   },
+//   FirstName: db.Sequelize.TEXT,
+//   LastName: db.Sequelize.TEXT,
+//   BirthYear: db.Sequelize.TEXT,
+// }, {
+//   createdAt: false,
+//   updatedAt: false
+// });
+
+const {Authors} = require('./models')
 
 exports.getAllAuthors = function(callback) {
   Authors.findAll({

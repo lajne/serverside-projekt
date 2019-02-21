@@ -8,32 +8,31 @@ router.get('/', function(request, response){
       authors: authors
     }
 
-    const authorsPerPage = 10
-    let index = 0
-    let currentPage = 1
-    let authorsForPage = []
-
-    for(let author of model.authors) {
-      if(index < authorsPerPage) {
-        // authorsForPage.push(author)
-        author.pageIndex = currentPage
-        console.log("\nIndex: " + index)
-        console.log("Page: " + author.pageIndex)
-        console.log("CurrentPage: " + currentPage)
-        console.log(JSON.stringify(author, null, 2))
-        index++
-      } else {
-        index = 0
-        currentPage++
-      }
-    }
-
     /*
             Tänkte att man kunde skicka vidare modeln med vilken sida alla authors ska vara på.
             Men tror inte det fungerar?!
     */
-    
+    // const authorsPerPage = 10
+    // let index = 0
+    // let currentPage = 1
+    // let authorsForPage = []
+
+    // for(let author of model.authors) {
+    //   if(index < authorsPerPage) {
+    //     // authorsForPage.push(author)
+    //     author.pageIndex = currentPage
+    //     console.log("\nIndex: " + index)
+    //     console.log("Page: " + author.pageIndex)
+    //     console.log("CurrentPage: " + currentPage)
+    //     console.log(JSON.stringify(author, null, 2))
+    //     index++
+    //   } else {
+    //     index = 0
+    //     currentPage++
+    //   }
+    // }
     // response.redirect("/page/", model)
+    response.render("page-authors.hbs", model)
   })
 })
 

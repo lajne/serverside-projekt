@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bookRepo = require('../../data-access-layer/book-repository')
+const bookManager = require('../../business-logic-layer/book-manager')
 
 router.get('/', function(request, response){
   bookRepo.getAllBooks(function(books){
@@ -29,8 +30,14 @@ router.post("/create", function(request, response){
     pages : request.body.pages
   }
 
-  bookRepo.createBook(book, function(msg){
-    console.log("response: " + JSON.stringify(msg, null, 2))
+  bookManager.createBook(book, function(bookret, errors){
+    // console.log("response: " + JSON.stringify(msg, null, 2))
+    console.log("In router: " + bookret + errors)
+    if(0 < errors.length) {
+      console.log("ERROR CREATING BOOK!")
+    } else {
+      console.log("BOOK SUCCESSFULLY CREATED!")
+    }
   })
 })
 

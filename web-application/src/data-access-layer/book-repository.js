@@ -1,20 +1,22 @@
 const db = require('./db')
 
-const Books = db.sequelize.define('Books', {
-  ISBN: {
-    type: db.Sequelize.TEXT,
-    allowNull: false,
-    primaryKey: true
-  },
-  Title: db.Sequelize.TEXT,
-  SignId: db.Sequelize.INTEGER,
-  PublicationYear: db.Sequelize.TEXT,
-  PublicationInfo: db.Sequelize.TEXT,
-  Pages: db.Sequelize.INTEGER
-}, {
-  createdAt: false,
-  updatedAt: false
-});
+// const Books = db.sequelize.define('Books', {
+//   ISBN: {
+//     type: db.Sequelize.TEXT,
+//     allowNull: false,
+//     primaryKey: true
+//   },
+//   Title: db.Sequelize.TEXT,
+//   SignId: db.Sequelize.INTEGER,
+//   PublicationYear: db.Sequelize.TEXT,
+//   PublicationInfo: db.Sequelize.TEXT,
+//   Pages: db.Sequelize.INTEGER
+// }, {
+//   createdAt: false,
+//   updatedAt: false
+// });
+
+const {Books} = require('./models')
 
 exports.getAllBooks = function(callback) {
   Books.findAll({
@@ -42,7 +44,7 @@ exports.createBook = function(book, callback) {
     PublicationInfo: book.publicationInfo,
     Pages: book.pages
   }).then(function(createdBook){
-    callback(createdBook)
+    callback(createdBook, [])
   })
   .catch(function(error){
     callback(['databaseerror'])
