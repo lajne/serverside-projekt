@@ -1,43 +1,28 @@
 const express = require('express')
 const router = express.Router()
 const authorRepo = require('../../data-access-layer/author-repository')
+const authorManager = require('../../business-logic-layer/author-manager')
 
 router.get('/', function(request, response){
-  authorRepo.getAllAuthors(function(authors){
-    let model = {
-      authors: authors
-    }
-
-    /*
-            Tänkte att man kunde skicka vidare modeln med vilken sida alla authors ska vara på.
-            Men tror inte det fungerar?!
-    */
-    // const authorsPerPage = 10
-    // let index = 0
-    // let currentPage = 1
-    // let authorsForPage = []
-
-    // for(let author of model.authors) {
-    //   if(index < authorsPerPage) {
-    //     // authorsForPage.push(author)
-    //     author.pageIndex = currentPage
-    //     console.log("\nIndex: " + index)
-    //     console.log("Page: " + author.pageIndex)
-    //     console.log("CurrentPage: " + currentPage)
-    //     console.log(JSON.stringify(author, null, 2))
-    //     index++
-    //   } else {
-    //     index = 0
-    //     currentPage++
-    //   }
-    // }
-    // response.redirect("/page/", model)
-    response.render("page-authors.hbs", model)
-  })
+  response.redirect("/authors/page/1")
 })
 
-router.get('/page/:index', function(request, response){
+router.get('/page/:pageIndex', function(request, response){
+  let page = request.params.pageIndex
+  let limit = 10
+  let offset = 0
 
+  authorManager.getAllAuthors(page, limit, offset, function(authors, pages){
+    let pageIndexes = []
+    for(let index = 1; index < (pages + 1); index++) {
+      pageIndexes.push({index: index})
+    }
+    let model = {
+      authors: authors,
+      pages: pageIndexes
+    }
+    response.render("page-authors.hbs", model)
+  })
 })
 
 router.get("/create", function(request, response){
@@ -50,11 +35,15 @@ router.post("/create", function(request, response){
     lastName: request.body.lastName,
     birthYear: request.body.birthYear
   }
-  authorRepo.createAuthor(author, function(msg){
-    /* 
-          Here we wan't to maybe tell and show the user that we successfully created
-          an author. :ppPppP
-    */
+  authorManager.createAuthor(author, function(authorret, errors){
+    if(0 < errors.length) {
+      const model = {
+        errors: errors
+      }
+      response.render("page-createauthor.hbs", model)
+    } else {
+      response.redirect('/authors/')
+    }
   })
 })
 
@@ -66,10 +55,6 @@ router.get('/search/:searchTerm', function(request, response){
       authors: authors
     }
     response.render("page-authors.hbs", model)
-    /*
-    Om man söker flera gånger efter varandra så lägger den till 
-    "/author/search/ + /author/search/ + osv.." 
-    */
   })
 })
 
@@ -109,12 +94,15 @@ router.post("/:id/edit", function(request, response){
     birthYear: request.body.birthYear
   }
 
-  authorRepo.editAuthor(author, function(msg){
-    console.log("response: " + JSON.stringify(msg, null, 2))
-    /* 
-          Here we wan't to maybe tell and show the user that we successfully created
-          an author. :ppPppP
-    */
+  authorManager.editAuthor(author, function(authorret, errors){
+    if(0 < errors.length) {
+      const model = {
+        errors: errors
+      }
+      response.render("editauthor.hbs", model)
+    } else {
+      response.redirect("/authors/")
+    }
   })
 })
 

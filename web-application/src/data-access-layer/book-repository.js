@@ -1,36 +1,24 @@
 const db = require('./db')
-
-// const Books = db.sequelize.define('Books', {
-//   ISBN: {
-//     type: db.Sequelize.TEXT,
-//     allowNull: false,
-//     primaryKey: true
-//   },
-//   Title: db.Sequelize.TEXT,
-//   SignId: db.Sequelize.INTEGER,
-//   PublicationYear: db.Sequelize.TEXT,
-//   PublicationInfo: db.Sequelize.TEXT,
-//   Pages: db.Sequelize.INTEGER
-// }, {
-//   createdAt: false,
-//   updatedAt: false
-// });
-
 const {Books} = require('./models')
 
-exports.getAllBooks = function(callback) {
-  Books.findAll({
-    /* where: {
-      Id: {
-        [db.Sequelize.Op.gt]: 600
-      }
-    } */
-  }).then(function(books){
-      callback(books, [])
-  }).catch(function(error) {
-    console.log(error)
-    callback(['databaseerror'])
+exports.getAllBooks = function(page, limit, offset, callback) {
+  Books.findAndCountAll()
+  .then(function(books) {
+    let pages = Math.ceil(books.count / limit)
+    offset = limit * (page - 1)
+    
+    Books.findAll({
+      limit: limit,
+      offset: offset
+    })
+    .then(function(books){
+        callback(books, pages)
+    }).catch(function(error) {
+      console.log(error)
+      callback(['databaseerror'])
+    })
   })
+  
 }
 
 exports.createBook = function(book, callback) {

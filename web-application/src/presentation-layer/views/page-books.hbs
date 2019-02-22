@@ -18,3 +18,8 @@
     <button onclick="window.location.href='/books/create'">Create book</button>
   </div>
 {{/if}}
+<div>
+  {{#each pages}}
+    <a href="/books/page/{{index}}">{{index}}</a>
+  {{/each}}
+</div>
