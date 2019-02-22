@@ -1,20 +1,22 @@
 const db = require('./db')
 
-const Books = db.sequelize.define('Books', {
-  ISBN: {
-    type: db.Sequelize.TEXT,
-    allowNull: false,
-    primaryKey: true
-  },
-  Title: db.Sequelize.TEXT,
-  SignId: db.Sequelize.INTEGER,
-  PublicationYear: db.Sequelize.TEXT,
-  PublicationInfo: db.Sequelize.TEXT,
-  Pages: db.Sequelize.INTEGER
-}, {
-  createdAt: false,
-  updatedAt: false
-});
+// const Books = db.sequelize.define('Books', {
+//   ISBN: {
+//     type: db.Sequelize.TEXT,
+//     allowNull: false,
+//     primaryKey: true
+//   },
+//   Title: db.Sequelize.TEXT,
+//   SignId: db.Sequelize.INTEGER,
+//   PublicationYear: db.Sequelize.TEXT,
+//   PublicationInfo: db.Sequelize.TEXT,
+//   Pages: db.Sequelize.INTEGER
+// }, {
+//   createdAt: false,
+//   updatedAt: false
+// });
+
+const {Books} = require('./models')
 
 exports.getAllBooks = function(callback) {
   Books.findAll({
@@ -23,12 +25,11 @@ exports.getAllBooks = function(callback) {
         [db.Sequelize.Op.gt]: 600
       }
     } */
-  }).then(function(books, error){
-    if(error) {
-      callback(['databaseerror'], null)
-    } else {
-      callback(books)
-    }
+  }).then(function(books){
+      callback(books, [])
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }
 
@@ -42,7 +43,7 @@ exports.createBook = function(book, callback) {
     PublicationInfo: book.publicationInfo,
     Pages: book.pages
   }).then(function(createdBook){
-    callback(createdBook)
+    callback(createdBook, [])
   })
   .catch(function(error){
     callback(['databaseerror'])
@@ -61,7 +62,10 @@ exports.editBook = function(book, callback) {
   }, {
     where: {ISBN: book.isbn}
   }).then(function(updatedBook){
-    callback(updatedBook)
+    callback(updatedBook, [])
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }
 
@@ -70,12 +74,11 @@ exports.getBookByISBN = function(isbn, callback) {
     where: {
       ISBN: isbn
     }
-  }).then(function(book, error){
-    if(error) {
-      callback(['databaseerror'], null)
-    } else {
-      callback(book[0])
-    }
+  }).then(function(book){
+      callback(book[0], [])
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }
 

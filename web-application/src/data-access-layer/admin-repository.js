@@ -1,10 +1,12 @@
-const db = require('./db')
+// const db = require('./db')
 
-const Admins = db.sequelize.define('Admins', {
-  Username: db.Sequelize.TEXT,
-  Password: db.Sequelize.TEXT,
-});
-Admins.sync()
+// const Admins = db.sequelize.define('Admins', {
+//   Username: db.Sequelize.TEXT,
+//   Password: db.Sequelize.TEXT,
+// });
+// Admins.sync()
+
+const {Admins} = require('./models')
 
 exports.getAllAdmins = function(callback) {
   Admins.findAll({
