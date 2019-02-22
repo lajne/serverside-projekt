@@ -1,5 +1,5 @@
 <h1>AUTHORS</h1>
-<form action="authors/search/" method="GET">
+<form action="/authors/search/" method="GET">
   <div>
     Search <input type="text" name="authorSearch">
     <input type="submit" value="Go!">
@@ -18,3 +18,8 @@
     <button onclick="window.location.href='/authors/create'">Create author</button>
   </div>
 {{/if}}
+<div>
+  {{#each pages}}
+    <a href="/authors/page/{{index}}">{{index}}</a>
+  {{/each}}
+</div>

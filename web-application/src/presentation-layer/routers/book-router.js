@@ -4,17 +4,25 @@ const bookRepo = require('../../data-access-layer/book-repository')
 const bookManager = require('../../business-logic-layer/book-manager')
 
 router.get('/', function(request, response){
-  bookManager.getAllBooks(function(books, errors){
-    const model = {
-      errors: errors,
-      books: books
+  response.redirect("/books/page/1")
+})
+
+router.get('/page/:pageIndex', function(request, response){
+  let page = request.params.pageIndex
+  let limit = 10
+  let offset = 0
+
+  bookManager.getAllBooks(page, limit, offset, function(books, pages) {
+    let pageIndexes = []
+    for(let index = 1; index < (pages + 1); index++) {
+      pageIndexes.push( {index: index} )
+    }
+    let model = {
+      books: books,
+      pages: pageIndexes
     }
     response.render("page-books.hbs", model)
   })
-})
-
-router.get('/page/:index', function(request, response){
-  
 })
 
 router.get("/create", function(request, response){
@@ -32,12 +40,15 @@ router.post("/create", function(request, response){
   }
 
   bookManager.createBook(book, function(bookret, errors){
-    // console.log("response: " + JSON.stringify(msg, null, 2))
     console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
     if(0 < errors.length) {
-      console.log("ERROR CREATING BOOK!")
+      const model = {
+        errors: errors
+      }
+
+      response.render("page-createbook.hbs", model)
     } else {
-      console.log("BOOK SUCCESSFULLY CREATED!")
+      response.redirect("/books/")
     }
   })
 })
