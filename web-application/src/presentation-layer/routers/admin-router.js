@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const adminRepo = require('../../data-access-layer/admin-repository')
+const adminManager = require('../../business-logic-layer/admin-manager')
 
 router.get('/', function(request, response){
-  adminRepo.getAllAdmins(function(admins){
+  adminManager.getAllAdmins(function(admins, error){
     const model = {
-      admins: admins
+      admins: admins,
+      error: error
     }
     response.render("page-admins.hbs", model)
   })
@@ -21,15 +23,23 @@ router.post("/create", function(request, response){
     password: request.body.password
   }
 
-  adminRepo.createAdmin(admin, function(msg){
-    console.log("response: " + JSON.stringify(msg, null, 2))
+  adminManager.createAdmin(admin, function(admin, error){
+    if(0 < error.length) {
+      const model = {
+        admin: admin,
+        error: error
+      }
+      response.render("page-createadmin.hbs", model)
+    } else {
+      response.redirect("/admins")
+    }
   })
 })
 
 router.get('/:id', function(request, response){
   const id = request.params.id
 
-  adminRepo.getAdminById(id, function(admin) {
+  adminManager.getAdminById(id, function(admin) {
     const model = {
       admin: admin
     }
@@ -42,9 +52,10 @@ router.get('/:id', function(request, response){
 router.get("/:id/edit", function(request, response) {
   const id = request.params.id
   
-  adminRepo.getAdminById(id, function(admin) {
+  adminManager.getAdminById(id, function(admin, error) {
     const model = {
-      admin: admin
+      admin: admin,
+      error: error
     }
     response.render("page-editadmin.hbs", model)
   })
@@ -57,8 +68,16 @@ router.post("/:id/edit", function(request, response){
     password: request.body.password
   }
 
-  adminRepo.editAdmin(admin, function(msg) {
-    console.log("response: " + JSON.stringify(msg, null, 2))
+  adminManager.editAdmin(admin, function(admin, error) {
+    if(0 < error.length){
+      const model = {
+        admin: admin,
+        error: error
+      }
+      response.render("page-editadmin.hbs", model)
+    }else {
+      response.redirect("/admins")
+    }
   })
 })
 

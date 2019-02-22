@@ -11,12 +11,10 @@ const {Admins} = require('./models')
 exports.getAllAdmins = function(callback) {
   Admins.findAll({
 
-  }).then(function(admins, error){
-    if(error){
-      callback(['databaseerror'], null)
-    } else {
-      callback(admins)
-    }
+  }).then(function(admins){ 
+      callback(admins, [])  
+  }).catch(function(error){
+    callback(['databaseerror']) 
   })
 }
 
@@ -25,7 +23,7 @@ exports.createAdmin = function(admins, callback){
     Username: admins.username,
     Password: admins.password
   }).then(function(createdAdmin){
-    callback(createdAdmin)
+    callback(createdAdmin, [])
   }).catch(function(error){
     callback(['databaseerror'])
   })
@@ -38,8 +36,9 @@ exports.editAdmin = function(admin, callback) {
   }, {
     where: {id: admin.id}
   }).then(function(updatedAdmin){
-    console.log("updatedadmin: " + JSON.stringify(updatedAdmin, null, 2))
-    callback(updatedAdmin)
+     callback(updatedAdmin, [])
+  }).catch(function(error){
+    callback(['databaseerror'])
   })
 }
 
@@ -48,11 +47,9 @@ exports.getAdminById = function(adminId, callback) {
     where: {
       id: adminId
     }
-  }).then(function(admin, error) {
-    if(error) {
-      callback(['databaseerror'], null)
-    } else {
-      callback(admin[0])
-    }
+  }).then(function(admin) {
+    callback(admin[0], [])
+  }).catch(function(error){
+    callback(['databaseerror'])
   })
 }

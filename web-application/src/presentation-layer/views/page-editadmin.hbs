@@ -1,3 +1,12 @@
+{{#if error.length}}
+  <p>Could not edit admin because: </p>
+  <ul>
+    {{#each error}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+
 <form method="POST" action="/admins/{{admin.id}}/edit">
   Username: <input name="username" value="{{admin.Username}}"><br>
   Password: <input name="password" value="{{admin.Password}}"><br>
