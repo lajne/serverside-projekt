@@ -1,7 +1,8 @@
 exports.validateNewBook = function(isbn) {
   const errors = []
 
-  if(typeof(isbn) != "number") {
+  if(isNaN(isbn)) {
+    console.log("validationerror on isbn: " + isbn)
     errors.push("ISBN should only contain digits")
   }
 

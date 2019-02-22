@@ -4,8 +4,9 @@ const bookRepo = require('../../data-access-layer/book-repository')
 const bookManager = require('../../business-logic-layer/book-manager')
 
 router.get('/', function(request, response){
-  bookRepo.getAllBooks(function(books){
+  bookManager.getAllBooks(function(books, errors){
     const model = {
+      errors: errors,
       books: books
     }
     response.render("page-books.hbs", model)
@@ -32,7 +33,7 @@ router.post("/create", function(request, response){
 
   bookManager.createBook(book, function(bookret, errors){
     // console.log("response: " + JSON.stringify(msg, null, 2))
-    console.log("In router: " + bookret + errors)
+    console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
     if(0 < errors.length) {
       console.log("ERROR CREATING BOOK!")
     } else {
@@ -60,9 +61,9 @@ router.get('/search', function(request, response){
 router.get('/:isbn', function(request, response){
   const isbn = request.params.isbn
 
-  bookRepo.getBookByISBN(isbn, function(book){
+  bookManager.getBookByISBN(isbn, function(bookret, errors){
     const model = {
-      book: book
+      book: bookret
     }
     response.render("page-viewbooks.hbs", model)
   })
@@ -71,9 +72,9 @@ router.get('/:isbn', function(request, response){
 router.get("/:isbn/edit", function(request, response){
   const isbn = request.params.isbn
 
-  bookRepo.getBookByISBN(isbn, function(book){
+  bookManager.getBookByISBN(isbn, function(bookret, errors){
     const model = {
-      book: book
+      book: bookret
     }
     response.render("page-editbook.hbs", model)
   })
@@ -89,8 +90,12 @@ router.post("/:isbn/edit", function(request, response){
     pages : request.body.pages
   }
 
-  bookRepo.editBook(book, function(msg){
-    console.log("response: " + JSON.stringify(msg, null, 2))
+  bookManager.editBook(book, function(bookret, errors){
+    if(0 < errors.length) {
+      console.log("errors: " + errors)
+    } else {
+      console.log("response: " + JSON.stringify(bookret, null, 2))
+    }
     /* 
           Here we wan't to maybe tell and show the user that we successfully created
           an author. :ppPppP

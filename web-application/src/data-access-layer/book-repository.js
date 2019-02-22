@@ -25,12 +25,11 @@ exports.getAllBooks = function(callback) {
         [db.Sequelize.Op.gt]: 600
       }
     } */
-  }).then(function(books, error){
-    if(error) {
-      callback(['databaseerror'], null)
-    } else {
-      callback(books)
-    }
+  }).then(function(books){
+      callback(books, [])
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }
 
@@ -63,7 +62,10 @@ exports.editBook = function(book, callback) {
   }, {
     where: {ISBN: book.isbn}
   }).then(function(updatedBook){
-    callback(updatedBook)
+    callback(updatedBook, [])
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }
 
@@ -72,12 +74,11 @@ exports.getBookByISBN = function(isbn, callback) {
     where: {
       ISBN: isbn
     }
-  }).then(function(book, error){
-    if(error) {
-      callback(['databaseerror'], null)
-    } else {
-      callback(book[0])
-    }
+  }).then(function(book){
+      callback(book[0], [])
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }
 
