@@ -41,15 +41,18 @@ exports.getAdminById = function(adminId, callback) {
 exports.login = function(username, password, callback){
 
     adminRepository.getAdminByUsername(username, function(admin, errors) {
-        if(0 < errors.length){
-            callback(errors)
-        } else if(!admin){
-            callback(["Wrong username"])
-        } else if(admin.password != password){
-            callback(["Wrong password"])
-        } else{
-            callback(admin, [])
-        }
+      // console.log("admin: " + JSON.stringify(admin, null, 2))
+      // console.log("errors: " + errors)
+      if(0 < errors.length){
+          callback(errors)
+      } else if(!admin){
+          callback(["Wrong username"])
+      } else if(admin.Password != password){
+          callback(["Wrong password"])
+      } else{
+          // console.log("callback admin")
+          callback(admin, [])
+      }
     })
 
 }

@@ -51,11 +51,11 @@ exports.getAdminById = function(adminId, callback) {
 exports.getAdminByUsername = function(username, callback){
 Admins.findOne({where: {Username: username}})
   .then(function(admin){
-    console.log("success")
+    // console.log("success in rep")
     callback(admin, [])
   })
   .catch(function(error){
-    console.log("fail")
+    // console.log("fail in rep")
     callback(["databaseerror"])
   })
 }

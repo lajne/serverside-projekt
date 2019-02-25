@@ -4,6 +4,7 @@ const adminRepo = require('../../data-access-layer/admin-repository')
 const adminManager = require('../../business-logic-layer/admin-manager')
 
 router.get('/', function(request, response){
+  console.log("session admin: " + JSON.stringify(request.session.admin, null, 2))
   adminManager.getAllAdmins(function(admins, error){
     const model = {
       admins: admins,
@@ -50,6 +51,8 @@ router.post("/login", function(request, response){
   const password = request.body.password
 
   adminManager.login(username, password, function(admin, error){
+    // console.log("router admin: " + JSON.stringify(admin, null, 2))
+    // console.log("router error: " + error)
     if(0 < error.length){
       const model = {
         username: username,
@@ -61,6 +64,11 @@ router.post("/login", function(request, response){
       response.redirect("/admins")
     }
   })
+})
+
+router.get("/logout", function(request, response) {
+  request.session.admin = null
+  response.redirect("/")
 })
 
 router.get('/:id', function(request, response){

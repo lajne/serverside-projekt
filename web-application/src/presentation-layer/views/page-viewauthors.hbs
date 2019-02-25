@@ -1,7 +1,9 @@
 {{#if author}}
   <div>Name: {{author.FirstName}} {{author.LastName}}</div>
   <div>Birthyear: {{author.BirthYear}}</div>
-  <button onclick="window.location.href='/authors/{{author.Id}}/edit'">Edit</button>
+  {{#if admin}}
+    <button onclick="window.location.href='/authors/{{author.Id}}/edit'">Edit</button>
+  {{/if}}
 {{else}}
   <p>Author does not exist yet!</p>
 {{/if}}

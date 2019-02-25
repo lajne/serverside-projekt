@@ -1,9 +1,9 @@
 <h1>LOGIN</h1>
 
-{{#if errors.length}}
+{{#if error.length}}
     <p>Could not log in because:</p>
     <ul>
-        {{#each}}
+        {{#each error}}
             <li>{{this}}</li>
         {{/each}}
     </ul>

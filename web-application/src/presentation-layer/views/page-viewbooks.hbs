@@ -5,7 +5,9 @@
   <div>{{book.PublicationYear}}</div>
   <div>{{book.PublicationInfo}}</div>
   <div>{{book.Pages}}</div>
-  <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
+  {{#if admin}}
+    <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
+  {{/if}}
 {{else}}
   <p>Book does not exist yet!</p>
 {{/if}}
