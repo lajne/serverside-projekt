@@ -45,3 +45,12 @@ exports.getAdminById = function(adminId, callback) {
     callback(['databaseerror'])
   })
 }
+
+exports.getAdminByUsername = function(username, callback){
+  Admins.findOne({where: {username: username}})
+    .then(function(admin){
+      callback(admin, [])
+    }).catch(function(error){
+        callback(["databaseerror"])
+    })
+}

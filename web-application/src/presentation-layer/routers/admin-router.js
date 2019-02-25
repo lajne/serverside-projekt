@@ -36,6 +36,33 @@ router.post("/create", function(request, response){
   })
 })
 
+router.get("/login", function(request, response){
+  const model = {
+    username: "",
+    error: []
+  }
+
+  response.render("page-login.hbs", model)
+})
+
+router.post("/login", function(request, response){
+  const username = request.body.username
+  const password = request.body.password
+
+  adminManager.login(username, password, function(admin, error){
+    if(0 < error.length){
+      const model = {
+        username: username,
+        error: error
+      }
+      response.render("page-login.hbs", model)
+    } else{
+      request.session.admin = admin
+      response.redirect("/")
+    }
+  })
+})
+
 router.get('/:id', function(request, response){
   const id = request.params.id
 

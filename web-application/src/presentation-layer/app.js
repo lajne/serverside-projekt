@@ -2,7 +2,7 @@ const path = require('path')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-// const expressSession = require('express-session')
+const expressSession = require('express-session')
 
 const accountRouter = require('./routers/account-router')
 const adminRouter = require('./routers/admin-router')
@@ -10,6 +10,7 @@ const authorRouter = require('./routers/author-router')
 const bookRouter = require('./routers/book-router')
 
 const app = express()
+
 
 app.set('views', path.join(__dirname, 'views'))
 
@@ -21,11 +22,16 @@ app.engine('hbs', expressHandlebars({
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-// app.use(expressSession({
-//   resave: false,
-//   saveUninitialized: false,
-//   secret: "abcdefghijklmnopqrstuvwxyz"
-// }))
+app.use(expressSession({
+  resave: false,
+  saveUninitialized: false,
+  secret: "dsfsdfsdfsfdsfdsdfsdf"
+}))
+
+app.use(function(request, response, next){
+	response.locals.admin = request.session.admin
+	next()
+})
 
 // Parse bodies of requests written in
 // x-www-form-urlencoded format.
