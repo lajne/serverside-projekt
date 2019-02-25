@@ -30,7 +30,7 @@ exports.createBook = function(book, callback) {
     PublicationYear: book.publicationYear,
     PublicationInfo: book.publicationInfo,
     Pages: book.pages,
-    AuthorId: book.authorId
+    // AuthorId: book.authorId
   }).then(function(createdBook){
     callback(createdBook, [])
   })
