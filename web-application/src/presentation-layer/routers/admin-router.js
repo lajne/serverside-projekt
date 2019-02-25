@@ -58,7 +58,7 @@ router.post("/login", function(request, response){
       response.render("page-login.hbs", model)
     } else{
       request.session.admin = admin
-      response.redirect("/")
+      response.redirect("/admins")
     }
   })
 })

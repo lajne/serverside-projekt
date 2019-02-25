@@ -42,7 +42,7 @@ exports.login = function(username, password, callback){
 
     adminRepository.getAdminByUsername(username, function(admin, errors) {
         if(0 < errors.length){
-            callback([], errors)
+            callback(errors)
         } else if(!admin){
             callback(["Wrong username"])
         } else if(admin.password != password){

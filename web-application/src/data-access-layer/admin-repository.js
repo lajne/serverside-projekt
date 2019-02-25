@@ -28,8 +28,10 @@ exports.editAdmin = function(admin, callback) {
   }, {
     where: {id: admin.id}
   }).then(function(updatedAdmin){
+    console.log("lyckat")
      callback(updatedAdmin, [])
   }).catch(function(error){
+    console.log("misslyckat")
     callback(['databaseerror'])
   })
 }
@@ -47,10 +49,13 @@ exports.getAdminById = function(adminId, callback) {
 }
 
 exports.getAdminByUsername = function(username, callback){
-  Admins.findOne({where: {username: username}})
-    .then(function(admin){
-      callback(admin, [])
-    }).catch(function(error){
-        callback(["databaseerror"])
-    })
+Admins.findOne({where: {Username: username}})
+  .then(function(admin){
+    console.log("success")
+    callback(admin, [])
+  })
+  .catch(function(error){
+    console.log("fail")
+    callback(["databaseerror"])
+  })
 }

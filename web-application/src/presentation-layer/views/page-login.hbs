@@ -1,6 +1,6 @@
 <h1>LOGIN</h1>
 
-{{#if}}
+{{#if errors.length}}
     <p>Could not log in because:</p>
     <ul>
         {{#each}}
@@ -12,7 +12,7 @@
 <div class="loginBox">
     <form method="POST" action="/admins/login">
     <p>Username</p>
-    <input type="text" name="username" placeholder="Enter Username">
+    <input type="text" name="username" placeholder="Enter Username" value="{{admin.username}}">
     <p>Password</p>
     <input type="password" name="password" placeholder="Enter Password">
     <br>
