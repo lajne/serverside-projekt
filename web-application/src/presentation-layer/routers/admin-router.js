@@ -37,12 +37,15 @@ router.post("/create", function(request, response){
 })
 
 router.get("/login", function(request, response){
+  console.log("hej")
   const model = {
     username: "",
     error: []
   }
+  console.log("hej2")
+  console.log("hej3: " + JSON.stringify(model, null, 2))
 
-  response.render("page-login.hbs", model)
+  response.render("page-login.hbs")
 })
 
 router.post("/login", function(request, response){

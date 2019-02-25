@@ -4,7 +4,7 @@ const expressHandlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const expressSession = require('express-session')
 
-const accountRouter = require('./routers/account-router')
+// const accountRouter = require('./routers/account-router')
 const adminRouter = require('./routers/admin-router')
 const authorRouter = require('./routers/author-router')
 const bookRouter = require('./routers/book-router')
@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }))
 
-app.use('/accounts', accountRouter)
+// app.use('/accounts', accountRouter)
 app.use('/admins', adminRouter)
 app.use('/authors', authorRouter)
 app.use('/books', bookRouter)
