@@ -20,6 +20,7 @@ const Authors = db.sequelize.define('Authors', {
   updatedAt: false
 });
 
+
 const Books = db.sequelize.define('Books', {
   ISBN: {
     type: db.Sequelize.TEXT,
@@ -37,6 +38,9 @@ const Books = db.sequelize.define('Books', {
 });
 
 Admins.sync()
+
+Authors.belongsToMany(Books, {through: 'BookAuthors'})
+Books.belongsToMany(Authors, {through: 'BookAuthors'})
 
 exports.Admins = Admins
 exports.Authors = Authors

@@ -1,10 +1,10 @@
 {{#if book}}
-  <div>{{book.ISBN}}</div>
-  <div>{{book.Title}}</div>
-  <div>{{book.SignId}}</div>
-  <div>{{book.PublicationYear}}</div>
-  <div>{{book.PublicationInfo}}</div>
-  <div>{{book.Pages}}</div>
+  <div>ISBN: {{book.ISBN}}</div>
+  <div>Title: {{book.Title}}</div>
+  <div>SignId: {{book.SignId}}</div>
+  <div>PublicationYear: {{book.PublicationYear}}</div>
+  <div>PublicationInfo: {{book.PublicationInfo}}</div>
+  <div>Pages: {{book.Pages}}</div>
   <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
 {{else}}
   <p>Book does not exist yet!</p>

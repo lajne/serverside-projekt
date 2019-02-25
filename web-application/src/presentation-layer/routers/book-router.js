@@ -33,10 +33,11 @@ router.post("/create", function(request, response){
   const book = {
     isbn: request.body.isbn,
     title : request.body.title,
-    signId : request.body.signId,
+    signId : request.body.signid,
     publicationYear : request.body.publicationyear,
     publicationInfo : request.body.publicationinfo,
-    pages : request.body.pages
+    pages : request.body.pages,
+    authorId: request.body.authorid
   }
 
   bookManager.createBook(book, function(bookret, errors){

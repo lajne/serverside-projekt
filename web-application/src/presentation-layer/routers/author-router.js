@@ -31,9 +31,9 @@ router.get("/create", function(request, response){
 
 router.post("/create", function(request, response){
   const author = {
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-    birthYear: request.body.birthYear
+    firstName: request.body.firstname,
+    lastName: request.body.lastname,
+    birthYear: request.body.birthyear
   }
   authorManager.createAuthor(author, function(authorret, errors){
     if(0 < errors.length) {

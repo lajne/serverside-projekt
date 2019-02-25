@@ -22,14 +22,15 @@ exports.getAllBooks = function(page, limit, offset, callback) {
 }
 
 exports.createBook = function(book, callback) {
-  console.log("author: " + JSON.stringify(book, null, 2))
+  console.log("Repository: " + JSON.stringify(book, null, 2))
   Books.create({
     ISBN: book.isbn,
     Title: book.title,
     SignId: book.signId,
     PublicationYear: book.publicationYear,
     PublicationInfo: book.publicationInfo,
-    Pages: book.pages
+    Pages: book.pages,
+    AuthorId: book.authorId
   }).then(function(createdBook){
     callback(createdBook, [])
   })
