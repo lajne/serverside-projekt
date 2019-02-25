@@ -1,5 +1,5 @@
 const db = require('./db')
-const {Books} = require('./models')
+const {Books, Authors} = require('./models')
 
 exports.getAllBooks = function(page, limit, offset, callback) {
   Books.findAndCountAll()

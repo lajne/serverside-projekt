@@ -10,6 +10,8 @@ exports.getAllBooks = function(page, limit, offset, callback) {
 exports.createBook = function(book, callback) {
   const errors = bookValidator.validateNewBook(book.isbn)
 
+  console.log("errors: " +  errors)
+
   if(0 < errors.length) {
     callback([], errors)
     return

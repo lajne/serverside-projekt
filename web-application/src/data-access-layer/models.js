@@ -50,8 +50,16 @@ const BookAuthors = db.sequelize.define('BookAuthors', {
 
 Admins.sync()
 
-Authors.belongsToMany(Books, {through: BookAuthors})
-Books.belongsToMany(Authors, {through: BookAuthors})
+Authors.belongsToMany(Books, {
+  through: {
+    model: BookAuthors
+  }
+})
+Books.belongsToMany(Authors, {
+  through: {
+    model: BookAuthors
+  }
+})
 
 exports.Admins = Admins
 exports.Authors = Authors
