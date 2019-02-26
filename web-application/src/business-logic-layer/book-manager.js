@@ -1,4 +1,5 @@
 const bookRepository = require('../data-access-layer/book-repository')
+const authorRepository = require('../data-access-layer/author-repository')
 const bookValidator = require('./book-validator')
 
 exports.getAllBooks = function(page, limit, offset, callback) {

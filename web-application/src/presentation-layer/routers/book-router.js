@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bookRepo = require('../../data-access-layer/book-repository')
 const bookManager = require('../../business-logic-layer/book-manager')
+const authorManager = require('../../business-logic-layer/author-manager')
 
 router.get('/', function(request, response){
   response.redirect("/books/page/1")
@@ -37,11 +38,13 @@ router.post("/create", function(request, response){
     publicationYear : request.body.publicationyear,
     publicationInfo : request.body.publicationinfo,
     pages : request.body.pages,
-    authorId: request.body.authorid
   }
 
-  bookManager.createBook(book, function(bookret, errors){
-    console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
+  const authorId = request.body.authorid
+  console.log("authorid: " + authorId + "book: " + JSON.stringify(book, null, 2))
+
+  authorManager.getAuthorById(authorId, function(author, errors) {
+    console.log("THE AUTHOR FOR BOOK: " + JSON.stringify(author, null, 2))
     if(0 < errors.length) {
       const model = {
         errors: errors
@@ -49,9 +52,24 @@ router.post("/create", function(request, response){
 
       response.render("page-createbook.hbs", model)
     } else {
-      response.redirect("/books/")
+
+      book.author = author
+
+      bookManager.createBook(book, function(bookret, errors){
+        console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
+        if(0 < errors.length) {
+          const model = {
+            errors: errors
+          }
+    
+          response.render("page-createbook.hbs", model)
+        } else {
+          response.redirect("/books/")
+        }
+      })
     }
   })
+
 })
 
 router.get('/search/:searchTerm', function(request, response){

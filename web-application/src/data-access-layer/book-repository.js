@@ -1,5 +1,5 @@
 const db = require('./db')
-const {Books, Authors} = require('./models')
+const {Books, Book_Authors} = require('./models')
 
 exports.getAllBooks = function(page, limit, offset, callback) {
   Books.findAndCountAll()
@@ -30,7 +30,12 @@ exports.createBook = function(book, callback) {
     PublicationYear: book.publicationYear,
     PublicationInfo: book.publicationInfo,
     Pages: book.pages,
-    // AuthorId: book.authorId
+    book_authors: book.author
+  }, {
+    include: [{
+      model: Book_Authors,
+      association: 'book_authors'
+    }]
   }).then(function(createdBook){
     Books.addAuthors()
     callback(createdBook, [])
