@@ -37,29 +37,21 @@ const Books = db.sequelize.define('Books', {
   updatedAt: false
 });
 
-const BookAuthors = db.sequelize.define('BookAuthors', {
-  BookISBN: {
-    type: db.Sequelize.TEXT,
-    allowNull: false
-  },
-  AuthorId: {
-    type: db.Sequelize.INTEGER,
-    allowNull: false
-  }
-})
+// const BookAuthors = db.sequelize.define('BookAuthors', {
+//   BookISBN: {
+//     type: db.Sequelize.TEXT,
+//     allowNull: false
+//   },
+//   AuthorId: {
+//     type: db.Sequelize.INTEGER,
+//     allowNull: false
+//   }
+// })
 
 Admins.sync()
 
-Authors.belongsToMany(Books, {
-  through: {
-    model: BookAuthors
-  }
-})
-Books.belongsToMany(Authors, {
-  through: {
-    model: BookAuthors
-  }
-})
+Authors.belongsToMany(Books, { through: { model: BookAuthors}, foreignKey: 'AuthorId' } )
+Books.belongsToMany(Authors, { through: { model: BookAuthors}, foreignKey: 'BookISBN'} )
 
 exports.Admins = Admins
 exports.Authors = Authors

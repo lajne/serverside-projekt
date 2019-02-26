@@ -32,6 +32,7 @@ exports.createBook = function(book, callback) {
     Pages: book.pages,
     // AuthorId: book.authorId
   }).then(function(createdBook){
+    Books.addAuthors()
     callback(createdBook, [])
   })
   .catch(function(error){
