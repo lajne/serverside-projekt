@@ -13,7 +13,7 @@ router.get('/page/:pageIndex', function(request, response){
   let limit = 10
   let offset = 0
 
-  bookManager.getAllBooks(page, limit, offset, function(books, pages) {
+  bookManager.getAllBooks(page, limit, offset, function(books, pages, errors) {
     let pageIndexes = []
     for(let index = 1; index < (pages + 1); index++) {
       pageIndexes.push( {index: index} )
@@ -43,7 +43,7 @@ router.post("/create", function(request, response){
   const authorId = request.body.authorid
   console.log("authorid: " + authorId + "book: " + JSON.stringify(book, null, 2))
 
-  authorManager.getAuthorById(authorId, function(author, errors) {
+  authorManager.getAuthorById(authorId, function(errors, author) {
     console.log("THE AUTHOR FOR BOOK: " + JSON.stringify(author, null, 2))
     if(0 < errors.length) {
       const model = {
@@ -55,7 +55,7 @@ router.post("/create", function(request, response){
 
       book.author = author
 
-      bookManager.createBook(book, function(bookret, errors){
+      bookManager.createBook(book, function(errors, bookret){
         console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
         if(0 < errors.length) {
           const model = {
@@ -91,7 +91,7 @@ router.get('/search', function(request, response){
 router.get('/:isbn', function(request, response){
   const isbn = request.params.isbn
 
-  bookManager.getBookByISBN(isbn, function(bookret, errors){
+  bookManager.getBookByISBN(isbn, function(errors, bookret){
     const model = {
       book: bookret
     }
@@ -102,7 +102,7 @@ router.get('/:isbn', function(request, response){
 router.get("/:isbn/edit", function(request, response){
   const isbn = request.params.isbn
 
-  bookManager.getBookByISBN(isbn, function(bookret, errors){
+  bookManager.getBookByISBN(isbn, function(errors, bookret){
     const model = {
       book: bookret
     }
@@ -120,7 +120,7 @@ router.post("/:isbn/edit", function(request, response){
     pages : request.body.pages
   }
 
-  bookManager.editBook(book, function(bookret, errors){
+  bookManager.editBook(book, function(errors, bookret){
     if(0 < errors.length) {
       console.log("errors: " + errors)
     } else {

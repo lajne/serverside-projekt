@@ -34,11 +34,12 @@ exports.createBook = function(book, callback) {
   }, {
     include: [{
       model: Book_Authors,
-      association: 'book_authors'
+      association: 'book_authors',
+      all: true
     }]
   }).then(function(createdBook){
-    Books.addAuthors()
-    callback(createdBook, [])
+    console.log("created book in repo: " + createdBook)
+    callback([], createdBook)
   })
   .catch(function(error){
     callback(['databaseerror'])
@@ -57,7 +58,7 @@ exports.editBook = function(book, callback) {
   }, {
     where: {ISBN: book.isbn}
   }).then(function(updatedBook){
-    callback(updatedBook, [])
+    callback([], updatedBook)
   }).catch(function(error) {
     console.log(error)
     callback(['databaseerror'])
@@ -70,7 +71,7 @@ exports.getBookByISBN = function(isbn, callback) {
       ISBN: isbn
     }
   }).then(function(book){
-      callback(book[0], [])
+      callback([], book[0])
   }).catch(function(error) {
     console.log(error)
     callback(['databaseerror'])

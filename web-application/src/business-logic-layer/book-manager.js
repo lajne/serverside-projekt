@@ -14,24 +14,24 @@ exports.createBook = function(book, callback) {
   console.log("errors: " +  errors)
 
   if(0 < errors.length) {
-    callback([], errors)
+    callback(errors, [])
     return
   }
 
-  bookRepository.createBook(book, function(bookret, errors){
-    callback(bookret, errors)
+  bookRepository.createBook(book, function(errors, bookret){
     console.log("In manager: " + JSON.stringify(bookret, null, 2) + errors)
+    callback(errors, bookret)
   })
 }
 
 exports.getBookByISBN = function(isbn, callback) {
-  bookRepository.getBookByISBN(isbn, function(book, errors) {
-    callback(book, errors)
+  bookRepository.getBookByISBN(isbn, function(errors, book) {
+    callback(errors, book)
   })
 }
 
 exports.editBook = function(book, callback) {
-  bookRepository.editBook(book, function(book, error) {
-    callback(book, error)
+  bookRepository.editBook(book, function(error, book) {
+    callback(error, book)
   })
 }

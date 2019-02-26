@@ -11,24 +11,24 @@ exports.createAuthor = function(author, callback) {
   const errors = authorValidator.validateNewAuthor(author)
 
   if(0 < errors.length) {
-    callback([], errors)
+    callback(errors, [])
     return
   }
 
-  authorRepository.createAuthor(author, function(authorret, errors) {
-    callback(authorret, errors)
+  authorRepository.createAuthor(author, function(errors, authorret) {
+    callback(errors, authorret)
   })
 }
 
 exports.getAuthorById = function(id, callback) {
-  authorRepository.getAuthorById(id, function(author, errors) {
-    callback(author, errors)
+  authorRepository.getAuthorById(id, function(errors, author) {
+    callback(errors, author)
   })
 }
 
 exports.editAuthor = function(author, callback) {
-  authorRepository.editAuthor(author, function(authorret, errors) {
+  authorRepository.editAuthor(author, function(errors, authorret) {
     console.log("manager: " + authorret)
-    callback(authorret, errors)
+    callback(errors, authorret)
   })
 }

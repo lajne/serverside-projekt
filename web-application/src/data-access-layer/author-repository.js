@@ -28,7 +28,7 @@ exports.createAuthor = function(author, callback) {
     LastName: author.lastName,
     BirthYear: author.birthYear
   }).then(function(createdAuthor){
-    callback(createdAuthor, [])
+    callback([], createdAuthor)
   })
   .catch(function(error){
     callback(['databaseerror'])
@@ -44,7 +44,7 @@ exports.editAuthor = function(author, callback) {
     where: {Id: author.id}
   }).then(function(updatedAuthor){
     console.log("repository: " + updatedAuthor)
-    callback(updatedAuthor, [])
+    callback([], updatedAuthor)
   }).catch(function(error) {
     console.log(error)
     callback(['databaseerror'])
@@ -57,7 +57,7 @@ exports.getAuthorById = function(authorId, callback) {
       Id: authorId
     }
   }).then(function(author){
-      callback(author[0], [])
+      callback([], author[0])
   }).catch(function(error) {
     console.log(error)
     callback(['databaseerror'])

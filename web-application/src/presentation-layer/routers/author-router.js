@@ -35,7 +35,7 @@ router.post("/create", function(request, response){
     lastName: request.body.lastname,
     birthYear: request.body.birthyear
   }
-  authorManager.createAuthor(author, function(authorret, errors){
+  authorManager.createAuthor(author, function(errors, authorret){
     if(0 < errors.length) {
       const model = {
         errors: errors
@@ -67,7 +67,7 @@ router.get('/search', function(request, response){
 router.get('/:id', function(request, response){
   const id = request.params.id
 
-  authorRepo.getAuthorById(id, function(author){
+  authorRepo.getAuthorById(id, function(errors, author){
     const model = {
       author: author
     }
@@ -78,7 +78,7 @@ router.get('/:id', function(request, response){
 router.get("/:id/edit", function(request, response){
   const id = request.params.id
   
-  authorRepo.getAuthorById(id, function(author) {
+  authorRepo.getAuthorById(id, function(errors, author) {
     const model = {
       author: author
     }
@@ -94,7 +94,7 @@ router.post("/:id/edit", function(request, response){
     birthYear: request.body.birthYear
   }
 
-  authorManager.editAuthor(author, function(authorret, errors){
+  authorManager.editAuthor(author, function(errors, authorret){
     if(0 < errors.length) {
       const model = {
         errors: errors
