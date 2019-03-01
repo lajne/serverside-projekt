@@ -53,7 +53,7 @@ router.post("/create", function(request, response){
       response.render("page-createbook.hbs", model)
     } else {
 
-      book.author = author
+      book.author = [author]
 
       bookManager.createBook(book, function(errors, bookret){
         console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
@@ -64,6 +64,9 @@ router.post("/create", function(request, response){
     
           response.render("page-createbook.hbs", model)
         } else {
+
+          //Gör det här ist
+          // sequelize vill ha flera authors. lägg till dem här.
           response.redirect("/books/")
         }
       })
