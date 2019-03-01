@@ -34,6 +34,7 @@ exports.createBook = function(book, callback) {
     callback(createdBook, [])
   })
   .catch(function(error){
+    console.log("erroret är: " + error)
     callback(['databaseerror'])
   })
 }
