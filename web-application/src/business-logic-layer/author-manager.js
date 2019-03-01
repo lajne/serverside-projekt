@@ -1,8 +1,8 @@
 const authorRepository = require('../data-access-layer/author-repository')
 const authorValidator = require('./author-validator')
 
-exports.getAllAuthors = function(page, limit, offset, callback) {
-  authorRepository.getAllAuthors(page, limit, offset, function(authors, errors) {
+exports.getAllAuthors = function(options, callback) {
+  authorRepository.getAllAuthors(options, function(authors, errors) {
     callback(authors, errors)
   })
 }

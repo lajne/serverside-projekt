@@ -27,7 +27,15 @@ router.get('/page/:pageIndex', function(request, response){
 })
 
 router.get("/create", function(request, response){
-  response.render("page-createbook.hbs")
+  const options = {
+    default: true
+  }
+  authorManager.getAllAuthors(options, function(authors) {
+    let model = {
+      authors: authors
+    }
+    response.render("page-createbook.hbs", model)
+  })
 })
 
 router.post("/create", function(request, response){
@@ -39,6 +47,8 @@ router.post("/create", function(request, response){
     publicationInfo : request.body.publicationinfo,
     pages : request.body.pages,
   }
+
+  console.log("selected: " + request.body.selectedAuthors)
 
   const authorId = request.body.authorid
   console.log("authorid: " + authorId + "book: " + JSON.stringify(book, null, 2))

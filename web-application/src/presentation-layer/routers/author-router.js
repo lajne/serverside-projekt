@@ -8,11 +8,17 @@ router.get('/', function(request, response){
 })
 
 router.get('/page/:pageIndex', function(request, response){
-  let page = request.params.pageIndex
+  const options = {
+    default: false,
+    page: request.params.pageIndex,
+    limit: 10,
+    offset: 0
+  }
+  /* let page = request.params.pageIndex
   let limit = 10
-  let offset = 0
+  let offset = 0 */
 
-  authorManager.getAllAuthors(page, limit, offset, function(authors, pages){
+  authorManager.getAllAuthors(options, function(authors, pages){
     let pageIndexes = []
     for(let index = 1; index < (pages + 1); index++) {
       pageIndexes.push({index: index})
