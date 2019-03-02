@@ -35,7 +35,10 @@ exports.createBook = function(book, callback) {
     include: [{
       model: Book_Authors,
       association: 'book_authors',
-      all: true
+      all: true,
+/*       where: {
+        AuthorId: book.authors
+      } */
     }]
   }).then(function(createdBook){
     console.log("created book in repo: " + JSON.stringify(createdBook, null, 2))

@@ -62,11 +62,41 @@ router.post("/create", function(request, response){
       }
       console.log(JSON.stringify(model, null, 2))
 //      response.render("page-createbook.hbs", model)
-     }else {
+     } else {
 
-      /* book.authors = authorsret
+      /*
+          Om jag gör det här så fungerar det logiskt som jag vill fram till create i repo.
+          Då Försöker den skapa nya authors som redan finns....
+      */
+     /*
+      Om jag lägger till hårdkodade authors med egna id's så lägger den till dem precis
+      som jag vill till boken via BookAuthors!!!!!
+     */
+
+     /*
+      Ska man ens kunna välja befintliga authors?
+     */
+     const theAuthors = [
+       {
+         "Id": 1331,
+         "FirstName": "Janos",
+         "LastName": "Slynt",
+         "BirthYear": ""
+       }, {
+        "Id": 1332,
+        "FirstName": "Janoslav",
+        "LastName": "Slynt",
+        "BirthYear": ""
+      }, {
+        "Id": 1333,
+        "FirstName": "Pianoslav",
+        "LastName": "Slynt",
+        "BirthYear": ""
+      },
+     ]
+      book.authors = theAuthors
       console.log("book: " + JSON.stringify(book, null, 2))
-      console.log("book authors: " + JSON.stringify(book.authors, null, 2)) */
+      console.log("book authors: " + JSON.stringify(book.authors, null, 2))
 
       bookManager.createBook(book, function(errors, bookret){
         console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
@@ -80,9 +110,13 @@ router.post("/create", function(request, response){
 
           //Gör det här ist
           // sequelize vill ha flera authors. lägg till dem här.
+          /*
+          Om jag gör det här så skapas authorn till boken med en nytt id.
+          */
+          /* console.log("sätt authors till bok.")
           book.authors = authorsret
           console.log("book: " + JSON.stringify(book, null, 2))
-          console.log("book authors: " + JSON.stringify(book.authors, null, 2))
+          console.log("book authors: " + JSON.stringify(book.authors, null, 2)) */
           response.redirect("/books/")
         }
       })
