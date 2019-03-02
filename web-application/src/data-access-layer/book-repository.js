@@ -30,7 +30,7 @@ exports.createBook = function(book, callback) {
     PublicationYear: book.publicationYear,
     PublicationInfo: book.publicationInfo,
     Pages: book.pages,
-    book_authors: book.author
+    book_authors: book.authors
   }, {
     include: [{
       model: Book_Authors,
@@ -38,7 +38,7 @@ exports.createBook = function(book, callback) {
       all: true
     }]
   }).then(function(createdBook){
-    console.log("created book in repo: " + createdBook)
+    console.log("created book in repo: " + JSON.stringify(createdBook, null, 2))
     callback([], createdBook)
   })
   .catch(function(error){

@@ -5,13 +5,29 @@ exports.getAllAuthors = function(options, callback) {
   
   console.log("options: " + options.default)
   if(options.default) {
-    Authors.findAll()
-    .then(function(authors) {
-      callback(authors)
-    }).catch(function(error) {
-      console.log(error)
-      callback(['databaseerror'])
-    })
+    if(options.authors) {
+      Authors.findAll({
+        where: {
+          Id: options.authors
+        }
+      })
+      .then(function(authors) {
+        console.log("success")
+        callback([], authors)
+      })
+      .catch(function(error) {
+        console.log(error)
+        callback(['databaseerror'])
+      })
+    } else {
+      Authors.findAll()
+      .then(function(authors) {
+        callback([], authors)
+      }).catch(function(error) {
+        console.log(error)
+        callback(['databaseerror'])
+      })
+    }
   } else {
     Authors.findAndCountAll()
     .then(function(authors) {

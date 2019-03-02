@@ -30,7 +30,7 @@ router.get("/create", function(request, response){
   const options = {
     default: true
   }
-  authorManager.getAllAuthors(options, function(authors) {
+  authorManager.getAllAuthors(options, function(errors, authors) {
     let model = {
       authors: authors
     }
@@ -49,21 +49,24 @@ router.post("/create", function(request, response){
   }
 
   console.log("selected: " + request.body.selectedAuthors)
+  const options = {
+    default: true,
+    authors: request.body.selectedAuthors
+  }
 
-  const authorId = request.body.authorid
-  console.log("authorid: " + authorId + "book: " + JSON.stringify(book, null, 2))
-
-  authorManager.getAuthorById(authorId, function(errors, author) {
-    console.log("THE AUTHOR FOR BOOK: " + JSON.stringify(author, null, 2))
-    if(0 < errors.length) {
+  authorManager.getAllAuthors(options, function(errors, authorsret) {
+    console.log("THE AUTHORS FOR BOOK: " + JSON.stringify(authorsret, null, 2))
+     if(0 < errors.length) {
       const model = {
         errors: errors
       }
+      console.log(JSON.stringify(model, null, 2))
+//      response.render("page-createbook.hbs", model)
+     }else {
 
-      response.render("page-createbook.hbs", model)
-    } else {
-
-      book.author = [author]
+      /* book.authors = authorsret
+      console.log("book: " + JSON.stringify(book, null, 2))
+      console.log("book authors: " + JSON.stringify(book.authors, null, 2)) */
 
       bookManager.createBook(book, function(errors, bookret){
         console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
@@ -77,6 +80,9 @@ router.post("/create", function(request, response){
 
           //Gör det här ist
           // sequelize vill ha flera authors. lägg till dem här.
+          book.authors = authorsret
+          console.log("book: " + JSON.stringify(book, null, 2))
+          console.log("book authors: " + JSON.stringify(book.authors, null, 2))
           response.redirect("/books/")
         }
       })
