@@ -7,9 +7,11 @@
 </form>
 {{#if authors.length}} 
   {{#each authors}}
+  <div class="item-container">
     <div class="item">
       <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
     </div>
+  </div>
   {{/each}}
   <button onclick="window.location.href='/authors/create'">Create author</button>
 {{else}}

@@ -23,6 +23,7 @@ nav ul li{
 }
 
 main{
+  text-align: center;
   flex-grow: 1;
 }
 
@@ -84,11 +85,16 @@ main{
 
 /* authors */
 
+.items-container {
+  text-align: center;
+}
+
 .item{
   background-color: cornflowerblue;
   border: 1px solid black;
   width: 15em;
-  text-align: center;
+  /* text-align: center; */
+  display: inline-block;
   margin-top: 5px;
   font-size: 16px;
 }

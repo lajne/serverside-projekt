@@ -7,9 +7,11 @@
 </form>
 {{#if books.length}}
   {{#each books}}
+  <div class="item-container">
     <div class="item">
       <a href="/books/{{ISBN}}">{{Title}}</a>
     </div>
+  </div>
   {{/each}}
   <button onclick="window.location.href='/books/create'">Create book</button>
 {{else}}
