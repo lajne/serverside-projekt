@@ -9,11 +9,14 @@ router.get('/', function(request, response){
 })
 
 router.get('/page/:pageIndex', function(request, response){
-  let page = request.params.pageIndex
-  let limit = 10
-  let offset = 0
+  const options = {
+    default: false,
+    page: request.params.pageIndex,
+    limit: 10,
+    offset: 0
+  }
 
-  bookManager.getAllBooks(page, limit, offset, function(books, pages, errors) {
+  bookManager.getAllBooks(options, function(books, pages) {
     let pageIndexes = []
     for(let index = 1; index < (pages + 1); index++) {
       pageIndexes.push( {index: index} )
@@ -48,75 +51,26 @@ router.post("/create", function(request, response){
     pages : request.body.pages,
   }
 
-  console.log("selected: " + request.body.selectedAuthors)
   const options = {
     default: true,
     authors: request.body.selectedAuthors
   }
 
   authorManager.getAllAuthors(options, function(errors, authorsret) {
-    console.log("THE AUTHORS FOR BOOK: " + JSON.stringify(authorsret, null, 2))
      if(0 < errors.length) {
       const model = {
         errors: errors
       }
-      console.log(JSON.stringify(model, null, 2))
-//      response.render("page-createbook.hbs", model)
+      response.render("page-createbook.hbs", model)
      } else {
-
-      /*
-          Om jag gör det här så fungerar det logiskt som jag vill fram till create i repo.
-          Då Försöker den skapa nya authors som redan finns....
-      */
-     /*
-      Om jag lägger till hårdkodade authors med egna id's så lägger den till dem precis
-      som jag vill till boken via BookAuthors!!!!!
-     */
-
-     /*
-      Ska man ens kunna välja befintliga authors?
-     */
-     const theAuthors = [
-       {
-         "Id": 1331,
-         "FirstName": "Janos",
-         "LastName": "Slynt",
-         "BirthYear": ""
-       }, {
-        "Id": 1332,
-        "FirstName": "Janoslav",
-        "LastName": "Slynt",
-        "BirthYear": ""
-      }, {
-        "Id": 1333,
-        "FirstName": "Pianoslav",
-        "LastName": "Slynt",
-        "BirthYear": ""
-      },
-     ]
-      book.authors = theAuthors
-      console.log("book: " + JSON.stringify(book, null, 2))
-      console.log("book authors: " + JSON.stringify(book.authors, null, 2))
-
+      book.authors = authorsret
       bookManager.createBook(book, function(errors, bookret){
-        console.log("In router: " + JSON.stringify(bookret, null, 2) + errors)
         if(0 < errors.length) {
           const model = {
             errors: errors
           }
-    
           response.render("page-createbook.hbs", model)
         } else {
-
-          //Gör det här ist
-          // sequelize vill ha flera authors. lägg till dem här.
-          /*
-          Om jag gör det här så skapas authorn till boken med en nytt id.
-          */
-          /* console.log("sätt authors till bok.")
-          book.authors = authorsret
-          console.log("book: " + JSON.stringify(book, null, 2))
-          console.log("book authors: " + JSON.stringify(book.authors, null, 2)) */
           response.redirect("/books/")
         }
       })
@@ -175,14 +129,13 @@ router.post("/:isbn/edit", function(request, response){
 
   bookManager.editBook(book, function(errors, bookret){
     if(0 < errors.length) {
-      console.log("errors: " + errors)
+      const model = {
+        errors: errors
+      }
+      response.render("editbook.hbs", model)
     } else {
-      console.log("response: " + JSON.stringify(bookret, null, 2))
+      response.redirect("/books/")
     }
-    /* 
-          Here we wan't to maybe tell and show the user that we successfully created
-          an author. :ppPppP
-    */
   })
 })
 

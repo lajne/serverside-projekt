@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const authorRepo = require('../../data-access-layer/author-repository')
 const authorManager = require('../../business-logic-layer/author-manager')
+const bookManager = require('../../business-logic-layer/book-manager')
 
 router.get('/', function(request, response){
   response.redirect("/authors/page/1")
@@ -14,9 +15,6 @@ router.get('/page/:pageIndex', function(request, response){
     limit: 10,
     offset: 0
   }
-  /* let page = request.params.pageIndex
-  let limit = 10
-  let offset = 0 */
 
   authorManager.getAllAuthors(options, function(authors, pages){
     let pageIndexes = []
@@ -32,7 +30,15 @@ router.get('/page/:pageIndex', function(request, response){
 })
 
 router.get("/create", function(request, response){
-  response.render("page-createauthor.hbs")
+  const options = {
+    default: true
+  }
+  bookManager.getAllBooks(options, function(errors, books) {
+    let model = {
+      books: books
+    }
+    response.render("page-createauthor.hbs", model)
+  })
 })
 
 router.post("/create", function(request, response){
@@ -41,15 +47,32 @@ router.post("/create", function(request, response){
     lastName: request.body.lastname,
     birthYear: request.body.birthyear
   }
-  authorManager.createAuthor(author, function(errors, authorret){
+
+  const options = {
+    default: true,
+    books: request.body.selectedBooks
+  }
+  bookManager.getAllBooks(options, function(errors, booksret) {
     if(0 < errors.length) {
       const model = {
         errors: errors
       }
-      response.render("page-createauthor.hbs", model)
-    } else {
-      response.redirect('/authors/')
-    }
+      console.log(JSON.stringify(model, null, 2))
+//      response.render("page-createbook.hbs", model)
+     } else {
+       author.books = booksret
+       
+       authorManager.createAuthor(author, function(errors, authorret){
+         if(0 < errors.length) {
+           const model = {
+             errors: errors
+           }
+           response.render("page-createauthor.hbs", model)
+         } else {
+           response.redirect('/authors/')
+         }
+       })
+     }
   })
 })
 

@@ -2,9 +2,9 @@ const bookRepository = require('../data-access-layer/book-repository')
 const authorRepository = require('../data-access-layer/author-repository')
 const bookValidator = require('./book-validator')
 
-exports.getAllBooks = function(page, limit, offset, callback) {
-  bookRepository.getAllBooks(page, limit, offset, function(books, errors) {
-    callback(books, errors)
+exports.getAllBooks = function(options, callback) {
+  bookRepository.getAllBooks(options, function(errors, books) {
+    callback(errors, books)
   })
 }
 
@@ -19,7 +19,6 @@ exports.createBook = function(book, callback) {
   }
 
   bookRepository.createBook(book, function(errors, bookret){
-    console.log("In manager: " + JSON.stringify(bookret, null, 2) + errors)
     callback(errors, bookret)
   })
 }

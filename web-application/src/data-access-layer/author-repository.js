@@ -1,5 +1,5 @@
 const db = require('./db')
-const {Authors} = require('./models')
+const {Authors, Author_Books} = require('./models')
 
 exports.getAllAuthors = function(options, callback) {
   
@@ -45,18 +45,19 @@ exports.getAllAuthors = function(options, callback) {
       })
     })
   }
-
-
 }
 
 exports.createAuthor = function(author, callback) {
   console.log("author: " + JSON.stringify(author, null, 2))
+
   Authors.create({
     FirstName: author.firstName,
     LastName: author.lastName,
     BirthYear: author.birthYear
   }).then(function(createdAuthor){
-    callback([], createdAuthor)
+    createdAuthor.addBooks(author.books).then(function(createdAuthorWithBooks) {
+      callback([], createdAuthorWithBooks)
+    })
   })
   .catch(function(error){
     callback(['databaseerror'])
@@ -83,7 +84,10 @@ exports.getAuthorById = function(authorId, callback) {
   Authors.findAll({
     where: {
       Id: authorId
-    }
+    },
+    include: [{
+      association: Author_Books
+    }]
   }).then(function(author){
       callback([], author[0])
   }).catch(function(error) {

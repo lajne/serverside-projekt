@@ -11,5 +11,10 @@
   firstname: <input type="text" name="firstname"><br>
   lastname: <input type="text" name="lastname"><br>
   birthyear: <input type="text" name="birthyear"><br>
+  <select multiple class="selectedBooks" name="selectedBooks">
+    {{#each books}}
+      <option value="{{ISBN}}">{{Title}}</option>
+    {{/each}}
+  </select>
   <input type="submit" value="Create author">
 </form>
