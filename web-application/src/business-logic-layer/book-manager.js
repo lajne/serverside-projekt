@@ -1,5 +1,4 @@
 const bookRepository = require('../data-access-layer/book-repository')
-const authorRepository = require('../data-access-layer/author-repository')
 const bookValidator = require('./book-validator')
 
 exports.getAllBooks = function(options, callback) {
@@ -10,10 +9,7 @@ exports.getAllBooks = function(options, callback) {
 
 exports.createBook = function(authorized, book, callback) {
   if(authorized.session){
-    const errors = bookValidator.validateNewBook(book.isbn)
-
-    console.log("errors: " +  errors)
-  
+    const errors = bookValidator.validateNewBook(book.isbn) 
     if(0 < errors.length) {
       callback(errors, [])
       return

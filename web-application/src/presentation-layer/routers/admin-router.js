@@ -41,14 +41,10 @@ router.post("/create", function(request, response){
 })
 
 router.get("/login", function(request, response){
-  console.log("hej")
   const model = {
     username: "",
     error: []
   }
-  console.log("hej2")
-  console.log("hej3: " + JSON.stringify(model, null, 2))
-
   response.render("page-login.hbs")
 })
 
@@ -77,7 +73,6 @@ router.get('/:id', function(request, response){
     const model = {
       admin: admin
     }
-    console.log("admin to view: " + JSON.stringify(model, null, 2))
     response.render("page-viewadmins.hbs", model)
   })
   
@@ -112,7 +107,6 @@ router.post("/:id/edit", function(request, response){
         admin: admin,
         error: error
       }
-      console.log(JSON.stringify(model, null, 2))
       response.render("page-editadmin.hbs", model)
     }else {
       response.redirect("/admins")

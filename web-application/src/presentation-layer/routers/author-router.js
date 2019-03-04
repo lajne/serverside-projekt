@@ -61,6 +61,7 @@ router.post("/create", function(request, response){
       const model = {
         errors: errors
       }
+      response.render("page-createauthor.hbs", model
      } else {
        author.books = booksret
        

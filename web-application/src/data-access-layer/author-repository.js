@@ -2,8 +2,6 @@ const db = require('./db')
 const {Authors, Author_Books} = require('./models')
 
 exports.getAllAuthors = function(options, callback) {
-  
-  console.log("options: " + options.default)
   if(options.default) {
     if(options.authors) {
       Authors.findAll({
@@ -12,7 +10,6 @@ exports.getAllAuthors = function(options, callback) {
         }
       })
       .then(function(authors) {
-        console.log("success")
         callback([], authors)
       })
       .catch(function(error) {
@@ -48,8 +45,6 @@ exports.getAllAuthors = function(options, callback) {
 }
 
 exports.createAuthor = function(author, callback) {
-  console.log("author: " + JSON.stringify(author, null, 2))
-
   Authors.create({
     FirstName: author.firstName,
     LastName: author.lastName,
@@ -72,7 +67,6 @@ exports.editAuthor = function(author, callback) {
   }, {
     where: {Id: author.id}
   }).then(function(updatedAuthor){
-    console.log("repository: " + updatedAuthor)
     callback([], updatedAuthor)
   }).catch(function(error) {
     console.log(error)

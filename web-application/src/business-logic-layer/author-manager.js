@@ -35,7 +35,6 @@ exports.getAuthorById = function(id, callback) {
 exports.editAuthor = function(authorized, author, callback) {
   if(authorized.session){
     authorRepository.editAuthor(author, function(errors, authorret) {
-      console.log("manager: " + authorret)
       callback(errors, authorret)
     })
   }else{
