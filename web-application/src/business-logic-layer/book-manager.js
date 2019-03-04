@@ -8,19 +8,24 @@ exports.getAllBooks = function(options, callback) {
   })
 }
 
-exports.createBook = function(book, callback) {
-  const errors = bookValidator.validateNewBook(book.isbn)
+exports.createBook = function(authorized, book, callback) {
+  if(authorized.session){
+    const errors = bookValidator.validateNewBook(book.isbn)
 
-  console.log("errors: " +  errors)
-
-  if(0 < errors.length) {
-    callback(errors, [])
+    console.log("errors: " +  errors)
+  
+    if(0 < errors.length) {
+      callback(errors, [])
+      return
+    }
+  
+    bookRepository.createBook(book, function(errors, bookret){
+      callback(errors, bookret)
+    })
+  }else{
+    callback(["you need to be an admin to do that."], [])
     return
   }
-
-  bookRepository.createBook(book, function(errors, bookret){
-    callback(errors, bookret)
-  })
 }
 
 exports.getBookByISBN = function(isbn, callback) {
@@ -29,8 +34,14 @@ exports.getBookByISBN = function(isbn, callback) {
   })
 }
 
-exports.editBook = function(book, callback) {
-  bookRepository.editBook(book, function(error, book) {
+exports.editBook = function(authorized, book, callback) {
+  if(authorized.session){
+    bookRepository.editBook(book, function(error, book) {
     callback(error, book)
-  })
+   })
+  }else{
+    callback(["you need to be an admin to do that."], [])
+    return
+  }
+
 }

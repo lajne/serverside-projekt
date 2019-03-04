@@ -17,9 +17,16 @@
       <div class="topnav">
         <a href="/books">Books</a>
         <a href="/authors">Authors</a>
-        <a href="/admins">Administrators</a>
+        {{#if admin}}
+          <a href="/admins">Administrators</a>
+        {{/if}}
         <div class="topnav-right">
-          <a href="/admins/login">Login</a>
+          {{#if admin}}
+            <a href="/admins/{{admin.id}}">Logged in as {{admin.Username}}</a>
+            <a href="/admins/logout">Logout</a>
+          {{else}}
+            <a href="/admins/login">Login</a> 
+          {{/if}}
         </div>
         
       </div>

@@ -42,6 +42,10 @@ router.get("/create", function(request, response){
 })
 
 router.post("/create", function(request, response){
+  const authorized = {
+    session: request.session.admin
+  }
+
   const book = {
     isbn: request.body.isbn,
     title : request.body.title,
@@ -64,7 +68,7 @@ router.post("/create", function(request, response){
       response.render("page-createbook.hbs", model)
      } else {
       book.authors = authorsret
-      bookManager.createBook(book, function(errors, bookret){
+      bookManager.createBook(authorized, book, function(errors, bookret){
         if(0 < errors.length) {
           const model = {
             errors: errors
@@ -118,6 +122,10 @@ router.get("/:isbn/edit", function(request, response){
 })
 
 router.post("/:isbn/edit", function(request, response){
+  const authorized = {
+    session: request.session.admin
+  }
+
   const book = {
     isbn: request.body.isbn,
     title : request.body.title,
@@ -127,7 +135,7 @@ router.post("/:isbn/edit", function(request, response){
     pages : request.body.pages
   }
 
-  bookManager.editBook(book, function(errors, bookret){
+  bookManager.editBook(authorized, book, function(errors, bookret){
     if(0 < errors.length) {
       const model = {
         book: book,

@@ -7,29 +7,41 @@ exports.getAllAdmins = function(callback) {
     })
 }
 
-exports.createAdmin = function(admin, callback) {
-    const errors = adminValidator.validateNewAccount(admin.username)
+exports.createAdmin = function(authorized, admin, callback) {
+    if(authorized.session){
+        const errors = adminValidator.validateNewAccount(admin.username)
 
-    if(0 < errors.length){
-        callback([], errors)
+        if(0 < errors.length){
+            callback([], errors)
+            return
+        }
+        adminRepository.createAdmin(admin, function(admin, errors) {
+            callback(admin, errors)
+        })
+    }else{
+        callback([], ["you need to be an admin to do that."])
         return
     }
-    adminRepository.createAdmin(admin, function(admin, errors) {
-        callback(admin, errors)
-    })
+
 }
 
-exports.editAdmin = function(admin, callback) {
-    const errors = adminValidator.validateNewAccount(admin.Username)
+exports.editAdmin = function(authorized, admin, callback) {
+    if(authorized.session){
+        const errors = adminValidator.validateNewAccount(admin.Username)
 
-    if(0 < errors.length){
-        callback([], errors)
+        if(0 < errors.length){
+            callback([], errors)
+            return
+        }
+    
+        adminRepository.editAdmin(admin, function(admin, errors) {
+            callback(admin, errors)
+        })
+    }else{
+        callback([], ["you need to be an admin to do that."])
         return
     }
 
-    adminRepository.editAdmin(admin, function(admin, errors) {
-        callback(admin, errors)
-    })
 }
 
 exports.getAdminById = function(adminId, callback) {
@@ -41,15 +53,18 @@ exports.getAdminById = function(adminId, callback) {
 exports.login = function(username, password, callback){
 
     adminRepository.getAdminByUsername(username, function(admin, errors) {
-        if(0 < errors.length){
-            callback([], errors)
-        } else if(!admin){
-            callback(["Wrong username"])
-        } else if(admin.password != password){
-            callback(["Wrong password"])
-        } else{
-            callback(admin, [])
-        }
-    })
+        console.log("admin: " + JSON.stringify(admin, null, 2))
+        console.log("errors: " + errors)
+       if(0 < errors.length){
+           callback(errors)
+       } else if(!admin){
+           callback(["Wrong username"])
+       } else if(admin.Password != password){
+           callback(["Wrong password"])
+       } else{
+           // console.log("callback admin")
+           callback(admin, [])
+       }
+     })
 
 }

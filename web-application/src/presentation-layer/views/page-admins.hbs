@@ -8,11 +8,10 @@
 
   {{#if admins.length}}
     {{#each admins}}
-      <div class="item">
-        <a href="/admins/{{id}}">{{Username}}</a>
-      </div>
+    <div class="item">
+      <a href="/admins/{{id}}">{{Username}}</a>
+    </div>
     {{/each}}
     <button onclick="window.location.href='/admins/create'">Create new!</button>
   {{/if}}
 {{/if}}
-<button onclick="window.location.href='/admins/create'">Create new!</button>

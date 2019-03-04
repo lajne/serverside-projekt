@@ -42,6 +42,10 @@ router.get("/create", function(request, response){
 })
 
 router.post("/create", function(request, response){
+  const authorized = {
+    session: request.session.admin
+  }
+
   const author = {
     firstName: request.body.firstname,
     lastName: request.body.lastname,
@@ -57,12 +61,10 @@ router.post("/create", function(request, response){
       const model = {
         errors: errors
       }
-      console.log(JSON.stringify(model, null, 2))
-//      response.render("page-createbook.hbs", model)
      } else {
        author.books = booksret
        
-       authorManager.createAuthor(author, function(errors, authorret){
+       authorManager.createAuthor(authorized, author, function(errors, authorret){
          if(0 < errors.length) {
            const model = {
              errors: errors
@@ -116,6 +118,10 @@ router.get("/:id/edit", function(request, response){
 })
 
 router.post("/:id/edit", function(request, response){
+  const authorized = {
+    session: request.session.admin
+  }
+
   const author = {
     id: request.params.id,
     firstName: request.body.firstName,
@@ -123,7 +129,7 @@ router.post("/:id/edit", function(request, response){
     birthYear: request.body.birthYear
   }
 
-  authorManager.editAuthor(author, function(errors, authorret){
+  authorManager.editAuthor(authorized, author, function(errors, authorret){
     if(0 < errors.length) {
       const model = {
         author: author,

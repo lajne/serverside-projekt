@@ -9,7 +9,10 @@
       {{/each}}
     </div>
   {{/if}}
-  <button onclick="window.location.href='/authors/{{author.Id}}/edit'">Edit</button>
+  {{#if admin}}
+    <button onclick="window.location.href='/authors/{{author.Id}}/edit'">Edit</button>
+  {{/if}}
+  
 {{else}}
   <p>Author does not exist yet!</p>
 {{/if}}

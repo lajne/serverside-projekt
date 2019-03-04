@@ -13,7 +13,9 @@
       {{/each}}
     </div>
   {{/if}}
-  <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
+  {{#if admin}}
+    <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
+  {{/if}}
 {{else}}
   <p>Book does not exist yet!</p>
 {{/if}}
