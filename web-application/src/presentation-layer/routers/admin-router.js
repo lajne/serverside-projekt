@@ -94,16 +94,17 @@ router.get("/:id/edit", function(request, response) {
 router.post("/:id/edit", function(request, response){
   const admin = {
     id: request.params.id,
-    username: request.body.username,
-    password: request.body.password
+    Username: request.body.username,
+    Password: request.body.password
   }
 
-  adminManager.editAdmin(admin, function(admin, error) {
+  adminManager.editAdmin(admin, function(adminret, error) {
     if(0 < error.length){
       const model = {
         admin: admin,
         error: error
       }
+      console.log(JSON.stringify(model, null, 2))
       response.render("page-editadmin.hbs", model)
     }else {
       response.redirect("/admins")

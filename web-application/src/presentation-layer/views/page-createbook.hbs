@@ -14,5 +14,10 @@
   PublicationYear: <input name="publicationyear"><br>
   PublicationInfo: <input name="publicationinfo"><br>
   Pages: <input name="pages"><br>
+  <select multiple class="selectedAuthors" name="selectedAuthors">
+    {{#each authors}}
+      <option value="{{Id}}">{{FirstName}} {{LastName}}</option>
+    {{/each}}
+  </select>
   <input type="submit" value="Create book">
 </form>

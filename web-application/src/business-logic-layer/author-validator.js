@@ -1,10 +1,10 @@
 exports.validateNewAuthor = function(author) {
   const errors = []
 
-  if(!author.Firstname) {
+  if(!author.firstName) {
     errors.push("You need to enter a Firstname")
   }
-  if(!author.Lastname) {
+  if(!author.lastName) {
     errors.push("You need to enter a Lastname")
   }
 
