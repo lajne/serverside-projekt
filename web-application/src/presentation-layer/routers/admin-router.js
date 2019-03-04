@@ -19,12 +19,17 @@ router.get("/create", function(request, response){
 })
 
 router.post("/create", function(request, response){
+
+  const authorized = {
+    session: request.session.admin
+  }
+
   const admin = {
     username: request.body.username,
     password: request.body.password
   }
 
-  adminManager.createAdmin(admin, function(admin, error){
+  adminManager.createAdmin(authorized, admin, function(admin, error){
     if(0 < error.length) {
       const model = {
         admin: admin,
@@ -97,13 +102,18 @@ router.get("/:id/edit", function(request, response) {
 })
 
 router.post("/:id/edit", function(request, response){
+
+  const authorized = {
+    session: request.session.admin
+  }
+
   const admin = {
     id: request.params.id,
     username: request.body.username,
     password: request.body.password
   }
 
-  adminManager.editAdmin(admin, function(admin, error) {
+  adminManager.editAdmin(authorized, admin, function(admin, error) {
     if(0 < error.length){
       const model = {
         admin: admin,

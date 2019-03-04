@@ -32,7 +32,12 @@ exports.getBookByISBN = function(isbn, callback) {
 }
 
 exports.editBook = function(authorized, book, callback) {
+  if(authorized.session){
     bookRepository.editBook(book, function(book, error) {
       callback(book, error)
     })
+  }else{
+    callback([], ["you need to be an admin to do that."])
+    return
+  }
 }

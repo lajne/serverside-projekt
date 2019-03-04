@@ -114,6 +114,7 @@ router.post("/:isbn/edit", function(request, response){
 
   bookManager.editBook(authorized, book, function(bookret, errors){
     if(0 < errors.length) {
+      
       console.log("errors: " + errors)
     } else {
       console.log("response: " + JSON.stringify(bookret, null, 2))

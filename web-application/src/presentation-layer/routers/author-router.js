@@ -30,12 +30,17 @@ router.get("/create", function(request, response){
 })
 
 router.post("/create", function(request, response){
+
+  const authorized = {
+    session: request.session.admin
+  }
+
   const author = {
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     birthYear: request.body.birthYear
   }
-  authorManager.createAuthor(author, function(authorret, errors){
+  authorManager.createAuthor(authorized, author, function(authorret, errors){
     if(0 < errors.length) {
       const model = {
         errors: errors
@@ -87,6 +92,11 @@ router.get("/:id/edit", function(request, response){
 })
 
 router.post("/:id/edit", function(request, response){
+
+  const authorized = {
+    session: request.session.admin
+  }
+
   const author = {
     id: request.params.id,
     firstName: request.body.firstName,
@@ -94,7 +104,7 @@ router.post("/:id/edit", function(request, response){
     birthYear: request.body.birthYear
   }
 
-  authorManager.editAuthor(author, function(authorret, errors){
+  authorManager.editAuthor(authorized, author, function(authorret, errors){
     if(0 < errors.length) {
       const model = {
         errors: errors

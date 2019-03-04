@@ -7,7 +7,8 @@ exports.getAllAdmins = function(callback) {
     })
 }
 
-exports.createAdmin = function(admin, callback) {
+exports.createAdmin = function(authorized, admin, callback) {
+    if(authorized.session){
     const errors = adminValidator.validateNewAccount(admin.username)
 
     if(0 < errors.length){
@@ -17,9 +18,15 @@ exports.createAdmin = function(admin, callback) {
     adminRepository.createAdmin(admin, function(admin, errors) {
         callback(admin, errors)
     })
+    }else{
+    callback([], ["you need to be an admin to do that."])
+    return
+    }
+
 }
 
-exports.editAdmin = function(admin, callback) {
+exports.editAdmin = function(authorized, admin, callback) {
+    if(authorized.session){
     const errors = adminValidator.validateNewAccount(admin.username)
 
     if(0 < errors.length){
@@ -30,6 +37,11 @@ exports.editAdmin = function(admin, callback) {
     adminRepository.editAdmin(admin, function(admin, errors) {
         callback(admin, errors)
     })
+    }else{
+    callback([], ["you need to be an admin to do that."])
+    return
+    }
+    
 }
 
 exports.getAdminById = function(adminId, callback) {

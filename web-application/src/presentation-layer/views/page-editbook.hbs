@@ -1,3 +1,11 @@
+{{#if errors.length}}
+  <p>Could not edit admin because: </p>
+  <ul>
+    {{#each errors}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
 
 <form method="POST" action="/books/{{book.ISBN}}/edit">
   ISBN: <input name="isbn" value="{{book.ISBN}}"><br>
