@@ -85,9 +85,11 @@ main{
 
 /* authors */
 
-.items-container {
+/* .item-container {
+  background-color: grey;
   text-align: center;
-}
+  width: 50%;
+} */
 
 .item{
   background-color: cornflowerblue;

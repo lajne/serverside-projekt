@@ -126,9 +126,10 @@ router.post("/:id/edit", function(request, response){
   authorManager.editAuthor(author, function(errors, authorret){
     if(0 < errors.length) {
       const model = {
+        author: author,
         errors: errors
       }
-      response.render("editauthor.hbs", model)
+      response.render("page-editauthor.hbs", model)
     } else {
       response.redirect("/authors/")
     }

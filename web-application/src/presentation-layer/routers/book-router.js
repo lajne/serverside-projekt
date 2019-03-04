@@ -130,9 +130,10 @@ router.post("/:isbn/edit", function(request, response){
   bookManager.editBook(book, function(errors, bookret){
     if(0 < errors.length) {
       const model = {
+        book: book,
         errors: errors
       }
-      response.render("editbook.hbs", model)
+      response.render("page-editbook.hbs", model)
     } else {
       response.redirect("/books/")
     }

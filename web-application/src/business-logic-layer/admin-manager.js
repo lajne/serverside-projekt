@@ -20,7 +20,7 @@ exports.createAdmin = function(admin, callback) {
 }
 
 exports.editAdmin = function(admin, callback) {
-    const errors = adminValidator.validateNewAccount(admin.username)
+    const errors = adminValidator.validateNewAccount(admin.Username)
 
     if(0 < errors.length){
         callback([], errors)
