@@ -95,7 +95,7 @@ router.post("/create", function(request, response){
 
 router.get('/search/:searchTerm', function(request, response){
   const searchTerm = request.params.searchTerm
-  bookRepo.getBooksBySearch(searchTerm, function(books){
+  bookManager.getBooksBySearch(searchTerm, function(error, books){
     const model = {
       books: books
     }

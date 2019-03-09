@@ -96,13 +96,22 @@ exports.getBookByISBN = function(isbn, callback) {
 exports.getBooksBySearch = function(searchTerm, callback) {
   Books.findAll({
     where: {
-      [db.Sequelize.Op.or]: [{ISBN: searchTerm}, {Title: searchTerm}]
+      [db.Sequelize.Op.or]: [
+        {
+          ISBN: {
+            [db.Sequelize.Op.regexp]: searchTerm
+          } 
+        }, {
+          Title: {
+            [db.Sequelize.Op.regexp]: searchTerm
+          }
+        }
+      ]
     }
-  }).then(function(book, error){
-    if(error) {
-      callback(['databaseerror'], null)
-    } else {
-      callback(book)
-    }
+  }).then(function(books) {
+    callback([], books)
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }
