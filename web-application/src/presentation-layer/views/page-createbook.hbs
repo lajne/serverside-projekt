@@ -8,12 +8,12 @@
 {{/if}}
 
 <form action="/books/create" method="POST">
-  ISBN: <input name="isbn"><br>
-  Title: <input name="title"><br>
-  SignId: <input name="signid"><br>
-  PublicationYear: <input name="publicationyear"><br>
-  PublicationInfo: <input name="publicationinfo"><br>
-  Pages: <input name="pages"><br>
+  ISBN: <input name="isbn" value="{{book.isbn}}"><br>
+  Title: <input name="title" value="{{book.title}}"><br>
+  SignId: <input name="signid" value="{{book.signId}}"><br>
+  PublicationYear: <input name="publicationyear" value="{{book.publicationYear}}"><br>
+  PublicationInfo: <input name="publicationinfo" value="{{book.publicationInfo}}"><br>
+  Pages: <input name="pages" value="{{book.pages}}"><br>
   <select multiple class="selectedAuthors" name="selectedAuthors">
     {{#each authors}}
       <option value="{{Id}}">{{FirstName}} {{LastName}}</option>

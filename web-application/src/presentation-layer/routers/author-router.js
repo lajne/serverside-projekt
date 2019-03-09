@@ -8,23 +8,45 @@ router.get('/', function(request, response){
   response.redirect("/authors/page/1")
 })
 
-router.get('/page/:pageIndex', function(request, response){
+router.get('/page/:currentPage', function(request, response){
   const options = {
     default: false,
-    page: request.params.pageIndex,
+    page: request.params.currentPage,
     limit: 10,
     offset: 0
   }
-
   authorManager.getAllAuthors(options, function(authors, pages){
     let pageIndexes = []
-    for(let index = 1; index < (pages + 1); index++) {
-      pageIndexes.push({index: index})
+    let currentPage = Number(request.params.currentPage)
+    if(currentPage > 3) {
+      let index = (currentPage - 3)
+      if((currentPage + 3) < pages) {
+        for(index; index <= (currentPage + 3); index++) {
+          pageIndexes.push({index: index})
+        }
+      } else {
+        for(index; index <= pages; index++) {
+          pageIndexes.push({index: index})
+        }
+      }
+    } else {
+      let index = 1
+      let max = (currentPage + 3)
+      if(1 < currentPage) {
+        for(index; index < currentPage; index++) {
+          pageIndexes.push({index: index})
+        }
+      }
+      let i = currentPage
+      for(i; i < max; i++) {
+        pageIndexes.push({index: i})
+      }
     }
     let model = {
       authors: authors,
       pages: pageIndexes
     }
+    console.log("model: " + JSON.stringify(model, null, 2))
     response.render("page-authors.hbs", model)
   })
 })
@@ -43,7 +65,7 @@ router.get("/create", function(request, response){
 
 router.post("/create", function(request, response){
   const authorized = {
-    session: request.session.admin
+    session: request.session.sessionAdmin
   }
 
   const author = {
@@ -61,7 +83,7 @@ router.post("/create", function(request, response){
       const model = {
         errors: errors
       }
-      response.render("page-createauthor.hbs", model
+      response.render("page-createauthor.hbs", model)
      } else {
        author.books = booksret
        
@@ -120,14 +142,14 @@ router.get("/:id/edit", function(request, response){
 
 router.post("/:id/edit", function(request, response){
   const authorized = {
-    session: request.session.admin
+    session: request.session.sessionAdmin
   }
 
   const author = {
     id: request.params.id,
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-    birthYear: request.body.birthYear
+    firstName: request.body.firstname,
+    lastName: request.body.lastname,
+    birthYear: request.body.birthyear
   }
 
   authorManager.editAuthor(authorized, author, function(errors, authorret){

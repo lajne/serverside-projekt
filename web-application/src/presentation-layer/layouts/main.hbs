@@ -17,12 +17,12 @@
       <div class="topnav">
         <a href="/books">Books</a>
         <a href="/authors">Authors</a>
-        {{#if admin}}
+        {{#if sessionAdmin}}
           <a href="/admins">Administrators</a>
         {{/if}}
         <div class="topnav-right">
-          {{#if admin}}
-            <a href="/admins/{{admin.id}}">Logged in as {{admin.Username}}</a>
+          {{#if sessionAdmin}}
+            <a href="/admins/{{sessionAdmin.id}}">Logged in as {{sessionAdmin.Username}}</a>
             <a href="/admins/logout">Logout</a>
           {{else}}
             <a href="/admins/login">Login</a> 

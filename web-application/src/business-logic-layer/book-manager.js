@@ -9,7 +9,7 @@ exports.getAllBooks = function(options, callback) {
 
 exports.createBook = function(authorized, book, callback) {
   if(authorized.session){
-    const errors = bookValidator.validateNewBook(book.isbn) 
+    const errors = bookValidator.validateNewBook(book) 
     if(0 < errors.length) {
       callback(errors, [])
       return
@@ -32,6 +32,12 @@ exports.getBookByISBN = function(isbn, callback) {
 
 exports.editBook = function(authorized, book, callback) {
   if(authorized.session){
+    const errors = bookValidator.validateNewBook(book)
+
+    if(0 < errors.length) {
+      callback(errors, [])
+      return
+    }
     bookRepository.editBook(book, function(error, book) {
     callback(error, book)
    })

@@ -8,9 +8,9 @@
 {{/if}}
 
 <form action="/authors/create" method="POST">
-  firstname: <input type="text" name="firstname"><br>
-  lastname: <input type="text" name="lastname"><br>
-  birthyear: <input type="text" name="birthyear"><br>
+  firstname: <input type="text" name="firstname" value="{{author.firstName}}"><br>
+  lastname: <input type="text" name="lastname" value="{{book.lastName}}"><br>
+  birthyear: <input type="text" name="birthyear" value="{{book.birthYear}}"><br>
   <select multiple class="selectedBooks" name="selectedBooks">
     {{#each books}}
       <option value="{{ISBN}}">{{Title}}</option>

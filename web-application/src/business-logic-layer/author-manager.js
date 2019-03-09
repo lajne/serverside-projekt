@@ -34,6 +34,13 @@ exports.getAuthorById = function(id, callback) {
 
 exports.editAuthor = function(authorized, author, callback) {
   if(authorized.session){
+    const errors = authorValidator.validateNewAuthor(author)
+
+    if(0 < errors.length) {
+      callback(errors, [])
+      return
+    }
+
     authorRepository.editAuthor(author, function(errors, authorret) {
       callback(errors, authorret)
     })

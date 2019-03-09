@@ -19,7 +19,7 @@ router.get("/create", function(request, response){
 
 router.post("/create", function(request, response){
   const authorized = {
-    session: request.session.admin
+    session: request.session.sessionAdmin
   }
 
   const admin = {
@@ -45,7 +45,7 @@ router.get("/login", function(request, response){
     username: "",
     error: []
   }
-  response.render("page-login.hbs")
+  response.render("page-login.hbs", model)
 })
 
 router.post("/login", function(request, response){
@@ -60,7 +60,7 @@ router.post("/login", function(request, response){
       }
       response.render("page-login.hbs", model)
     } else{
-      request.session.admin = admin
+      request.session.sessionAdmin = admin
       response.redirect("/")
     }
   })
@@ -92,7 +92,7 @@ router.get("/:id/edit", function(request, response) {
 
 router.post("/:id/edit", function(request, response){
   const authorized = {
-    session: request.session.admin
+    session: request.session.sessionAdmin
   }
 
   const admin = {
@@ -109,6 +109,24 @@ router.post("/:id/edit", function(request, response){
       }
       response.render("page-editadmin.hbs", model)
     }else {
+      response.redirect("/admins")
+    }
+  })
+})
+
+router.get("/:id/delete", function(request, response) {
+  const authorized = {
+    session: request.session.sessionAdmin
+  }
+  const id = request.params.id
+
+  adminManager.deleteAdmin(authorized, id, function(row, error) {
+    if(0 < error.length) {
+      const model = {
+        error: error
+      }
+      response.render("page-viewadmins.hbs", model)
+    } else {
       response.redirect("/admins")
     }
   })

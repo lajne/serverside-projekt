@@ -11,13 +11,13 @@
       <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
     </div>
   {{/each}}
-  {{#if admin}}
+  {{#if sessionAdmin}}
     <button onclick="window.location.href='/authors/create'">Create author</button>
   {{/if}}
 {{else}}
   <div>
     <p>There is no authors atm..</p>
-    {{#if admin}}
+    {{#if sessionAdmin}}
       <button onclick="window.location.href='/authors/create'">Create author</button>
     {{/if}}
   </div>

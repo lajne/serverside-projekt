@@ -11,13 +11,13 @@
       <a href="/books/{{ISBN}}">{{Title}}</a>
     </div>
   {{/each}}
-  {{#if admin}}
+  {{#if sessionAdmin}}
     <button onclick="window.location.href='/books/create'">Create book</button>
   {{/if}}
 {{else}}
   <div>
     <p>There is no books atm..</p>
-    {{#if admin}}
+    {{#if sessionAdmin}}
       <button onclick="window.location.href='/books/create'">Create book</button>
     {{/if}}
   </div>

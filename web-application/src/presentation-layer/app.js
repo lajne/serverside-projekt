@@ -29,7 +29,7 @@ app.use(expressSession({
 }))
 
 app.use(function(request, response, next){
-	response.locals.admin = request.session.admin
+	response.locals.sessionAdmin = request.session.sessionAdmin
 	next()
 })
 

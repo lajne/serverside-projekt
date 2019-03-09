@@ -34,6 +34,16 @@ exports.editAdmin = function(admin, callback) {
   })
 }
 
+exports.deleteAdmin = function(id, callback ) {
+  Admins.destroy({
+    where: {id: id}
+  }).then(function(row) {
+    callback(row, [])
+  }).catch(function(error) {
+    callback(['databaseerror'])
+  })
+}
+
 exports.getAdminById = function(adminId, callback) {
   Admins.findAll({
     where: {

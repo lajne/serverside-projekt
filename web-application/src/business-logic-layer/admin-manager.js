@@ -26,10 +26,10 @@ exports.createAdmin = function(authorized, admin, callback) {
 }
 
 exports.editAdmin = function(authorized, admin, callback) {
-    if(authorized.session){
+    if(authorized.session) {
         const errors = adminValidator.validateNewAccount(admin.Username)
 
-        if(0 < errors.length){
+        if(0 < errors.length) {
             callback([], errors)
             return
         }
@@ -37,11 +37,22 @@ exports.editAdmin = function(authorized, admin, callback) {
         adminRepository.editAdmin(admin, function(admin, errors) {
             callback(admin, errors)
         })
-    }else{
+    } else {
         callback([], ["you need to be an admin to do that."])
         return
     }
 
+}
+
+exports.deleteAdmin = function(authorized, id, callback) {
+  if(authorized.session) {
+    adminRepository.deleteAdmin(id, function(row, error) {
+      callback(row, error)
+    })
+  } else {
+    callback([], ['you need to be an admin to do that.'])
+    return
+  }
 }
 
 exports.getAdminById = function(adminId, callback) {
@@ -53,14 +64,13 @@ exports.getAdminById = function(adminId, callback) {
 exports.login = function(username, password, callback){
 
     adminRepository.getAdminByUsername(username, function(admin, errors) {
-       if(0 < errors.length){
+       if(0 < errors.length) {
            callback(errors)
-       } else if(!admin){
+       } else if(!admin) {
            callback(["Wrong username"])
-       } else if(admin.Password != password){
+       } else if(admin.Password != password) {
            callback(["Wrong password"])
-       } else{
-           // console.log("callback admin")
+       } else {
            callback(admin, [])
        }
      })

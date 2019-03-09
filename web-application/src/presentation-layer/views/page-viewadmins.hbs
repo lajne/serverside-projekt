@@ -2,6 +2,7 @@
   <div>{{admin.Username}}</div>
   {{#if admin}}
     <button onclick="window.location.href='/admins/{{admin.id}}/edit'">Edit</button>
+    <button onclick="window.location.href='/admins/{{admin.id}}/delete'">Delete</button>
   {{/if}}
 {{else}}
   <p>Admin does not exist yet!</p>
