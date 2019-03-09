@@ -32,6 +32,12 @@ exports.getAuthorById = function(id, callback) {
   })
 }
 
+exports.getAuthorsBySearch = function(searchTerm, callback) {
+  authorRepository.getAuthorsBySearch(searchTerm, function(error, authors) {
+    callback(error, authors)
+  })
+}
+
 exports.editAuthor = function(authorized, author, callback) {
   if(authorized.session){
     const errors = authorValidator.validateNewAuthor(author)

@@ -93,13 +93,22 @@ exports.getAuthorById = function(authorId, callback) {
 exports.getAuthorsBySearch = function(searchTerm, callback) {
   Authors.findAll({
     where: {
-      [db.Sequelize.Op.or]: [{FirstName: searchTerm}, {LastName: searchTerm}]
+      [db.Sequelize.Op.or]: [
+        {
+          FirstName: {
+            [db.Sequelize.Op.regexp]: searchTerm
+          }
+        }, {
+          LastName: {
+            [db.Sequelize.Op.regexp]: searchTerm
+          }
+        }
+      ]
     }
-  }).then(function(author, error){
-    if(error) {
-      callback(['databaseerror'], null)
-    } else {
-      callback(author)
-    }
+  }).then(function(authors) {
+      callback([], authors)
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
   })
 }

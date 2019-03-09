@@ -46,7 +46,6 @@ router.get('/page/:currentPage', function(request, response){
       authors: authors,
       pages: pageIndexes
     }
-    console.log("model: " + JSON.stringify(model, null, 2))
     response.render("page-authors.hbs", model)
   })
 })
@@ -104,7 +103,7 @@ router.post("/create", function(request, response){
 router.get('/search/:searchTerm', function(request, response){
   const searchTerm = request.params.searchTerm
 
-  authorRepo.getAuthorsBySearch(searchTerm, function(authors){
+  authorManager.getAuthorsBySearch(searchTerm, function(error, authors){
     const model = {
       authors: authors
     }

@@ -30,6 +30,12 @@ exports.getBookByISBN = function(isbn, callback) {
   })
 }
 
+exports.getBooksBySearch = function(searchTerm, callback) {
+  bookRepository.getBooksBySearch(searchTerm, function(error, books) {
+    callback(error, books)
+  })
+}
+
 exports.editBook = function(authorized, book, callback) {
   if(authorized.session){
     const errors = bookValidator.validateNewBook(book)
