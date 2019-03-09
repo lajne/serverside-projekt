@@ -3,6 +3,7 @@ const router = express.Router()
 const authorRepo = require('../../data-access-layer/author-repository')
 const authorManager = require('../../business-logic-layer/author-manager')
 const bookManager = require('../../business-logic-layer/book-manager')
+const paginate = require('../pagination/paginate')
 
 router.get('/', function(request, response){
   response.redirect("/authors/page/1")
@@ -16,32 +17,9 @@ router.get('/page/:currentPage', function(request, response){
     offset: 0
   }
   authorManager.getAllAuthors(options, function(authors, pages){
-    let pageIndexes = []
     let currentPage = Number(request.params.currentPage)
-    if(currentPage > 3) {
-      let index = (currentPage - 3)
-      if((currentPage + 3) < pages) {
-        for(index; index <= (currentPage + 3); index++) {
-          pageIndexes.push({index: index})
-        }
-      } else {
-        for(index; index <= pages; index++) {
-          pageIndexes.push({index: index})
-        }
-      }
-    } else {
-      let index = 1
-      let max = (currentPage + 3)
-      if(1 < currentPage) {
-        for(index; index < currentPage; index++) {
-          pageIndexes.push({index: index})
-        }
-      }
-      let i = currentPage
-      for(i; i < max; i++) {
-        pageIndexes.push({index: i})
-      }
-    }
+    const pageIndexes = paginate(currentPage, pages)
+  
     let model = {
       authors: authors,
       pages: pageIndexes
