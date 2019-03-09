@@ -3,24 +3,24 @@ const router = express.Router()
 const bookRepo = require('../../data-access-layer/book-repository')
 const bookManager = require('../../business-logic-layer/book-manager')
 const authorManager = require('../../business-logic-layer/author-manager')
+const paginate = require('../pagination/paginate')
 
 router.get('/', function(request, response){
   response.redirect("/books/page/1")
 })
 
-router.get('/page/:pageIndex', function(request, response){
+router.get('/page/:currentPage', function(request, response){
   const options = {
     default: false,
-    page: request.params.pageIndex,
+    page: request.params.currentPage,
     limit: 10,
     offset: 0
   }
 
   bookManager.getAllBooks(options, function(books, pages) {
-    let pageIndexes = []
-    for(let index = 1; index < (pages + 1); index++) {
-      pageIndexes.push( {index: index} )
-    }
+    let currentPage = Number(request.params.currentPage)
+    const pageIndexes = paginate(currentPage, pages)
+    
     let model = {
       books: books,
       pages: pageIndexes
