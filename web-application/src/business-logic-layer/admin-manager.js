@@ -1,9 +1,10 @@
 const adminRepository = require('../data-access-layer/admin-repository')
 const adminValidator = require('./admin-validator')
+const hash = require('../data-access-layer/hash')
 
 exports.getAllAdmins = function(callback) {
-    adminRepository.getAllAdmins(function(admins, errors) {
-        callback(admins, errors)
+    adminRepository.getAllAdmins(function(errors, admins) {
+        callback(errors, admins)
     })
 }
 
@@ -12,11 +13,11 @@ exports.createAdmin = function(authorized, admin, callback) {
         const errors = adminValidator.validateNewAccount(admin.username)
 
         if(0 < errors.length){
-            callback([], errors)
+            callback(errors)
             return
         }
-        adminRepository.createAdmin(admin, function(admin, errors) {
-            callback(admin, errors)
+        adminRepository.createAdmin(admin, function(errors, admin) {
+            callback([], admin)
         })
     }else{
         callback([], ["you need to be an admin to do that."])
@@ -30,15 +31,15 @@ exports.editAdmin = function(authorized, admin, callback) {
         const errors = adminValidator.validateNewAccount(admin.Username)
 
         if(0 < errors.length) {
-            callback([], errors)
+            callback(errors)
             return
         }
     
-        adminRepository.editAdmin(admin, function(admin, errors) {
-            callback(admin, errors)
+        adminRepository.editAdmin(admin, function(errors, admin) {
+            callback(errors, admin)
         })
     } else {
-        callback([], ["you need to be an admin to do that."])
+        callback(["you need to be an admin to do that."])
         return
     }
 
@@ -46,33 +47,40 @@ exports.editAdmin = function(authorized, admin, callback) {
 
 exports.deleteAdmin = function(authorized, id, callback) {
   if(authorized.session) {
-    adminRepository.deleteAdmin(id, function(row, error) {
-      callback(row, error)
+    adminRepository.deleteAdmin(id, function(error, row) {
+      callback(error, row)
     })
   } else {
-    callback([], ['you need to be an admin to do that.'])
+    callback(['you need to be an admin to do that.'])
     return
   }
 }
 
 exports.getAdminById = function(adminId, callback) {
-    adminRepository.getAdminById(adminId, function(admin , errors) {
-        callback(admin, errors)
+    adminRepository.getAdminById(adminId, function(errors, admin) {
+        callback(errors, admin)
     })
 }
 
 exports.login = function(username, password, callback){
 
-    adminRepository.getAdminByUsername(username, function(admin, errors) {
-       if(0 < errors.length) {
-           callback(errors)
-       } else if(!admin) {
-           callback(["Wrong username"])
-       } else if(admin.Password != password) {
-           callback(["Wrong password"])
-       } else {
-           callback(admin, [])
-       }
-     })
+  const errors = []
+  
+  if(!username || !password) {
+    errors.push("You need to enter username and password")
+    callback(errors)
+    return
+  }
+  
+  adminRepository.getAdminByUsername(username, function(error, admin) {
+    const hashedPassword = hash(password, admin.Salt)
+    if(0 < error.length) {
+      errors.push(error)
+    } 
+    if(admin.Password != hashedPassword) {
+      errors.push("Wrong password")
+    }
+    callback(errors, admin)
+  })
 
 }
