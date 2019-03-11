@@ -2,6 +2,7 @@ const db = require('./db')
 
 const Admins = db.sequelize.define('Admins', {
   Username: db.Sequelize.TEXT,
+  Salt: db.Sequelize.TEXT,
   Password: db.Sequelize.TEXT,
 });
 
@@ -38,6 +39,7 @@ const Books = db.sequelize.define('Books', {
 });
 
 Admins.sync()
+// Admins.sync({ force: true })
 
 const Author_Books = Authors.belongsToMany(Books, {through: 'BookAuthors'} )
 const Book_Authors = Books.belongsToMany(Authors, {through: 'BookAuthors'} )

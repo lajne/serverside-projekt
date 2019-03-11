@@ -4,7 +4,7 @@ const adminRepo = require('../../data-access-layer/admin-repository')
 const adminManager = require('../../business-logic-layer/admin-manager')
 
 router.get('/', function(request, response){
-  adminManager.getAllAdmins(function(admins, error){
+  adminManager.getAllAdmins(function(error, admins){
     const model = {
       admins: admins,
       error: error
@@ -24,10 +24,11 @@ router.post("/create", function(request, response){
 
   const admin = {
     username: request.body.username,
+    salt: "",
     password: request.body.password
   }
 
-  adminManager.createAdmin(authorized, admin, function(admin, error){
+  adminManager.createAdmin(authorized, admin, function(error, admin){
     if(0 < error.length) {
       const model = {
         admin: admin,
@@ -52,11 +53,12 @@ router.post("/login", function(request, response){
   const username = request.body.username
   const password = request.body.password
 
-  adminManager.login(username, password, function(admin, error){
-    if(0 < error.length){
+  adminManager.login(username, password, function(errors, admin){
+    console.log("errors: " + errors)
+    if(0 < errors.length){
       const model = {
         username: username,
-        error: error
+        errors: errors
       }
       response.render("page-login.hbs", model)
     } else{
@@ -66,10 +68,15 @@ router.post("/login", function(request, response){
   })
 })
 
+router.get("/logout", function(request, response) {
+  request.session.sessionAdmin = null
+  response.redirect("/")
+})
+
 router.get('/:id', function(request, response){
   const id = request.params.id
 
-  adminManager.getAdminById(id, function(admin) {
+  adminManager.getAdminById(id, function(error, admin) {
     const model = {
       admin: admin
     }
@@ -81,7 +88,7 @@ router.get('/:id', function(request, response){
 router.get("/:id/edit", function(request, response) {
   const id = request.params.id
   
-  adminManager.getAdminById(id, function(admin, error) {
+  adminManager.getAdminById(id, function(error, admin) {
     const model = {
       admin: admin,
       error: error
@@ -101,7 +108,7 @@ router.post("/:id/edit", function(request, response){
     Password: request.body.password
   }
 
-  adminManager.editAdmin(authorized, admin, function(adminret, error) {
+  adminManager.editAdmin(authorized, admin, function(error, adminret) {
     if(0 < error.length){
       const model = {
         admin: admin,
@@ -120,7 +127,7 @@ router.get("/:id/delete", function(request, response) {
   }
   const id = request.params.id
 
-  adminManager.deleteAdmin(authorized, id, function(row, error) {
+  adminManager.deleteAdmin(authorized, id, function(error, row) {
     if(0 < error.length) {
       const model = {
         error: error

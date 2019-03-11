@@ -3,7 +3,7 @@
 {{#if errors.length}}
     <p>Could not log in because:</p>
     <ul>
-        {{#each}}
+        {{#each errors}}
             <li>{{this}}</li>
         {{/each}}
     </ul>
