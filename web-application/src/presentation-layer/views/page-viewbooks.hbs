@@ -9,7 +9,7 @@
     <div>
       <h1>Authors:</h1> 
       {{#each book.Authors}}
-        <li>{{FirstName}} {{LastName}}</li>
+        <li><a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a></li>
       {{/each}}
     </div>
   {{/if}}

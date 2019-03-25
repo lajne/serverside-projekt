@@ -1,0 +1,43 @@
+!Frågor till Peter!
+
+- I edit funktionaliteten, ska vi kunna byta authors till en bok eller tvärtom?
+
+- Om man inte är inloggad, är det snyggare att disablea editknappen eller gömma den i html som vi har atm?
+
+- Är det ok att andvända pagination funktionaliteten på mitt sätt?
+  - Isf vart skall module exporten ligga?
+
+  paginate och hassh i bll
+
+
+!Saker att implementera!
+
+- [x] Bättre pagination!
+
+- [x] Delete admins
+
+- [x] Hasha lösenord
+
+- [x] Bättre sökfunktionalitet
+
+- [] När man editar lösenord för en admin skall den hasha lösenordet.
+
+- [] Snyggare UI, t.ex flytta create i admins/authors/books längre upp inte längst ner under alla items.
+
+!Saker att fixa!
+
+- [x] När man klickar på en admin i listan så blir man inloggad som den adminen..
+
+- [] Indentation till tabs == 2 spaces
+
+- [] bort med authorization object och skicka bara request.session.blabla
+
+- [] ha inte options utan dela upp i olika funktioner t.ex getallwithpagination.
+
+- [] lös pagination-algoritmen med hans variabler.
+
+- [] när man tar emot req.sess.sessadmin byt namn på variabel authorized till sessionAdmin.
+
+- [] Om man inte är inloggad och skriver /admins/create så kan man göra saker.(auth i admin överlag)
+
+- [x] länka vidare till de books/authors som tillhör en viss book/author.

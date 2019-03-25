@@ -5,7 +5,7 @@
     <div>
       <h1>Books:</h1> 
       {{#each author.Books}}
-        <li>{{Title}}</li>
+        <li><a href="/books/{{ISBN}}">{{Title}}</a></li>
       {{/each}}
     </div>
   {{/if}}
