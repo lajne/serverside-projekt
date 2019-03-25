@@ -44,9 +44,9 @@ exports.getAuthorById = function(id, callback) {
   })
 }
 
-exports.getAuthorsBySearch = function(searchTerm, callback) {
-  authorRepository.getAuthorsBySearch(searchTerm, function(error, authors) {
-    callback(error, authors)
+exports.getAuthorsBySearch = function(searchTerm, paginationOptions, callback) {
+  authorRepository.getAuthorsBySearch(searchTerm, paginationOptions, function(error, authors, pages) {
+    callback(error, authors, pages)
   })
 }
 

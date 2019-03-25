@@ -66,15 +66,29 @@ router.post("/create", function(request, response){
   })
 })
 
-router.get('/search/:searchTerm', function(request, response){
+router.get('/search/:searchTerm/page/:currentPage', function(request, response){
   const searchTerm = request.params.searchTerm
+  const paginationOptions = {
+    page: request.params.currentPage,
+    limit: 10,
+    offset: 0
+  }
 
-  authorManager.getAuthorsBySearch(searchTerm, function(error, authors){
+  authorManager.getAuthorsBySearch(searchTerm, paginationOptions, function(error, authors, pages) {
+    let currentPage = Number(request.params.currentPage)
+    const pageIndexes = paginate(currentPage, pages)
     const model = {
-      authors: authors
+      searchTerm: searchTerm,
+      authors: authors,
+      pages: pageIndexes
     }
     response.render("page-authors.hbs", model)
   })
+})
+
+router.get('/search/:searchTerm', function(request, response) {
+  const searchTerm = request.params.searchTerm
+  response.redirect('/authors/search/' + searchTerm + '/page/1')
 })
 
 router.get('/search', function(request, response){

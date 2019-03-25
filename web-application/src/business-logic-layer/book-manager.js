@@ -42,9 +42,9 @@ exports.getBookByISBN = function(isbn, callback) {
   })
 }
 
-exports.getBooksBySearch = function(searchTerm, callback) {
-  bookRepository.getBooksBySearch(searchTerm, function(error, books) {
-    callback(error, books)
+exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
+  bookRepository.getBooksBySearch(searchTerm, paginationOptions, function(error, books, pages) {
+    callback(error, books, pages)
   })
 }
 

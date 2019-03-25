@@ -93,8 +93,8 @@ exports.getBookByISBN = function(isbn, callback) {
   })
 }
 
-exports.getBooksBySearch = function(searchTerm, callback) {
-  Books.findAll({
+exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
+  Books.findAndCountAll({
     where: {
       [db.Sequelize.Op.or]: [
         {
@@ -108,10 +108,35 @@ exports.getBooksBySearch = function(searchTerm, callback) {
         }
       ]
     }
-  }).then(function(books) {
-    callback([], books)
-  }).catch(function(error) {
-    console.log(error)
-    callback(['databaseerror'])
+  })
+  .then(function(books) {
+    console.log("COUNT: " + books.count)
+    let pages
+    if(books.count > 10) {
+      pages = Math.ceil(books.count / paginationOptions.limit)
+      paginationOptions.offset = paginationOptions.limit * (paginationOptions.page -1)
+    }
+    Books.findAll({
+      where: {
+        [db.Sequelize.Op.or]: [
+          {
+            ISBN: {
+              [db.Sequelize.Op.regexp]: searchTerm
+            } 
+          }, {
+            Title: {
+              [db.Sequelize.Op.regexp]: searchTerm
+            }
+          }
+        ]
+      },
+      limit: paginationOptions.limit,
+      offset: paginationOptions.offset
+    }).then(function(books) {
+      callback([], books, pages)
+    }).catch(function(error) {
+      console.log(error)
+      callback(['databaseerror'])
+    })
   })
 }

@@ -81,14 +81,29 @@ router.post("/create", function(request, response){
 
 })
 
-router.get('/search/:searchTerm', function(request, response){
+router.get('/search/:searchTerm/page/:currentPage', function(request, response){
   const searchTerm = request.params.searchTerm
-  bookManager.getBooksBySearch(searchTerm, function(error, books){
+  const paginationOptions = {
+    page: request.params.currentPage,
+    limit: 10,
+    offset: 0
+  }
+
+  bookManager.getBooksBySearch(searchTerm, paginationOptions, function(error, books, pages){
+    let currentPage = Number(request.params.currentPage)
+    const pageIndexes = paginate(currentPage, pages)
     const model = {
-      books: books
+      searchTerm: searchTerm,
+      books: books,
+      pages: pageIndexes
     }
     response.render("page-books.hbs", model)
   })
+})
+
+router.get('/search/:searchTerm', function(request, response) {
+  const searchTerm = request.params.searchTerm
+  response.redirect('/books/search/' + searchTerm + '/page/1')
 })
 
 router.get('/search', function(request, response){
