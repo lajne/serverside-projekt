@@ -30,11 +30,11 @@
 
 - [] Indentation till tabs == 2 spaces
 
-- [] bort med authorization object och skicka bara request.session.blabla
+- [x] bort med authorization object och skicka bara request.session.blabla
 
-- [] ha inte options utan dela upp i olika funktioner t.ex getallwithpagination.
+- [x] ha inte options utan dela upp i olika funktioner t.ex getallwithpagination.
 
-- [] lös pagination-algoritmen med hans variabler.
+- [x] lös pagination-algoritmen med hans variabler.
 
 - [] när man tar emot req.sess.sessadmin byt namn på variabel authorized till sessionAdmin.
 
