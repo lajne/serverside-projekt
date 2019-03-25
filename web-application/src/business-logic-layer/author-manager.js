@@ -13,6 +13,12 @@ exports.getAuthorsById = function(selectedAuthors, callback) {
   })
 }
 
+exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
+  authorRepository.getAllAuthorsWithPagination(paginationOptions, function(errors, authors) {
+    callback(errors, authors)
+  })
+}
+
 exports.createAuthor = function(authorized, author, callback) {
   if(authorized.session){
     const errors = authorValidator.validateNewAuthor(author)

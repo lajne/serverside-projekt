@@ -1,22 +1,7 @@
 const db = require('./db')
 const {Authors, Author_Books} = require('./models')
 
-exports.getAllAuthors = function(options, callback) {
-  if(options.default) {
-    // if(options.authors) {
-    //   Authors.findAll({
-    //     where: {
-    //       Id: options.authors
-    //     }
-    //   })
-    //   .then(function(authors) {
-    //     callback([], authors)
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error)
-    //     callback(['databaseerror'])
-    //   })
-    // } else {
+exports.getAllAuthors = function(callback) {
       Authors.findAll()
       .then(function(authors) {
         callback([], authors)
@@ -24,24 +9,6 @@ exports.getAllAuthors = function(options, callback) {
         console.log(error)
         callback(['databaseerror'])
       })
-    //}
-  } else {
-    Authors.findAndCountAll()
-    .then(function(authors) {
-      let pages = Math.ceil(authors.count / options.limit)
-      options.offset = options.limit * (options.page - 1)
-  
-      Authors.findAll({
-        limit: options.limit,
-        offset: options.offset
-      }).then(function(authors){
-        callback(authors, pages)
-      }).catch(function(error) {
-        console.log(error)
-        callback(['databaseerror'])
-      })
-    })
-  }
 }
 // Koppla ihop med övrigt
 exports.getAuthorsById = function(selectedAuthors, callback) {
@@ -54,6 +21,24 @@ exports.getAuthorsById = function(selectedAuthors, callback) {
   }).catch(function(error) {
     callback(['databaseerror'])
   })
+}
+
+exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
+  Authors.findAndCountAll()
+    .then(function(authors) {
+      let pages = Math.ceil(authors.count / paginationOptions.limit)
+      paginationOptions.offset = paginationOptions.limit * (paginationOptions.page - 1)
+  
+      Authors.findAll({
+        limit: paginationOptions.limit,
+        offset: paginationOptions.offset
+      }).then(function(authors){
+        callback(authors, pages)
+      }).catch(function(error) {
+        console.log(error)
+        callback(['databaseerror'])
+      })
+    })
 }
 
 exports.createAuthor = function(author, callback) {

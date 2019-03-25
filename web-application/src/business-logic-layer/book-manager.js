@@ -1,8 +1,20 @@
 const bookRepository = require('../data-access-layer/book-repository')
 const bookValidator = require('./book-validator')
 
-exports.getAllBooks = function(options, callback) {
-  bookRepository.getAllBooks(options, function(errors, books) {
+exports.getAllBooks = function(callback) {
+  bookRepository.getAllBooks(function(errors, books) {
+    callback(errors, books)
+  })
+}
+
+exports.getBooksByISBN = function(selectedBooks, callback) {
+  bookRepository.getBooksByISBN(selectedBooks, function(errors, books) {
+    callback(errors, books)
+  })
+}
+
+exports.getAllBooksWithPagination = function(paginationOptions, callback) {
+  bookRepository.getAllBooksWithPagination(paginationOptions, function(errors, books) {
     callback(errors, books)
   })
 }

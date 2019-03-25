@@ -18,9 +18,9 @@ router.get("/create", function(request, response){
 })
 
 router.post("/create", function(request, response){
-  const authorized = {
-    session: request.session.sessionAdmin
-  }
+  // const authorized = {
+  //   session: request.session.sessionAdmin
+  // }
 
   const admin = {
     username: request.body.username,
@@ -28,7 +28,7 @@ router.post("/create", function(request, response){
     password: request.body.password
   }
 
-  adminManager.createAdmin(authorized, admin, function(error, admin){
+  adminManager.createAdmin(request.session.sessionAdmin, admin, function(error, admin){
     if(0 < error.length) {
       const model = {
         admin: admin,
@@ -98,9 +98,9 @@ router.get("/:id/edit", function(request, response) {
 })
 
 router.post("/:id/edit", function(request, response){
-  const authorized = {
-    session: request.session.sessionAdmin
-  }
+  // const authorized = {
+  //   session: request.session.sessionAdmin
+  // }
 
   const admin = {
     id: request.params.id,
@@ -108,7 +108,7 @@ router.post("/:id/edit", function(request, response){
     Password: request.body.password
   }
 
-  adminManager.editAdmin(authorized, admin, function(error, adminret) {
+  adminManager.editAdmin(request.session.sessionAdmin, admin, function(error, adminret) {
     if(0 < error.length){
       const model = {
         admin: admin,
@@ -122,12 +122,12 @@ router.post("/:id/edit", function(request, response){
 })
 
 router.get("/:id/delete", function(request, response) {
-  const authorized = {
-    session: request.session.sessionAdmin
-  }
+  // const authorized = {
+  //   session: request.session.sessionAdmin
+  // }
   const id = request.params.id
 
-  adminManager.deleteAdmin(authorized, id, function(error, row) {
+  adminManager.deleteAdmin(request.session.sessionAdmin, id, function(error, result) {
     if(0 < error.length) {
       const model = {
         error: error
