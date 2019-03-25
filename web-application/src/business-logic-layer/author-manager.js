@@ -7,6 +7,12 @@ exports.getAllAuthors = function(options, callback) {
   })
 }
 
+exports.getAuthorsById = function(selectedAuthors, callback) {
+  authorRepository.getAuthorsById(selectedAuthors, function(errors, authors) {
+    callback(errors, authors)
+  })
+}
+
 exports.createAuthor = function(authorized, author, callback) {
   if(authorized.session){
     const errors = authorValidator.validateNewAuthor(author)

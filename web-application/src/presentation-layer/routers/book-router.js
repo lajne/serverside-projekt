@@ -55,12 +55,12 @@ router.post("/create", function(request, response){
     pages : request.body.pages,
   }
 
-  const options = {
-    default: true,
-    authors: request.body.selectedAuthors
-  }
+  // const options = {
+  //   default: true,
+  //   authors: request.body.selectedAuthors
+  // }
 
-  authorManager.getAllAuthors(options, function(errors, authorsret) {
+  authorManager.getAuthorsById(request.body.selectedAuthors, function(errors, authorsret) {
      if(0 < errors.length) {
       const model = {
         book: book,

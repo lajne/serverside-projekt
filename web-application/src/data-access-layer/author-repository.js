@@ -3,20 +3,20 @@ const {Authors, Author_Books} = require('./models')
 
 exports.getAllAuthors = function(options, callback) {
   if(options.default) {
-    if(options.authors) {
-      Authors.findAll({
-        where: {
-          Id: options.authors
-        }
-      })
-      .then(function(authors) {
-        callback([], authors)
-      })
-      .catch(function(error) {
-        console.log(error)
-        callback(['databaseerror'])
-      })
-    } else {
+    // if(options.authors) {
+    //   Authors.findAll({
+    //     where: {
+    //       Id: options.authors
+    //     }
+    //   })
+    //   .then(function(authors) {
+    //     callback([], authors)
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error)
+    //     callback(['databaseerror'])
+    //   })
+    // } else {
       Authors.findAll()
       .then(function(authors) {
         callback([], authors)
@@ -24,7 +24,7 @@ exports.getAllAuthors = function(options, callback) {
         console.log(error)
         callback(['databaseerror'])
       })
-    }
+    //}
   } else {
     Authors.findAndCountAll()
     .then(function(authors) {
@@ -42,6 +42,18 @@ exports.getAllAuthors = function(options, callback) {
       })
     })
   }
+}
+// Koppla ihop med övrigt
+exports.getAuthorsById = function(selectedAuthors, callback) {
+  Authors.findAll({
+    where: {
+      Id: selectedAuthors
+    }
+  }).then(function(authors) {
+    callback([], authors)
+  }).catch(function(error) {
+    callback(['databaseerror'])
+  })
 }
 
 exports.createAuthor = function(author, callback) {

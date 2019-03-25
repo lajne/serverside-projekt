@@ -42,7 +42,7 @@ router.get("/create", function(request, response){
 
 router.post("/create", function(request, response){
   const authorized = {
-    session: request.session.sessionAdmin
+    admin: request.session.sessionAdmin
   }
 
   const author = {
