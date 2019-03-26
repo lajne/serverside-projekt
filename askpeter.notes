@@ -20,7 +20,7 @@
 
 - [x] Bättre sökfunktionalitet
 
-- [] När man editar lösenord för en admin skall den hasha lösenordet.
+- [x] När man editar lösenord för en admin skall den hasha lösenordet.
 
 - [] Snyggare UI, t.ex flytta create i admins/authors/books längre upp inte längst ner under alla items.
 
@@ -36,8 +36,14 @@
 
 - [x] lös pagination-algoritmen med hans variabler.
 
-- [] när man tar emot req.sess.sessadmin byt namn på variabel authorized till sessionAdmin.
+- [x] när man tar emot req.sess.sessadmin byt namn på variabel authorized till sessionAdmin.
 
 - [] Om man inte är inloggad och skriver /admins/create så kan man göra saker.(auth i admin överlag)
 
 - [x] länka vidare till de books/authors som tillhör en viss book/author.
+
+- [] ändra variabelnamnen "booksret"
+
+- [] lägg till så att alla värden man skrev när man försökte skapa author är kvar om det är errors.
+
+- [] när man editar, hur skall lösenordet visas? ska det ens visas?

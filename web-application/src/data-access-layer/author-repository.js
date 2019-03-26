@@ -4,6 +4,7 @@ const {Authors, Author_Books} = require('./models')
 exports.getAllAuthors = function(callback) {
   Authors.findAll()
   .then(function(authors) {
+    console.log(JSON.stringify("authors i createn: " + authors, null, 2))
     callback([], authors)
   }).catch(function(error) {
     console.log(error)

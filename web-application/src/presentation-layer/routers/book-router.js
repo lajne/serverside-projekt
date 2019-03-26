@@ -59,17 +59,13 @@ router.post("/create", function(request, response){
       book.authors = authorsret
       bookManager.createBook(request.session.sessionAdmin, book, function(errors, bookret){
         if(0 < errors.length) {
-          const options = {
-            default: true
-          }
           let model = {
             authors: "",
             book: book,
             errors: errors
           }
-          authorManager.getAllAuthors(options, function(errors, authorsret) {
+          authorManager.getAllAuthors(function(errors, authorsret) {
             model.authors = authorsret
-            console.log(JSON.stringify(errors, null, 2))
             response.render("page-createbook.hbs", model)
           })
         } else {

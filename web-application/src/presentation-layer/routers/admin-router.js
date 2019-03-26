@@ -18,10 +18,6 @@ router.get("/create", function(request, response){
 })
 
 router.post("/create", function(request, response){
-  // const authorized = {
-  //   session: request.session.sessionAdmin
-  // }
-
   const admin = {
     username: request.body.username,
     salt: "",
@@ -97,34 +93,29 @@ router.get("/:id/edit", function(request, response) {
   })
 })
 
-router.post("/:id/edit", function(request, response){
-  // const authorized = {
-  //   session: request.session.sessionAdmin
-  // }
-
-  const admin = {
-    id: request.params.id,
-    Username: request.body.username,
-    Password: request.body.password
-  }
-
-  adminManager.editAdmin(request.session.sessionAdmin, admin, function(error, adminret) {
-    if(0 < error.length){
-      const model = {
-        admin: admin,
-        error: error
-      }
-      response.render("page-editadmin.hbs", model)
-    }else {
-      response.redirect("/admins")
+router.post("/:id/edit", function(request, response) {
+  adminManager.getAdminById(request.params.id, function(error, adminReturned) {
+    const admin = {
+      id: request.params.id,
+      Username: request.body.username,
+      Salt: adminReturned.Salt,
+      Password: request.body.password
     }
+    adminManager.editAdmin(request.session.sessionAdmin, admin, function(error, adminret) {
+      if(0 < error.length) {
+        const model = {
+          admin: admin,
+          error: error
+        }
+        response.render("page-editadmin.hbs", model)
+      } else {
+        response.redirect("/admins")
+      }
+    })
   })
 })
 
 router.get("/:id/delete", function(request, response) {
-  // const authorized = {
-  //   session: request.session.sessionAdmin
-  // }
   const id = request.params.id
 
   adminManager.deleteAdmin(request.session.sessionAdmin, id, function(error, result) {

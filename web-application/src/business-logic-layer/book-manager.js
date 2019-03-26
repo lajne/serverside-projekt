@@ -19,8 +19,8 @@ exports.getAllBooksWithPagination = function(paginationOptions, callback) {
   })
 }
 
-exports.createBook = function(authorized, book, callback) {
-  if(authorized.session){
+exports.createBook = function(sessionAdmin, book, callback) {
+  if(sessionAdmin){
     const errors = bookValidator.validateNewBook(book) 
     if(0 < errors.length) {
       callback(errors, [])
@@ -48,8 +48,8 @@ exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
   })
 }
 
-exports.editBook = function(authorized, book, callback) {
-  if(authorized.session){
+exports.editBook = function(sessionAdmin, book, callback) {
+  if(sessionAdmin){
     const errors = bookValidator.validateNewBook(book)
 
     if(0 < errors.length) {

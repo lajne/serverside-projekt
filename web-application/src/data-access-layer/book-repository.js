@@ -2,9 +2,11 @@ const db = require('./db')
 const {Books, Book_Authors} = require('./models')
 
 exports.getAllBooks = function(callback) {
-  Books.findAll().then(function(books) {
+  Books.findAll()
+  .then(function(books) {
     callback([], books)
   }).catch(function(error) {
+    console.log(error)
     callback(['databaseerror'])
   })
 }

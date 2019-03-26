@@ -54,10 +54,15 @@ router.post("/create", function(request, response){
        
        authorManager.createAuthor(request.session.sessionAdmin, author, function(errors, authorret){
          if(0 < errors.length) {
-           const model = {
-             errors: errors
-           }
-           response.render("page-createauthor.hbs", model)
+          let model = {
+            books: "",
+            author: author,
+            errors: errors
+          }
+          bookManager.getAllBooks(function(errors, books) {
+            model.books = books
+            response.render("page-createauthor.hbs", model)
+          })
          } else {
            response.redirect('/authors/')
          }

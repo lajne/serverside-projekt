@@ -1,8 +1,8 @@
 const authorRepository = require('../data-access-layer/author-repository')
 const authorValidator = require('./author-validator')
 
-exports.getAllAuthors = function(options, callback) {
-  authorRepository.getAllAuthors(options, function(errors, authors) {
+exports.getAllAuthors = function(callback) {
+  authorRepository.getAllAuthors(function(errors, authors) {
     callback(errors, authors)
   })
 }
@@ -19,8 +19,8 @@ exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
   })
 }
 
-exports.createAuthor = function(authorized, author, callback) {
-  if(authorized.session){
+exports.createAuthor = function(sessionAdmin, author, callback) {
+  if(sessionAdmin){
     const errors = authorValidator.validateNewAuthor(author)
 
     if(0 < errors.length) {
@@ -50,8 +50,8 @@ exports.getAuthorsBySearch = function(searchTerm, paginationOptions, callback) {
   })
 }
 
-exports.editAuthor = function(authorized, author, callback) {
-  if(authorized.session){
+exports.editAuthor = function(sessionAdmin, author, callback) {
+  if(sessionAdmin){
     const errors = authorValidator.validateNewAuthor(author)
 
     if(0 < errors.length) {

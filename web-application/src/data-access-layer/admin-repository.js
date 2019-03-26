@@ -24,9 +24,12 @@ exports.createAdmin = function(admins, callback){
 }
 
 exports.editAdmin = function(admin, callback) {
+  //const salt = String(Math.random().toString(36).substring(2, 15))
+  const hashedPassword = hash(admin.Password, admin.Salt)
   Admins.update({
-    Username: admin.username,
-    Password: admin.password
+    Username: admin.Username,
+    Salt: admin.Salt,
+    Password: hashedPassword
   }, {
     where: {id: admin.id}
   }).then(function(updatedAdmin){
