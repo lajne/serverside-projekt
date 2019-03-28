@@ -50,19 +50,12 @@ router.post("/create", function(request, response) {
   })
 })
 
-router.get("/login", function(request, response) {
-  if(request.session.sessionAdmin) {
-    const model = {
-      username: "",
-      errors: []
-    }
-    response.render("page-login.hbs", model)
-  } else {
-    const model = {
-      errors: ["you need to be an admin to do that."]
-    }
-    response.render("page-login.hbs", model)
+router.get("/login", function(request, response){
+  const model = {
+    username: "",
+    error: []
   }
+  response.render("page-login.hbs", model)
 })
 
 router.post("/login", function(request, response) {
