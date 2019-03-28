@@ -1,18 +1,20 @@
-{{#if author}}
-  <div>Name: {{author.FirstName}} {{author.LastName}}</div>
-  <div>Birthyear: {{author.BirthYear}}</div>
-  {{#if author.Books}}
-    <div>
-      <h1>Books:</h1> 
-      {{#each author.Books}}
-        <li><a href="/books/{{ISBN}}">{{Title}}</a></li>
-      {{/each}}
-    </div>
+<div class="viewClickedItem">
+  {{#if author}}
+    <div>Name: {{author.FirstName}} {{author.LastName}}</div>
+    <div>Birthyear: {{author.BirthYear}}</div>
+    {{#if author.Books}}
+      <div>
+        <h1>Books:</h1> 
+        {{#each author.Books}}
+          <li><a href="/books/{{ISBN}}">{{Title}}</a></li>
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#if sessionAdmin}}
+      <button onclick="window.location.href='/authors/{{author.Id}}/edit'">Edit</button>
+    {{/if}}
+    
+  {{else}}
+    <p>Author does not exist yet!</p>
   {{/if}}
-  {{#if sessionAdmin}}
-    <button onclick="window.location.href='/authors/{{author.Id}}/edit'">Edit</button>
-  {{/if}}
-  
-{{else}}
-  <p>Author does not exist yet!</p>
-{{/if}}
+</div>

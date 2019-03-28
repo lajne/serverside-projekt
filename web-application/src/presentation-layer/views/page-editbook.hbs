@@ -7,6 +7,7 @@
   </ul>
 {{/if}}
 
+{{#if sessionAdmin}}
 <form method="POST" action="/books/{{book.ISBN}}/edit">
   ISBN: <input name="isbn" value="{{book.ISBN}}"><br>
   Title: <input name="title" value="{{book.Title}}"><br>
@@ -15,5 +16,5 @@
   PublicationInfo: <input name="publicationInfo" value="{{book.PublicationInfo}}"><br>
   Pages: <input type="text" name="pages" value="{{book.Pages}}"><br>
   <input type="submit" value="Save changes">
-
 </form>
+{{/if}}

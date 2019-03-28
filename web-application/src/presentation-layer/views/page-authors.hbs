@@ -1,6 +1,6 @@
 <h1>AUTHORS</h1>
 <form action="/authors/search/" method="GET">
-  <div>
+  <div class="searchfield">
     {{#if searchTerm}}
       Search <input type="text" name="authorSearch" value="{{searchTerm}}">
     {{else}}
@@ -35,7 +35,7 @@
     </div>
   {{/if}}
 {{/if}}
-<div>
+<div class="pagination">
   {{#each pages}}
     <a href="/authors/page/{{this}}">{{this}}</a>
   {{/each}}
