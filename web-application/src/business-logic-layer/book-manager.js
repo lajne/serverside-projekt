@@ -20,14 +20,14 @@ exports.getAllBooksWithPagination = function(paginationOptions, callback) {
 }
 
 exports.createBook = function(sessionAdmin, book, callback) {
-  if(sessionAdmin){
+  if(sessionAdmin) {
     const errors = bookValidator.validateNewBook(book) 
     if(0 < errors.length) {
       callback(errors, [])
       return
     }
   
-    bookRepository.createBook(book, function(errors, bookret){
+    bookRepository.createBook(book, function(errors, bookret) {
       callback(errors, bookret)
     })
   }else{
@@ -43,21 +43,21 @@ exports.getBookByISBN = function(isbn, callback) {
 }
 
 exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
-  bookRepository.getBooksBySearch(searchTerm, paginationOptions, function(error, books, pages) {
-    callback(error, books, pages)
+  bookRepository.getBooksBySearch(searchTerm, paginationOptions, function(errors, books, pages) {
+    callback(errors, books, pages)
   })
 }
 
 exports.editBook = function(sessionAdmin, book, callback) {
-  if(sessionAdmin){
+  if(sessionAdmin) {
     const errors = bookValidator.validateNewBook(book)
 
     if(0 < errors.length) {
       callback(errors, [])
       return
     }
-    bookRepository.editBook(book, function(error, book) {
-    callback(error, book)
+    bookRepository.editBook(book, function(errors, book) {
+    callback(errors, book)
    })
   }else{
     callback(["you need to be an admin to do that."], [])

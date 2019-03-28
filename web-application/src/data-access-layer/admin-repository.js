@@ -2,29 +2,28 @@ const {Admins} = require('./models')
 const hash = require('./hash')
 
 exports.getAllAdmins = function(callback) {
-  Admins.findAll().then(function(admins){ 
+  Admins.findAll().then(function(admins) { 
       callback([], admins)  
-  }).catch(function(error){
+  }).catch(function(errors) {
     callback(['databaseerror']) 
   })
 }
 
-exports.createAdmin = function(admins, callback){
+exports.createAdmin = function(admins, callback) {
   const salt = String(Math.random().toString(36).substring(2, 15))
   const hashedPassword = hash(admins.password, salt)
   Admins.create({
     Username: admins.username,
     Salt: salt,
     Password: hashedPassword
-  }).then(function(createdAdmin){
+  }).then(function(createdAdmin) {
     callback([], createdAdmin)
-  }).catch(function(error){
+  }).catch(function(errors) {
     callback(['databaseerror'])
   })
 }
 
 exports.editAdmin = function(admin, callback) {
-  //const salt = String(Math.random().toString(36).substring(2, 15))
   const hashedPassword = hash(admin.Password, admin.Salt)
   Admins.update({
     Username: admin.Username,
@@ -32,9 +31,9 @@ exports.editAdmin = function(admin, callback) {
     Password: hashedPassword
   }, {
     where: {id: admin.id}
-  }).then(function(updatedAdmin){
+  }).then(function(updatedAdmin) {
      callback([], updatedAdmin)
-  }).catch(function(error){
+  }).catch(function(errors) {
     callback(['databaseerror'])
   })
 }
@@ -44,7 +43,7 @@ exports.deleteAdmin = function(id, callback ) {
     where: {id: id}
   }).then(function(row) {
     callback([], row)
-  }).catch(function(error) {
+  }).catch(function(errors) {
     callback(['databaseerror'])
   })
 }
@@ -56,17 +55,17 @@ exports.getAdminById = function(adminId, callback) {
     }
   }).then(function(admin) {
     callback([], admin[0])
-  }).catch(function(error){
+  }).catch(function(errors) {
     callback(['databaseerror'])
   })
 }
 
-exports.getAdminByUsername = function(username, callback){
+exports.getAdminByUsername = function(username, callback) {
   Admins.findOne({where: {Username: username}})
-    .then(function(admin){
+    .then(function(admin) {
       callback([], admin)
-    }).catch(function(error){
-        console.log(error)
+    }).catch(function(errors) {
+        console.log(errors)
         callback(["databaseerror"])
     })
 }

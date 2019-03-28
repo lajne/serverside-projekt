@@ -6,8 +6,8 @@ exports.getAllAuthors = function(callback) {
   .then(function(authors) {
     console.log(JSON.stringify("authors i createn: " + authors, null, 2))
     callback([], authors)
-  }).catch(function(error) {
-    console.log(error)
+  }).catch(function(errors) {
+    console.log(errors)
     callback(['databaseerror'])
   })
 }
@@ -19,7 +19,7 @@ exports.getAuthorsById = function(selectedAuthors, callback) {
     }
   }).then(function(authors) {
     callback([], authors)
-  }).catch(function(error) {
+  }).catch(function(errors) {
     callback(['databaseerror'])
   })
 }
@@ -33,10 +33,10 @@ exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
     Authors.findAll({
       limit: paginationOptions.limit,
       offset: paginationOptions.offset
-    }).then(function(authors){
+    }).then(function(authors) {
       callback(authors, pages)
-    }).catch(function(error) {
-      console.log(error)
+    }).catch(function(errors) {
+      console.log(errors)
       callback(['databaseerror'])
     })
   })
@@ -47,12 +47,12 @@ exports.createAuthor = function(author, callback) {
     FirstName: author.firstName,
     LastName: author.lastName,
     BirthYear: author.birthYear
-  }).then(function(createdAuthor){
+  }).then(function(createdAuthor) {
     createdAuthor.addBooks(author.books).then(function(createdAuthorWithBooks) {
       callback([], createdAuthorWithBooks)
     })
   })
-  .catch(function(error){
+  .catch(function(errors) {
     callback(['databaseerror'])
   })
 }
@@ -64,10 +64,10 @@ exports.editAuthor = function(author, callback) {
     BirthYear: author.birthYear
   }, {
     where: {Id: author.id}
-  }).then(function(updatedAuthor){
+  }).then(function(updatedAuthor) {
     callback([], updatedAuthor)
-  }).catch(function(error) {
-    console.log(error)
+  }).catch(function(errors) {
+    console.log(errors)
     callback(['databaseerror'])
   })
 }
@@ -80,10 +80,10 @@ exports.getAuthorById = function(authorId, callback) {
     include: [{
       association: Author_Books
     }]
-  }).then(function(author){
+  }).then(function(author) {
       callback([], author[0])
-  }).catch(function(error) {
-    console.log(error)
+  }).catch(function(errors) {
+    console.log(errors)
     callback(['databaseerror'])
   })
 }
@@ -131,31 +131,9 @@ exports.getAuthorsBySearch = function(searchTerm, paginationOptions, callback) {
       offset: paginationOptions.offset
     }).then(function(authors) {
       callback([], authors, pages)
-    }).catch(function(error) {
-      console.log(error)
+    }).catch(function(errors) {
+      console.log(errors)
       callback(['databaseerror'])
     })
   })
-  
-
-  // Authors.findAll({
-  //   where: {
-  //     [db.Sequelize.Op.or]: [
-  //       {
-  //         FirstName: {
-  //           [db.Sequelize.Op.regexp]: searchTerm
-  //         }
-  //       }, {
-  //         LastName: {
-  //           [db.Sequelize.Op.regexp]: searchTerm
-  //         }
-  //       }
-  //     ]
-  //   }
-  // }).then(function(authors) {
-  //     callback([], authors)
-  // }).catch(function(error) {
-  //   console.log(error)
-  //   callback(['databaseerror'])
-  // })
 }
