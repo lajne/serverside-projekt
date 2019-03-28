@@ -1,21 +1,21 @@
 <h1 id="loginH1">LOGIN</h1>
 
 {{#if errors.length}}
-    <p>Could not log in because:</p>
-    <ul>
-        {{#each errors}}
-            <li>{{this}}</li>
-        {{/each}}
-    </ul>
+  <p>Could not log in because:</p>
+  <ul>
+    {{#each errors}}
+      <li>{{this}}</li>
+    {{/each}}
+  </ul>
 {{/if}}
 
 <div class="loginBox">
-    <form method="POST" action="/admins/login">
-    <p>Username</p>
-    <input type="text" name="username" placeholder="Enter Username">
-    <p>Password</p>
-    <input type="password" name="password" placeholder="Enter Password">
-    <br>
-    <input id="loginButton" type="submit" value="Login">
-    </form>
+  <form method="POST" action="/admins/login">
+  <p>Username</p>
+  <input type="text" name="username" placeholder="Enter Username">
+  <p>Password</p>
+  <input type="password" name="password" placeholder="Enter Password">
+  <br>
+  <input id="loginButton" type="submit" value="Login">
+  </form>
 </div>
