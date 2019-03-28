@@ -1,0 +1,19 @@
+{{#if errors.length}}
+  <p>Could not edit admin because: </p>
+  <ul>
+    {{#each errors}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+
+<form method="POST" action="/books/{{book.ISBN}}/edit">
+  ISBN: <input name="isbn" value="{{book.ISBN}}"><br>
+  Title: <input name="title" value="{{book.Title}}"><br>
+  SignId: <input name="signId" value="{{book.SignId}}"><br>
+  PublicationYear: <input name="publicationYear" value="{{book.PublicationYear}}"><br>
+  PublicationInfo: <input name="publicationInfo" value="{{book.PublicationInfo}}"><br>
+  Pages: <input type="text" name="pages" value="{{book.Pages}}"><br>
+  <input type="submit" value="Save changes">
+
+</form>

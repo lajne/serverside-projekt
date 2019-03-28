@@ -1,0 +1,42 @@
+<h1>BOOKS</h1>
+<form action="/books/search/" method="GET">
+  <div>
+    {{#if searchTerm}}
+      Search <input type="text" name="bookSearch" value="{{searchTerm}}">
+    {{else}}
+      Search <input type="text" name="bookSearch">
+    {{/if}}
+    <input type="submit" value="Go!">
+  </div>
+</form>
+{{#if books.length}}
+  {{#each books}}
+    <div class="item">
+      <a href="/books/{{ISBN}}">{{Title}}</a>
+    </div>
+  {{/each}}
+  {{#if sessionAdmin}}
+    <button onclick="window.location.href='/books/create'">Create book</button>
+  {{/if}}
+{{else}}
+  {{#if searchTerm}}
+    <div>
+      <p>Your search - <b>{{searchTerm}}</b> - did not match any book titles.</p>
+      {{#if sessionAdmin}}
+        <button onclick="window.location.href='/books/create'">Create book</button>
+      {{/if}}
+    </div>
+  {{else}}
+    <div>
+      <p>There are no books atm..</p>
+      {{#if sessionAdmin}}
+        <button onclick="window.location.href='/books/create'">Create book</button>
+      {{/if}}
+    </div>
+  {{/if}}
+{{/if}}
+<div>
+  {{#each pages}}
+    <a href="/books/page/{{this}}">{{this}}</a>
+  {{/each}}
+</div>

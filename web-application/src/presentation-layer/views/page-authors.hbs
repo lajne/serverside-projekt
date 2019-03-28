@@ -1,0 +1,42 @@
+<h1>AUTHORS</h1>
+<form action="/authors/search/" method="GET">
+  <div>
+    {{#if searchTerm}}
+      Search <input type="text" name="authorSearch" value="{{searchTerm}}">
+    {{else}}
+      Search <input type="text" name="authorSearch">
+    {{/if}}
+    <input type="submit" value="Go!">
+  </div>
+</form>
+{{#if authors.length}} 
+  {{#each authors}}
+    <div class="item">
+      <a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a>
+    </div>
+  {{/each}}
+  {{#if sessionAdmin}}
+    <button onclick="window.location.href='/authors/create'">Create author</button>
+  {{/if}}
+{{else}}
+  {{#if searchTerm}}
+    <div>
+      <p>Your search - <b>{{searchTerm}}</b> - did not match any authornames.</p>
+      {{#if sessionAdmin}}
+        <button onclick="window.location.href='/authors/create'">Create author</button>
+      {{/if}}
+    </div>
+  {{else}}
+    <div>
+      <p>There are no authors atm..</p>
+      {{#if sessionAdmin}}
+        <button onclick="window.location.href='/authors/create'">Create author</button>
+      {{/if}}
+    </div>
+  {{/if}}
+{{/if}}
+<div>
+  {{#each pages}}
+    <a href="/authors/page/{{this}}">{{this}}</a>
+  {{/each}}
+</div>

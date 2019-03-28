@@ -1,0 +1,16 @@
+<h1>Create Admin</h1>
+
+{{#if error.length}}
+  <p>Could not create an admin because: </p>
+  <ul>
+    {{#each error}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+
+<form method="POST" action="/admins/create">
+  Username: <input name="username"><br>
+  Password: <input name="password"><br>
+  <input type="submit" value="Create!">
+</form>

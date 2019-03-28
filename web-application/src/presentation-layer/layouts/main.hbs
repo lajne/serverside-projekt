@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible">
+    <title>JU Library</title>
+    <link rel="stylesheet" href="/css/layout.css">
+  </head>
+  <body>
+    <div id="entire-page">
+      
+      <header>
+        <a href="/" style="text-decoration: none">Jönköping Library</a>
+      </header>
+
+      <div class="topnav">
+        <a href="/books">Books</a>
+        <a href="/authors">Authors</a>
+        {{#if sessionAdmin}}
+          <a href="/admins">Administrators</a>
+        {{/if}}
+        <div class="topnav-right">
+          {{#if sessionAdmin}}
+            <a href="/admins/{{sessionAdmin.id}}">Logged in as {{sessionAdmin.Username}}</a>
+            <a href="/admins/logout">Logout</a>
+          {{else}}
+            <a href="/admins/login">Login</a> 
+          {{/if}}
+        </div>
+        
+      </div>
+      
+      <main>
+        {{{body}}}
+      </main>
+
+      <div id="footer">
+        <p>Copyright 2019 Jonatan Flodin Stenholm and Alexander Linné</p>
+      </div>
+      
+    </div>
+
+  </body>
+</html>

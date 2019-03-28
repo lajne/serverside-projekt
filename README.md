@@ -1,8 +1,10 @@
 # Serverside-projekt
 Project to create a library app.
 
-Good to know:
-https://shift.infinite.red/npm-vs-yarn-cheat-sheet-8755b092e5cc
+**To run the application**
+
+1. Change directory to: `/serverside-projekt` (the project folder).
+2. Commandline run: `docker-compose up --build` to start the application. `CTRL + C` to stop it.
 
 
 **Basic git commands**
