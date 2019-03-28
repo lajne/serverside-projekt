@@ -1,6 +1,6 @@
 const adminRepository = require('../data-access-layer/admin-repository')
 const adminValidator = require('./admin-validator')
-const hash = require('../data-access-layer/hash')
+const hash = require('./calculations/hash')
 
 exports.getAllAdmins = function(callback) {
   adminRepository.getAllAdmins(function(errors, admins) {

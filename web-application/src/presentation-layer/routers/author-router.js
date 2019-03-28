@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const authorManager = require('../../business-logic-layer/author-manager')
 const bookManager = require('../../business-logic-layer/book-manager')
-const paginate = require('../pagination/paginate')
+const paginate = require('../../business-logic-layer/calculations/paginate')
 
 router.get('/', function(request, response) {
   response.redirect("/authors/page/1")

@@ -1,5 +1,5 @@
 const {Admins} = require('./models')
-const hash = require('./hash')
+const hash = require('../business-logic-layer/calculations/hash')
 
 exports.getAllAdmins = function(callback) {
   Admins.findAll().then(function(admins) { 
