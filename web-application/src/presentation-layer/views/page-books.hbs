@@ -1,6 +1,6 @@
 <h1>BOOKS</h1>
 <form action="/books/search/" method="GET">
-  <div>
+  <div class="searchfield">
     {{#if searchTerm}}
       Search <input type="text" name="bookSearch" value="{{searchTerm}}">
     {{else}}
@@ -35,7 +35,7 @@
     </div>
   {{/if}}
 {{/if}}
-<div>
+<div class="pagination">
   {{#if searchPagination}}
     {{#each urlAttributes}}
       <a href="/books/search/{{searchTerm}}/page/{{pageIndex}}">{{pageIndex}}</a>

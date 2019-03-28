@@ -82,7 +82,7 @@ router.post("/create", function(request, response) {
   })
 })
 
-router.get('/search/:searchTerm/page/:currentPage', function(request, response){
+router.get('/search/:searchTerm/page/:currentPage', function(request, response) {
   const searchTerm = request.params.searchTerm
   const paginationOptions = {
     page: request.params.currentPage,

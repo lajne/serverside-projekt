@@ -7,9 +7,11 @@
   </ul>
 {{/if}}
 
-<form method="POST" action="/authors/{{author.Id}}/edit">
-  firstname: <input type="text" name="firstName" value="{{author.FirstName}}"><br>
-  lastname: <input type="text" name="lastName" value="{{author.LastName}}"><br>
-  birthyear: <input type="text" name="birthYear" value="{{author.BirthYear}}"><br>
-  <input type="submit" value="Save changes">
-</form>
+{{#if sessionAdmin}}
+  <form method="POST" action="/authors/{{author.Id}}/edit">
+    firstname: <input type="text" name="firstName" value="{{author.FirstName}}"><br>
+    lastname: <input type="text" name="lastName" value="{{author.LastName}}"><br>
+    birthyear: <input type="text" name="birthYear" value="{{author.BirthYear}}"><br>
+    <input type="submit" value="Save changes">
+  </form>
+{{/if}}
