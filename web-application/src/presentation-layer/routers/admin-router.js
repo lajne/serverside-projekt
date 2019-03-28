@@ -3,9 +3,9 @@ const router = express.Router()
 const adminRepo = require('../../data-access-layer/admin-repository')
 const adminManager = require('../../business-logic-layer/admin-manager')
 
-router.get('/', function(request, response){
+router.get('/', function(request, response) {
   if(request.session.sessionAdmin) {
-    adminManager.getAllAdmins(function(error, admins){
+    adminManager.getAllAdmins(function(error, admins) {
       const model = {
         admins: admins,
         error: error
@@ -20,7 +20,7 @@ router.get('/', function(request, response){
   }
 })
 
-router.get("/create", function(request, response){
+router.get("/create", function(request, response) {
   if(request.session.sessionAdmin) {
     response.render("page-createadmin.hbs")
   } else {
@@ -31,14 +31,14 @@ router.get("/create", function(request, response){
   }
 })
 
-router.post("/create", function(request, response){
+router.post("/create", function(request, response) {
   const admin = {
     username: request.body.username,
     salt: "",
     password: request.body.password
   }
 
-  adminManager.createAdmin(request.session.sessionAdmin, admin, function(error, admin){
+  adminManager.createAdmin(request.session.sessionAdmin, admin, function(error, admin) {
     if(0 < error.length) {
       const model = {
         admin: admin,
@@ -51,7 +51,7 @@ router.post("/create", function(request, response){
   })
 })
 
-router.get("/login", function(request, response){
+router.get("/login", function(request, response) {
   if(request.session.sessionAdmin) {
     const model = {
       username: "",
@@ -66,7 +66,7 @@ router.get("/login", function(request, response){
   }
 })
 
-router.post("/login", function(request, response){
+router.post("/login", function(request, response) {
   const username = request.body.username
   const password = request.body.password
 

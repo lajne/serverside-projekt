@@ -5,17 +5,17 @@ const authorManager = require('../../business-logic-layer/author-manager')
 const bookManager = require('../../business-logic-layer/book-manager')
 const paginate = require('../pagination/paginate')
 
-router.get('/', function(request, response){
+router.get('/', function(request, response) {
   response.redirect("/authors/page/1")
 })
 
-router.get('/page/:currentPage', function(request, response){
+router.get('/page/:currentPage', function(request, response) {
   const paginationOptions = {
     page: request.params.currentPage,
     limit: 10,
     offset: 0
   }
-  authorManager.getAllAuthorsWithPagination(paginationOptions, function(authors, pages){
+  authorManager.getAllAuthorsWithPagination(paginationOptions, function(authors, pages) {
     let currentPage = Number(request.params.currentPage)
     const pageIndexes = paginate(currentPage, pages)
   
@@ -27,7 +27,7 @@ router.get('/page/:currentPage', function(request, response){
   })
 })
 
-router.get("/create", function(request, response){
+router.get("/create", function(request, response) {
   bookManager.getAllBooks(function(errors, books) {
     let model = {
       books: books
@@ -36,7 +36,7 @@ router.get("/create", function(request, response){
   })
 })
 
-router.post("/create", function(request, response){
+router.post("/create", function(request, response) {
   const author = {
     firstName: request.body.firstname,
     lastName: request.body.lastname,
@@ -52,7 +52,7 @@ router.post("/create", function(request, response){
      } else {
        author.books = booksret
        
-       authorManager.createAuthor(request.session.sessionAdmin, author, function(errors, authorret){
+       authorManager.createAuthor(request.session.sessionAdmin, author, function(errors, authorret) {
          if(0 < errors.length) {
           let model = {
             books: "",
@@ -71,7 +71,7 @@ router.post("/create", function(request, response){
   })
 })
 
-router.get('/search/:searchTerm/page/:currentPage', function(request, response){
+router.get('/search/:searchTerm/page/:currentPage', function(request, response) {
   const searchTerm = request.params.searchTerm
   const paginationOptions = {
     page: request.params.currentPage,
@@ -96,16 +96,16 @@ router.get('/search/:searchTerm', function(request, response) {
   response.redirect('/authors/search/' + searchTerm + '/page/1')
 })
 
-router.get('/search', function(request, response){
+router.get('/search', function(request, response) {
   const searchTerm = request.query.authorSearch
 
   response.redirect("/authors/search/" + searchTerm)
 })
 
-router.get('/:id', function(request, response){
+router.get('/:id', function(request, response) {
   const id = request.params.id
 
-  authorRepo.getAuthorById(id, function(errors, author){
+  authorRepo.getAuthorById(id, function(errors, author) {
     const model = {
       author: author
     }
@@ -113,7 +113,7 @@ router.get('/:id', function(request, response){
   })
 })
 
-router.get("/:id/edit", function(request, response){
+router.get("/:id/edit", function(request, response) {
   const id = request.params.id
   
   authorRepo.getAuthorById(id, function(errors, author) {
@@ -124,7 +124,7 @@ router.get("/:id/edit", function(request, response){
   })
 })
 
-router.post("/:id/edit", function(request, response){
+router.post("/:id/edit", function(request, response) {
 
   const author = {
     id: request.params.id,
@@ -133,7 +133,7 @@ router.post("/:id/edit", function(request, response){
     birthYear: request.body.birthyear
   }
 
-  authorManager.editAuthor(request.session.sessionAdmin, author, function(errors, authorret){
+  authorManager.editAuthor(request.session.sessionAdmin, author, function(errors, authorret) {
     if(0 < errors.length) {
       const model = {
         author: author,
