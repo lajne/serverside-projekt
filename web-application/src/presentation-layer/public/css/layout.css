@@ -1,37 +1,37 @@
 
-#entire-page{
+#entire-page {
   min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
 
-header{
+header {
   text-align: center;
   font-size: 300%;
   border-bottom: 1px solid black;
 }
 
-h1{
+h1 {
   text-align: center;
 }
 
-html, body{
+html, body {
   width: 100%;
   height: 100%;
   margin: 0;
 }
 
-nav ul li{
+nav ul li {
   display: inline;
 }
 
-main{
+main {
   flex-grow: 1;
 }
 
 /* Footer */
-#footer{
+#footer {
   flex-shrink: 0;
   width:100%;
   height:40px; 
@@ -40,7 +40,7 @@ main{
   border-top: 1px solid black;
 }
 
-#homePage{
+#homePage {
   text-align: center;
 }
 
@@ -74,7 +74,7 @@ main{
 }
 
 /* Login-page */
-.loginBox{
+.loginBox {
   background-color: grey;
   position: absolute;
   width: 250px;
@@ -87,18 +87,18 @@ main{
   text-align: center;
 }
 
-.loginBox #loginButton{
+.loginBox #loginButton {
   margin-top: 1em;
 }
 
-#loginH1{
+#loginH1 {
   text-align: center;
   margin-top: 5em;
 }
 
 /* books, authors, admins */
 
-.item{
+.item {
   background-color: cornflowerblue;
   border: 1px solid black;
   width: 15em;
@@ -107,19 +107,19 @@ main{
   padding: 3px;
 }
 
-.item a{
+.item a {
   color: black;
 }
 
-.searchfield{
+.searchfield {
   text-align: center;
   margin-bottom: 1em;
 }
 
-.pagination{
+.pagination {
   text-align: center;
 }
 
-.viewClickedItem{
+.viewClickedItem {
   text-align: center;
 }
