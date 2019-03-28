@@ -1,21 +1,23 @@
-{{#if book}}
-  <div>ISBN: {{book.ISBN}}</div>
-  <div>Title: {{book.Title}}</div>
-  <div>SignId: {{book.SignId}}</div>
-  <div>PublicationYear: {{book.PublicationYear}}</div>
-  <div>PublicationInfo: {{book.PublicationInfo}}</div>
-  <div>Pages: {{book.Pages}}</div>
-  {{#if book.Authors}}
-    <div>
-      <h1>Authors:</h1> 
-      {{#each book.Authors}}
-        <li><a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a></li>
-      {{/each}}
-    </div>
+<div class="viewClickedItem">
+  {{#if book}}
+    <div>ISBN: {{book.ISBN}}</div>
+    <div>Title: {{book.Title}}</div>
+    <div>SignId: {{book.SignId}}</div>
+    <div>PublicationYear: {{book.PublicationYear}}</div>
+    <div>PublicationInfo: {{book.PublicationInfo}}</div>
+    <div>Pages: {{book.Pages}}</div>
+    {{#if book.Authors}}
+      <div>
+        <h1>Authors:</h1> 
+        {{#each book.Authors}}
+          <li><a href="/authors/{{Id}}">{{FirstName}} {{LastName}}</a></li>
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#if sessionAdmin}}
+      <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
+    {{/if}}
+  {{else}}
+    <p>Book does not exist yet!</p>
   {{/if}}
-  {{#if sessionAdmin}}
-    <button onclick="window.location.href='/books/{{book.ISBN}}/edit'">Edit</button>
-  {{/if}}
-{{else}}
-  <p>Book does not exist yet!</p>
-{{/if}}
+</div>

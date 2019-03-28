@@ -7,14 +7,16 @@
 	</ul>
 {{/if}}
 
-<form action="/authors/create" method="POST">
-  firstname: <input type="text" name="firstname" value="{{author.firstName}}"><br>
-  lastname: <input type="text" name="lastname" value="{{book.lastName}}"><br>
-  birthyear: <input type="text" name="birthyear" value="{{book.birthYear}}"><br>
-  <select multiple class="selectedBooks" name="selectedBooks">
-    {{#each books}}
-      <option value="{{ISBN}}">{{Title}}</option>
-    {{/each}}
-  </select>
-  <input type="submit" value="Create author">
-</form>
+{{#if sessionAdmin}}
+  <form action="/authors/create" method="POST">
+    firstname: <input type="text" name="firstname" value="{{author.firstName}}"><br>
+    lastname: <input type="text" name="lastname" value="{{book.lastName}}"><br>
+    birthyear: <input type="text" name="birthyear" value="{{book.birthYear}}"><br>
+    <select multiple class="selectedBooks" name="selectedBooks">
+      {{#each books}}
+        <option value="{{ISBN}}">{{Title}}</option>
+      {{/each}}
+    </select>
+    <input type="submit" value="Create author">
+  </form>
+{{/if}}
