@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = {}
-const sequelize = new Sequelize('aleskandersdatabase', 'aleskander', 'aleskander', {
-  host: 'ju-library.cgtn27kec3ou.eu-west-1.rds.amazonaws.com',
+const sequelize = new Sequelize('webAppDatabase', 'root', 'theRootPassword', {
+  host: 'database',
   dialect: 'mysql',
   pool: {
     max: 5,
@@ -10,6 +10,7 @@ const sequelize = new Sequelize('aleskandersdatabase', 'aleskander', 'aleskander
     idle: 10000
   },
 })
+
 
   sequelize
   .authenticate()
