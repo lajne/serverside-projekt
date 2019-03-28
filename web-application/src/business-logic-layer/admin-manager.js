@@ -8,8 +8,8 @@ exports.getAllAdmins = function(callback) {
     })
 }
 
-exports.createAdmin = function(authorized, admin, callback) {
-    if(authorized.session){
+exports.createAdmin = function(sessionAdmin, admin, callback) {
+    if(sessionAdmin){
         const errors = adminValidator.validateNewAccount(admin.username)
 
         if(0 < errors.length){
@@ -26,8 +26,8 @@ exports.createAdmin = function(authorized, admin, callback) {
 
 }
 
-exports.editAdmin = function(authorized, admin, callback) {
-    if(authorized.session) {
+exports.editAdmin = function(sessionAdmin, admin, callback) {
+    if(sessionAdmin) {
         const errors = adminValidator.validateNewAccount(admin.Username)
 
         if(0 < errors.length) {
@@ -45,8 +45,8 @@ exports.editAdmin = function(authorized, admin, callback) {
 
 }
 
-exports.deleteAdmin = function(authorized, id, callback) {
-  if(authorized.session) {
+exports.deleteAdmin = function(sessionAdmin, id, callback) {
+  if(sessionAdmin) {
     adminRepository.deleteAdmin(id, function(error, row) {
       callback(error, row)
     })

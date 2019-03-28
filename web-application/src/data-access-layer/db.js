@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = {}
-const sequelize = new Sequelize('webAppDatabase', 'root', 'theRootPassword', {
-  host: 'database',
+const sequelize = new Sequelize('aleskandersdatabase', 'aleskander', 'aleskander', {
+  host: 'ju-library.cgtn27kec3ou.eu-west-1.rds.amazonaws.com',
   dialect: 'mysql',
   pool: {
     max: 5,

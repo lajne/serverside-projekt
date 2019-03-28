@@ -1,42 +1,44 @@
 const db = require('./db')
 const {Books, Book_Authors} = require('./models')
 
-exports.getAllBooks = function(options, callback) {
-  if(options.default) {
-    if(options.books) {
-      Books.findAll({
-        where: {
-          ISBN: options.books
-        }
-      }).then(function(books) {
-        callback([], books)
-      }).catch(function(error) {
-        callback(['databaseerror'])
-      })
-    } else {
-      Books.findAll().then(function(books) {
-        callback([], books)
-      }).catch(function(error) {
-        callback(['databaseerror'])
-      })
+exports.getAllBooks = function(callback) {
+  Books.findAll()
+  .then(function(books) {
+    callback([], books)
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
+  })
+}
+
+exports.getBooksByISBN = function(selectedBooks, callback) {
+  Books.findAll({
+    where: {
+      ISBN: selectedBooks
     }
-  } else {
-    Books.findAndCountAll()
-    .then(function(books) {
-      let pages = Math.ceil(books.count / options.limit)
-      options.offset = options.limit * (options.page - 1)
-      
-      Books.findAll({
-        limit: options.limit,
-        offset: options.offset
-      }).then(function(books){
-          callback(books, pages)
-      }).catch(function(error) {
-        console.log(error)
-        callback(['databaseerror'])
-      })
+  }).then(function(books) {
+    callback([], books)
+  }).catch(function(error) {
+    callback(['databaseerror'])
+  })
+}
+
+exports.getAllBooksWithPagination = function(paginationOptions, callback) {
+  Books.findAndCountAll()
+  .then(function(books) {
+    let pages = Math.ceil(books.count / paginationOptions.limit)
+    paginationOptions.offset = paginationOptions.limit * (paginationOptions.page - 1)
+    
+    Books.findAll({
+      limit: paginationOptions.limit,
+      offset: paginationOptions.offset
+    }).then(function(books){
+        callback(books, pages)
+    }).catch(function(error) {
+      console.log(error)
+      callback(['databaseerror'])
     })
-  }
+  })
 }
 
 exports.createBook = function(book, callback) {
@@ -93,8 +95,8 @@ exports.getBookByISBN = function(isbn, callback) {
   })
 }
 
-exports.getBooksBySearch = function(searchTerm, callback) {
-  Books.findAll({
+exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
+  Books.findAndCountAll({
     where: {
       [db.Sequelize.Op.or]: [
         {
@@ -108,10 +110,35 @@ exports.getBooksBySearch = function(searchTerm, callback) {
         }
       ]
     }
-  }).then(function(books) {
-    callback([], books)
-  }).catch(function(error) {
-    console.log(error)
-    callback(['databaseerror'])
+  })
+  .then(function(books) {
+    console.log("COUNT: " + books.count)
+    let pages
+    if(books.count > 10) {
+      pages = Math.ceil(books.count / paginationOptions.limit)
+      paginationOptions.offset = paginationOptions.limit * (paginationOptions.page -1)
+    }
+    Books.findAll({
+      where: {
+        [db.Sequelize.Op.or]: [
+          {
+            ISBN: {
+              [db.Sequelize.Op.regexp]: searchTerm
+            } 
+          }, {
+            Title: {
+              [db.Sequelize.Op.regexp]: searchTerm
+            }
+          }
+        ]
+      },
+      limit: paginationOptions.limit,
+      offset: paginationOptions.offset
+    }).then(function(books) {
+      callback([], books, pages)
+    }).catch(function(error) {
+      console.log(error)
+      callback(['databaseerror'])
+    })
   })
 }

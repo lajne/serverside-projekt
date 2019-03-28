@@ -1,47 +1,15 @@
 const db = require('./db')
 const {Authors, Author_Books} = require('./models')
 
-exports.getAllAuthors = function(options, callback) {
-  if(options.default) {
-    // if(options.authors) {
-    //   Authors.findAll({
-    //     where: {
-    //       Id: options.authors
-    //     }
-    //   })
-    //   .then(function(authors) {
-    //     callback([], authors)
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error)
-    //     callback(['databaseerror'])
-    //   })
-    // } else {
-      Authors.findAll()
-      .then(function(authors) {
-        callback([], authors)
-      }).catch(function(error) {
-        console.log(error)
-        callback(['databaseerror'])
-      })
-    //}
-  } else {
-    Authors.findAndCountAll()
-    .then(function(authors) {
-      let pages = Math.ceil(authors.count / options.limit)
-      options.offset = options.limit * (options.page - 1)
-  
-      Authors.findAll({
-        limit: options.limit,
-        offset: options.offset
-      }).then(function(authors){
-        callback(authors, pages)
-      }).catch(function(error) {
-        console.log(error)
-        callback(['databaseerror'])
-      })
-    })
-  }
+exports.getAllAuthors = function(callback) {
+  Authors.findAll()
+  .then(function(authors) {
+    console.log(JSON.stringify("authors i createn: " + authors, null, 2))
+    callback([], authors)
+  }).catch(function(error) {
+    console.log(error)
+    callback(['databaseerror'])
+  })
 }
 // Koppla ihop med övrigt
 exports.getAuthorsById = function(selectedAuthors, callback) {
@@ -53,6 +21,24 @@ exports.getAuthorsById = function(selectedAuthors, callback) {
     callback([], authors)
   }).catch(function(error) {
     callback(['databaseerror'])
+  })
+}
+
+exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
+  Authors.findAndCountAll()
+  .then(function(authors) {
+    let pages = Math.ceil(authors.count / paginationOptions.limit)
+    paginationOptions.offset = paginationOptions.limit * (paginationOptions.page - 1)
+
+    Authors.findAll({
+      limit: paginationOptions.limit,
+      offset: paginationOptions.offset
+    }).then(function(authors){
+      callback(authors, pages)
+    }).catch(function(error) {
+      console.log(error)
+      callback(['databaseerror'])
+    })
   })
 }
 
@@ -102,8 +88,8 @@ exports.getAuthorById = function(authorId, callback) {
   })
 }
 
-exports.getAuthorsBySearch = function(searchTerm, callback) {
-  Authors.findAll({
+exports.getAuthorsBySearch = function(searchTerm, paginationOptions, callback) {
+  Authors.findAndCountAll({
     where: {
       [db.Sequelize.Op.or]: [
         {
@@ -117,10 +103,59 @@ exports.getAuthorsBySearch = function(searchTerm, callback) {
         }
       ]
     }
-  }).then(function(authors) {
-      callback([], authors)
-  }).catch(function(error) {
-    console.log(error)
-    callback(['databaseerror'])
   })
+  .then(function(authors) {
+    console.log("COUNT: " + authors.count)
+    let pages
+    if(authors.count > 10) {
+      pages = Math.ceil(authors.count / paginationOptions.limit)
+      paginationOptions.offset = paginationOptions.limit * (paginationOptions.page - 1)
+    } else {
+      paginationOptions.offset = paginationOptions.limit * (paginationOptions.page - 1)
+    }
+    Authors.findAll({
+      where: {
+        [db.Sequelize.Op.or]: [
+          {
+            FirstName: {
+              [db.Sequelize.Op.regexp]: searchTerm
+            }
+          }, {
+            LastName: {
+              [db.Sequelize.Op.regexp]: searchTerm
+            }
+          }
+        ]
+      },
+      limit: paginationOptions.limit,
+      offset: paginationOptions.offset
+    }).then(function(authors) {
+      callback([], authors, pages)
+    }).catch(function(error) {
+      console.log(error)
+      callback(['databaseerror'])
+    })
+  })
+  
+
+  // Authors.findAll({
+  //   where: {
+  //     [db.Sequelize.Op.or]: [
+  //       {
+  //         FirstName: {
+  //           [db.Sequelize.Op.regexp]: searchTerm
+  //         }
+  //       }, {
+  //         LastName: {
+  //           [db.Sequelize.Op.regexp]: searchTerm
+  //         }
+  //       }
+  //     ]
+  //   }
+  // }).then(function(authors) {
+  //     callback([], authors)
+  // }).catch(function(error) {
+  //   console.log(error)
+  //   callback(['databaseerror'])
+  // })
 }

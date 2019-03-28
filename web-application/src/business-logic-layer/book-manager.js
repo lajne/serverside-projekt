@@ -1,14 +1,26 @@
 const bookRepository = require('../data-access-layer/book-repository')
 const bookValidator = require('./book-validator')
 
-exports.getAllBooks = function(options, callback) {
-  bookRepository.getAllBooks(options, function(errors, books) {
+exports.getAllBooks = function(callback) {
+  bookRepository.getAllBooks(function(errors, books) {
     callback(errors, books)
   })
 }
 
-exports.createBook = function(authorized, book, callback) {
-  if(authorized.session){
+exports.getBooksByISBN = function(selectedBooks, callback) {
+  bookRepository.getBooksByISBN(selectedBooks, function(errors, books) {
+    callback(errors, books)
+  })
+}
+
+exports.getAllBooksWithPagination = function(paginationOptions, callback) {
+  bookRepository.getAllBooksWithPagination(paginationOptions, function(errors, books) {
+    callback(errors, books)
+  })
+}
+
+exports.createBook = function(sessionAdmin, book, callback) {
+  if(sessionAdmin){
     const errors = bookValidator.validateNewBook(book) 
     if(0 < errors.length) {
       callback(errors, [])
@@ -30,14 +42,14 @@ exports.getBookByISBN = function(isbn, callback) {
   })
 }
 
-exports.getBooksBySearch = function(searchTerm, callback) {
-  bookRepository.getBooksBySearch(searchTerm, function(error, books) {
-    callback(error, books)
+exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
+  bookRepository.getBooksBySearch(searchTerm, paginationOptions, function(error, books, pages) {
+    callback(error, books, pages)
   })
 }
 
-exports.editBook = function(authorized, book, callback) {
-  if(authorized.session){
+exports.editBook = function(sessionAdmin, book, callback) {
+  if(sessionAdmin){
     const errors = bookValidator.validateNewBook(book)
 
     if(0 < errors.length) {

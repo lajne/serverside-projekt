@@ -1,7 +1,11 @@
 <h1>AUTHORS</h1>
 <form action="/authors/search/" method="GET">
   <div>
-    Search <input type="text" name="authorSearch">
+    {{#if searchTerm}}
+      Search <input type="text" name="authorSearch" value="{{searchTerm}}">
+    {{else}}
+      Search <input type="text" name="authorSearch">
+    {{/if}}
     <input type="submit" value="Go!">
   </div>
 </form>
@@ -15,15 +19,24 @@
     <button onclick="window.location.href='/authors/create'">Create author</button>
   {{/if}}
 {{else}}
-  <div>
-    <p>There is no authors atm..</p>
-    {{#if sessionAdmin}}
-      <button onclick="window.location.href='/authors/create'">Create author</button>
-    {{/if}}
-  </div>
+  {{#if searchTerm}}
+    <div>
+      <p>Your search - <b>{{searchTerm}}</b> - did not match any authornames.</p>
+      {{#if sessionAdmin}}
+        <button onclick="window.location.href='/authors/create'">Create author</button>
+      {{/if}}
+    </div>
+  {{else}}
+    <div>
+      <p>There are no authors atm..</p>
+      {{#if sessionAdmin}}
+        <button onclick="window.location.href='/authors/create'">Create author</button>
+      {{/if}}
+    </div>
+  {{/if}}
 {{/if}}
 <div>
   {{#each pages}}
-    <a href="/authors/page/{{index}}">{{index}}</a>
+    <a href="/authors/page/{{this}}">{{this}}</a>
   {{/each}}
 </div>

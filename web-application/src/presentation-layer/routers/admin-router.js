@@ -4,31 +4,41 @@ const adminRepo = require('../../data-access-layer/admin-repository')
 const adminManager = require('../../business-logic-layer/admin-manager')
 
 router.get('/', function(request, response){
-  adminManager.getAllAdmins(function(error, admins){
+  if(request.session.sessionAdmin) {
+    adminManager.getAllAdmins(function(error, admins){
+      const model = {
+        admins: admins,
+        error: error
+      }
+      response.render("page-admins.hbs", model)
+    })
+  } else {
     const model = {
-      admins: admins,
-      error: error
+      error: ["you need to be an admin to do that."]
     }
     response.render("page-admins.hbs", model)
-  })
+  }
 })
 
 router.get("/create", function(request, response){
-  response.render("page-createadmin.hbs")
+  if(request.session.sessionAdmin) {
+    response.render("page-createadmin.hbs")
+  } else {
+    const model = {
+      error: ["you need to be an admin to do that."]
+    }
+    response.render("page-createadmin.hbs", model)
+  }
 })
 
 router.post("/create", function(request, response){
-  const authorized = {
-    session: request.session.sessionAdmin
-  }
-
   const admin = {
     username: request.body.username,
     salt: "",
     password: request.body.password
   }
 
-  adminManager.createAdmin(authorized, admin, function(error, admin){
+  adminManager.createAdmin(request.session.sessionAdmin, admin, function(error, admin){
     if(0 < error.length) {
       const model = {
         admin: admin,
@@ -42,11 +52,18 @@ router.post("/create", function(request, response){
 })
 
 router.get("/login", function(request, response){
-  const model = {
-    username: "",
-    error: []
+  if(request.session.sessionAdmin) {
+    const model = {
+      username: "",
+      error: []
+    }
+    response.render("page-login.hbs", model)
+  } else {
+    const model = {
+      error: ["you need to be an admin to do that."]
+    }
+    response.render("page-login.hbs", model)
   }
-  response.render("page-login.hbs", model)
 })
 
 router.post("/login", function(request, response){
@@ -86,57 +103,66 @@ router.get('/:id', function(request, response){
 })
 
 router.get("/:id/edit", function(request, response) {
-  const id = request.params.id
-  
-  adminManager.getAdminById(id, function(error, admin) {
-    const model = {
-      admin: admin,
-      error: error
-    }
-    response.render("page-editadmin.hbs", model)
-  })
-})
-
-router.post("/:id/edit", function(request, response){
-  const authorized = {
-    session: request.session.sessionAdmin
-  }
-
-  const admin = {
-    id: request.params.id,
-    Username: request.body.username,
-    Password: request.body.password
-  }
-
-  adminManager.editAdmin(authorized, admin, function(error, adminret) {
-    if(0 < error.length){
+  if(request.session.sessionAdmin) {
+    const id = request.params.id
+    
+    adminManager.getAdminById(id, function(error, admin) {
       const model = {
         admin: admin,
         error: error
       }
       response.render("page-editadmin.hbs", model)
-    }else {
-      response.redirect("/admins")
+    })
+  } else {
+    const model = {
+      error: ["you need to be an admin to do that."]
     }
+    response.render("page-editadmin.hbs", model)
+  }
+})
+
+router.post("/:id/edit", function(request, response) {
+  adminManager.getAdminById(request.params.id, function(error, adminReturned) {
+    const admin = {
+      id: request.params.id,
+      Username: request.body.username,
+      Salt: adminReturned.Salt,
+      Password: request.body.password
+    }
+    adminManager.editAdmin(request.session.sessionAdmin, admin, function(error, adminret) {
+      if(0 < error.length) {
+        const model = {
+          admin: admin,
+          error: error
+        }
+        response.render("page-editadmin.hbs", model)
+      } else {
+        response.redirect("/admins")
+      }
+    })
   })
 })
 
 router.get("/:id/delete", function(request, response) {
-  const authorized = {
-    session: request.session.sessionAdmin
-  }
-  const id = request.params.id
-
-  adminManager.deleteAdmin(authorized, id, function(error, row) {
-    if(0 < error.length) {
-      const model = {
-        error: error
+  if(request.session.sessionAdmin) {
+    const id = request.params.id
+  
+    adminManager.deleteAdmin(request.session.sessionAdmin, id, function(error, result) {
+      if(0 < error.length) {
+        const model = {
+          error: error
+        }
+        response.render("page-viewadmins.hbs", model)
+      } else {
+        response.redirect("/admins")
       }
-      response.render("page-viewadmins.hbs", model)
-    } else {
-      response.redirect("/admins")
+    })
+  } else {
+    const model = {
+      error: ["you need to be an admin to do that."]
     }
-  })
+    response.render("page-viewadmins.hbs", model)
+  }
 })
 
 module.exports = router

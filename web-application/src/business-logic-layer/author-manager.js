@@ -1,8 +1,8 @@
 const authorRepository = require('../data-access-layer/author-repository')
 const authorValidator = require('./author-validator')
 
-exports.getAllAuthors = function(options, callback) {
-  authorRepository.getAllAuthors(options, function(errors, authors) {
+exports.getAllAuthors = function(callback) {
+  authorRepository.getAllAuthors(function(errors, authors) {
     callback(errors, authors)
   })
 }
@@ -13,8 +13,14 @@ exports.getAuthorsById = function(selectedAuthors, callback) {
   })
 }
 
-exports.createAuthor = function(authorized, author, callback) {
-  if(authorized.session){
+exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
+  authorRepository.getAllAuthorsWithPagination(paginationOptions, function(errors, authors) {
+    callback(errors, authors)
+  })
+}
+
+exports.createAuthor = function(sessionAdmin, author, callback) {
+  if(sessionAdmin){
     const errors = authorValidator.validateNewAuthor(author)
 
     if(0 < errors.length) {
@@ -38,14 +44,14 @@ exports.getAuthorById = function(id, callback) {
   })
 }
 
-exports.getAuthorsBySearch = function(searchTerm, callback) {
-  authorRepository.getAuthorsBySearch(searchTerm, function(error, authors) {
-    callback(error, authors)
+exports.getAuthorsBySearch = function(searchTerm, paginationOptions, callback) {
+  authorRepository.getAuthorsBySearch(searchTerm, paginationOptions, function(error, authors, pages) {
+    callback(error, authors, pages)
   })
 }
 
-exports.editAuthor = function(authorized, author, callback) {
-  if(authorized.session){
+exports.editAuthor = function(sessionAdmin, author, callback) {
+  if(sessionAdmin){
     const errors = authorValidator.validateNewAuthor(author)
 
     if(0 < errors.length) {
