@@ -8,8 +8,7 @@ exports.validateNewAccount = function(username){
     if(!username){
         errors.push("Username is missing.")
     }else if(username.length < USERNAME_MIN_LENGTH || USERNAME_MAX_LENGTH < username.length){
-        errors.push("Username must be between 3-15 characters.")
-    }
-
-    return errors
+      errors.push("Username must be between 3-15 characters.")
+  }
+  return errors
 }

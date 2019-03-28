@@ -38,7 +38,7 @@
 
 - [x] när man tar emot req.sess.sessadmin byt namn på variabel authorized till sessionAdmin.
 
-- [] Om man inte är inloggad och skriver /admins/create så kan man göra saker.(auth i admin överlag)
+- [x] Om man inte är inloggad och skriver /admins/create så kan man göra saker.(auth i admin överlag)
 
 - [x] länka vidare till de books/authors som tillhör en viss book/author.
 

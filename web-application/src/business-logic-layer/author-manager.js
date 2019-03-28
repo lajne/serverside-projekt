@@ -20,7 +20,7 @@ exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
 }
 
 exports.createAuthor = function(sessionAdmin, author, callback) {
-  if(sessionAdmin){
+  if(sessionAdmin) {
     const errors = authorValidator.validateNewAuthor(author)
 
     if(0 < errors.length) {
@@ -51,7 +51,7 @@ exports.getAuthorsBySearch = function(searchTerm, paginationOptions, callback) {
 }
 
 exports.editAuthor = function(sessionAdmin, author, callback) {
-  if(sessionAdmin){
+  if(sessionAdmin) {
     const errors = authorValidator.validateNewAuthor(author)
 
     if(0 < errors.length) {
