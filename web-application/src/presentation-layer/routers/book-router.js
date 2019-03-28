@@ -18,11 +18,11 @@ router.get('/page/:currentPage', function(request, response) {
 
   bookManager.getAllBooksWithPagination(paginationOptions, function(books, pages) {
     let currentPage = Number(request.params.currentPage)
-    const pageIndexes = paginate(currentPage, pages)
+    const urlAttributes = paginate(currentPage, pages, null)
     
     let model = {
       books: books,
-      pages: pageIndexes
+      urlAttributes: urlAttributes
     }
     response.render("page-books.hbs", model)
   })

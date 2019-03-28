@@ -4,9 +4,17 @@ module.exports = function(currentPage, pages, searchTerm) {
   const last = Math.min(pages, currentPage+2)
   let urlAttributes = []
 
-  for(i = first; i <= last; i++) {
-    urlAttributes.push({ searchTerm: searchTerm, pageIndex: i })
+  if(searchTerm == null) {
+    for(i = first; i <= last; i++) {
+      urlAttributes.push({ searchTerm: null, pageIndex: i })
+    }
+    return urlAttributes
+  } else {
+    for(i = first; i <= last; i++) {
+      urlAttributes.push({ searchTerm: searchTerm, pageIndex: i })
+    }
   }
+
   return urlAttributes
 
 }

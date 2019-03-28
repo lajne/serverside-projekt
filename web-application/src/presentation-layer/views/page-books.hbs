@@ -36,13 +36,11 @@
   {{/if}}
 {{/if}}
 <div class="pagination">
-  {{#if searchPagination}}
-    {{#each urlAttributes}}
+  {{#each urlAttributes}}
+    {{#if searchPagination}}
       <a href="/books/search/{{searchTerm}}/page/{{pageIndex}}">{{pageIndex}}</a>
-    {{/each}}
-  {{else}}
-    {{#each pages}}
-      <a href="/books/page/{{this}}">{{this}}</a>
-    {{/each}}
-  {{/if}}
+    {{else}}
+      <a href="/books/page/{{pageIndex}}">{{pageIndex}}</a>
+    {{/if}}
+  {{/each}}
 </div>

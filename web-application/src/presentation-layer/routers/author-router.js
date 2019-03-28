@@ -16,11 +16,11 @@ router.get('/page/:currentPage', function(request, response) {
   }
   authorManager.getAllAuthorsWithPagination(paginationOptions, function(authors, pages) {
     let currentPage = Number(request.params.currentPage)
-    const pageIndexes = paginate(currentPage, pages)
+    const urlAttributes = paginate(currentPage, pages, null)
   
     let model = {
       authors: authors,
-      pages: pageIndexes
+      urlAttributes: urlAttributes
     }
     response.render("page-authors.hbs", model)
   })
