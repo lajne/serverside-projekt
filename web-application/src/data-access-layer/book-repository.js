@@ -5,8 +5,8 @@ exports.getAllBooks = function(callback) {
   Books.findAll()
   .then(function(books) {
     callback([], books)
-  }).catch(function(error) {
-    console.log(error)
+  }).catch(function(errors) {
+    console.log(errors)
     callback(['databaseerror'])
   })
 }
@@ -18,7 +18,7 @@ exports.getBooksByISBN = function(selectedBooks, callback) {
     }
   }).then(function(books) {
     callback([], books)
-  }).catch(function(error) {
+  }).catch(function(errors) {
     callback(['databaseerror'])
   })
 }
@@ -32,10 +32,10 @@ exports.getAllBooksWithPagination = function(paginationOptions, callback) {
     Books.findAll({
       limit: paginationOptions.limit,
       offset: paginationOptions.offset
-    }).then(function(books){
+    }).then(function(books) {
         callback(books, pages)
-    }).catch(function(error) {
-      console.log(error)
+    }).catch(function(errors) {
+      console.log(errors)
       callback(['databaseerror'])
     })
   })
@@ -49,13 +49,13 @@ exports.createBook = function(book, callback) {
     PublicationYear: book.publicationYear,
     PublicationInfo: book.publicationInfo,
     Pages: book.pages,
-  }).then(function(createdBook){
+  }).then(function(createdBook) {
     createdBook.addAuthors(book.authors).then(function(createdBookWithAuthors) {
       callback([], createdBookWithAuthors)
     })
   })
-  .catch(function(error){
-    console.log("error: " + error)
+  .catch(function(errors) {
+    console.log("error: " + errors)
     callback(['databaseerror'])
   })
 }
@@ -70,10 +70,10 @@ exports.editBook = function(book, callback) {
     Pages: book.pages 
   }, {
     where: {ISBN: book.isbn}
-  }).then(function(updatedBook){
+  }).then(function(updatedBook) {
     callback([], updatedBook)
-  }).catch(function(error) {
-    console.log(error)
+  }).catch(function(errors) {
+    console.log(errors)
     callback(['databaseerror'])
   })
 }
@@ -87,10 +87,10 @@ exports.getBookByISBN = function(isbn, callback) {
       association: Book_Authors
     }]
     
-  }).then(function(book){
+  }).then(function(book) {
     callback([], book[0])
-  }).catch(function(error) {
-    console.log(error)
+  }).catch(function(errors) {
+    console.log(errors)
     callback(['databaseerror'])
   })
 }
@@ -136,8 +136,8 @@ exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
       offset: paginationOptions.offset
     }).then(function(books) {
       callback([], books, pages)
-    }).catch(function(error) {
-      console.log(error)
+    }).catch(function(errors) {
+      console.log(errors)
       callback(['databaseerror'])
     })
   })
