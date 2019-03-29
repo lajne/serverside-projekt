@@ -26,6 +26,11 @@ nav ul li {
   display: inline;
 }
 
+ul {
+  list-style: none;
+  color: red;
+}
+
 main {
   flex-grow: 1;
 }
@@ -119,19 +124,3 @@ main {
 .centered {
   text-align: center;
 }
-
-/* .pagination {
-  text-align: center;
-}
-
-.viewClickedItem {
-  text-align: center;
-}
-
-.noSearchResult {
-  text-align: center;
-}
-
-#createAdminBtn {
-  text-align: center;
-} */

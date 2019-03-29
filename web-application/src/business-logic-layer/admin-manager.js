@@ -17,7 +17,7 @@ exports.createAdmin = function(sessionAdmin, admin, callback) {
       return
     }
     const salt = String(Math.random().toString(36).substring(2, 15))
-    const hashedPassword = hash(admin.password, salt)
+    const hashedPassword = hash(admin.Password, salt)
     admin.Salt = salt
     admin.Password = hashedPassword
     adminRepository.createAdmin(admin, function(errors, admin) {

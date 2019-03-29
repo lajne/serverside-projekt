@@ -1,12 +1,14 @@
 <h1>Create Admin</h1>
 
 {{#if errors.length}}
-  <p>Could not create an admin because: </p>
-  <ul>
-    {{#each errors}}
-    <li>{{this}}</li>
-    {{/each}}
-  </ul>
+  <div class="centered">
+    <p>Could not create an admin because: </p>
+    <ul>
+      {{#each errors}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
 
 {{#if sessionAdmin}}

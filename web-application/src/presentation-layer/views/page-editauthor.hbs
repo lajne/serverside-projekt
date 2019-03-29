@@ -1,10 +1,12 @@
 {{#if errors.length}}
-  <p>Could not edit author because: </p>
-  <ul>
-    {{#each errors}}
-    <li>{{this}}</li>
-    {{/each}}
-  </ul>
+  <div class="centered">
+    <p>Could not edit author because: </p>
+    <ul>
+      {{#each errors}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
 
 {{#if sessionAdmin}}

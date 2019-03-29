@@ -52,6 +52,7 @@ router.post("/create", function(request, response) {
     PublicationYear : request.body.publicationyear,
     PublicationInfo : request.body.publicationinfo,
     Pages : request.body.pages,
+    SelectedAuthors: request.body.selectedAuthors
   }
 
   authorManager.getAuthorsById(request.body.selectedAuthors, function(errors, authorsReturned) {

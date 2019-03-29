@@ -16,5 +16,9 @@ exports.validateNewBook = function(book) {
   if(!book.SignId || book.SignId <= 0) {
     errors.push("You need to enter a SignId with a posotive value")
   }
+
+  if(!book.SelectedAuthors) {
+    errors.push("You need to add at least one author to the book.")
+  }
   return errors
 }

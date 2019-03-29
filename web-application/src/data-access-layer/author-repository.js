@@ -43,9 +43,9 @@ exports.getAllAuthorsWithPagination = function(paginationOptions, callback) {
 
 exports.createAuthor = function(author, callback) {
   Authors.create({
-    FirstName: author.firstName,
-    LastName: author.lastName,
-    BirthYear: author.birthYear
+    FirstName: author.FirstName,
+    LastName: author.LastName,
+    BirthYear: author.BirthYear
   }).then(function(createdAuthor) {
     createdAuthor.addBooks(author.books).then(function(createdAuthorWithBooks) {
       callback([], createdAuthorWithBooks)

@@ -24,7 +24,7 @@ exports.editAdmin = function(admin, callback) {
   Admins.update({
     Username: admin.Username,
     Salt: admin.Salt,
-    Password: admin.password
+    Password: admin.Password
   }, {
     where: {id: admin.id}
   }).then(function(updatedAdmin) {
