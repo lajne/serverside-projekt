@@ -1,18 +1,22 @@
 <h1>Create Admin</h1>
 
 {{#if errors.length}}
-  <p>Could not create an admin because: </p>
-  <ul>
-    {{#each errors}}
-    <li>{{this}}</li>
-    {{/each}}
-  </ul>
+  <div class="centered">
+    <p>Could not create an admin because: </p>
+    <ul>
+      {{#each errors}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
 
 {{#if sessionAdmin}}
-  <form method="POST" action="/admins/create">
-    Username: <input name="username"><br>
-    Password: <input name="password"><br>
-    <input type="submit" value="Create!">
-  </form>
+  <div class="centered">
+    <form method="POST" action="/admins/create">
+      Username: <input name="username"><br>
+      Password: <input name="password"><br>
+      <input type="submit" value="Create!">
+    </form>
+  </div>
 {{/if}}

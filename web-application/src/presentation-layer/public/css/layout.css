@@ -26,6 +26,11 @@ nav ul li {
   display: inline;
 }
 
+ul {
+  list-style: none;
+  color: red;
+}
+
 main {
   flex-grow: 1;
 }
@@ -116,10 +121,6 @@ main {
   margin-bottom: 1em;
 }
 
-.pagination {
-  text-align: center;
-}
-
-.viewClickedItem {
+.centered {
   text-align: center;
 }

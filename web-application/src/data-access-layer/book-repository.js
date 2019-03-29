@@ -43,12 +43,12 @@ exports.getAllBooksWithPagination = function(paginationOptions, callback) {
 
 exports.createBook = function(book, callback) {
   Books.create({
-    ISBN: book.isbn,
-    Title: book.title,
-    SignId: book.signId,
-    PublicationYear: book.publicationYear,
-    PublicationInfo: book.publicationInfo,
-    Pages: book.pages,
+    ISBN: book.ISBN,
+    Title: book.Title,
+    SignId: book.SignId,
+    PublicationYear: book.PublicationYear,
+    PublicationInfo: book.PublicationInfo,
+    Pages: book.Pages,
   }).then(function(createdBook) {
     createdBook.addAuthors(book.authors).then(function(createdBookWithAuthors) {
       callback([], createdBookWithAuthors)
@@ -62,14 +62,14 @@ exports.createBook = function(book, callback) {
 
 exports.editBook = function(book, callback) {
   Books.update({
-    ISBN: book.isbn,
-    Title: book.title,
-    SignId: book.signId,
-    PublicationYear: book.publicationYear,
-    PublicationInfo: book.publicationInfo,
-    Pages: book.pages 
+    ISBN: book.ISBN,
+    Title: book.Title,
+    SignId: book.SignId,
+    PublicationYear: book.PublicationYear,
+    PublicationInfo: book.PublicationInfo,
+    Pages: book.Pages 
   }, {
-    where: {ISBN: book.isbn}
+    where: {ISBN: book.ISBN}
   }).then(function(updatedBook) {
     callback([], updatedBook)
   }).catch(function(errors) {

@@ -22,7 +22,9 @@
 
 - [x] När man editar lösenord för en admin skall den hasha lösenordet.
 
-- [] Snyggare UI, t.ex flytta create i admins/authors/books längre upp inte längst ner under alla items.
+- [x] Snyggare UI, t.ex flytta create i admins/authors/books längre upp inte längst ner under alla items.
+
+- [] Errorhantering för unique constraints när man skapar bok eller author.
 
 !Saker att fixa!
 
@@ -47,3 +49,5 @@
 - [] lägg till så att alla värden man skrev när man försökte skapa author är kvar om det är errors.
 
 - [] när man editar, hur skall lösenordet visas? ska det ens visas?
+
+- [] hashen ändras inte vid edit......

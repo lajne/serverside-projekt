@@ -44,9 +44,9 @@ router.get("/create", function(request, response) {
 
 router.post("/create", function(request, response) {
   const author = {
-    firstName: request.body.firstname,
-    lastName: request.body.lastname,
-    birthYear: request.body.birthyear
+    FirstName: request.body.firstname,
+    LastName: request.body.lastname,
+    BirthYear: request.body.birthyear
   }
 
   bookManager.getBooksByISBN(request.body.selectedBooks, function(errors, booksReturned) {
@@ -98,15 +98,10 @@ router.get('/search/:searchTerm/page/:currentPage', function(request, response) 
   })
 })
 
-router.get('/search/:searchTerm', function(request, response) {
-  const searchTerm = request.params.searchTerm
-  response.redirect('/authors/search/' + searchTerm + '/page/1')
-})
-
 router.get('/search', function(request, response) {
   const searchTerm = request.query.authorSearch
 
-  response.redirect("/authors/search/" + searchTerm)
+  response.redirect('/authors/search/' + searchTerm + '/page/1')
 })
 
 router.get('/:id', function(request, response) {
@@ -139,16 +134,17 @@ router.get("/:id/edit", function(request, response) {
 })
 
 router.post("/:id/edit", function(request, response) {
-
+  const id = request.params.id;
   const author = {
-    id: request.params.id,
-    firstName: request.body.firstname,
-    lastName: request.body.lastname,
-    birthYear: request.body.birthyear
+    Id: request.params.id,
+    FirstName: request.body.firstname,
+    LastName: request.body.lastname,
+    BirthYear: request.body.birthyear
   }
 
   authorManager.editAuthor(request.session.sessionAdmin, author, function(errors, authorReturned) {
     if(0 < errors.length) {
+      console.log("error")
       const model = {
         author: author,
         errors: errors

@@ -46,12 +46,13 @@ router.get("/create", function(request, response) {
 
 router.post("/create", function(request, response) {
   const book = {
-    isbn: request.body.isbn,
-    title : request.body.title,
-    signId : request.body.signid,
-    publicationYear : request.body.publicationyear,
-    publicationInfo : request.body.publicationinfo,
-    pages : request.body.pages,
+    ISBN: request.body.isbn,
+    Title : request.body.title,
+    SignId : request.body.signid,
+    PublicationYear : request.body.publicationyear,
+    PublicationInfo : request.body.publicationinfo,
+    Pages : request.body.pages,
+    SelectedAuthors: request.body.selectedAuthors
   }
 
   authorManager.getAuthorsById(request.body.selectedAuthors, function(errors, authorsReturned) {
@@ -103,15 +104,10 @@ router.get('/search/:searchTerm/page/:currentPage', function(request, response) 
   })
 })
 
-router.get('/search/:searchTerm', function(request, response) {
-  const searchTerm = request.params.searchTerm
-  response.redirect('/books/search/' + searchTerm + '/page/1')
-})
-
 router.get('/search', function(request, response) {
   const searchTerm = request.query.bookSearch
 
-  response.redirect("/books/search/" + searchTerm)
+  response.redirect("/books/search/" + searchTerm + '/page/1')
 })
 
 router.get('/:isbn', function(request, response) {
@@ -145,12 +141,12 @@ router.get("/:isbn/edit", function(request, response) {
 
 router.post("/:isbn/edit", function(request, response) {
   const book = {
-    isbn: request.body.isbn,
-    title : request.body.title,
-    signId : request.body.signid,
-    publicationYear : request.body.publicationyear,
-    publicationInfo : request.body.publicationinfo,
-    pages : request.body.pages
+    ISBN: request.body.isbn,
+    Title : request.body.title,
+    SignId : request.body.signid,
+    PublicationYear : request.body.publicationyear,
+    PublicationInfo : request.body.publicationinfo,
+    Pages : request.body.pages
   }
 
   bookManager.editBook(request.session.sessionAdmin, book, function(errors, bookReturned) {

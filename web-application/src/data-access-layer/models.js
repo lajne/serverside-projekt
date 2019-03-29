@@ -39,7 +39,6 @@ const Books = db.sequelize.define('Books', {
 });
 
 Admins.sync()
-// Admins.sync({ force: true })
 
 const Author_Books = Authors.belongsToMany(Books, {through: 'BookAuthors'} )
 const Book_Authors = Books.belongsToMany(Authors, {through: 'BookAuthors'} )

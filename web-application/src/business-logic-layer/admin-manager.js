@@ -10,12 +10,16 @@ exports.getAllAdmins = function(callback) {
 
 exports.createAdmin = function(sessionAdmin, admin, callback) {
   if(sessionAdmin) {
-    const errors = adminValidator.validateNewAccount(admin.username)
+    const errors = adminValidator.validateNewAccount(admin.Username)
 
     if(0 < errors.length) {
       callback(errors)
       return
     }
+    const salt = String(Math.random().toString(36).substring(2, 15))
+    const hashedPassword = hash(admin.Password, salt)
+    admin.Salt = salt
+    admin.Password = hashedPassword
     adminRepository.createAdmin(admin, function(errors, admin) {
       callback([], admin)
     })
@@ -33,7 +37,8 @@ exports.editAdmin = function(sessionAdmin, admin, callback) {
       callback(errors)
       return
     }
-    
+    const hashedPassword = hash(admin.Password, admin.Salt)
+    admin.Password = hashedPassword
     adminRepository.editAdmin(admin, function(errors, admin) {
       callback(errors, admin)
     })

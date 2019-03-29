@@ -1,17 +1,19 @@
 {{#if errors.length}}
-  <p>Could not edit author because: </p>
-  <ul>
-    {{#each errors}}
-    <li>{{this}}</li>
-    {{/each}}
-  </ul>
+  <div class="centered">
+    <p>Could not edit author because: </p>
+    <ul>
+      {{#each errors}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
 
 {{#if sessionAdmin}}
   <form method="POST" action="/authors/{{author.Id}}/edit">
-    firstname: <input type="text" name="firstName" value="{{author.FirstName}}"><br>
-    lastname: <input type="text" name="lastName" value="{{author.LastName}}"><br>
-    birthyear: <input type="text" name="birthYear" value="{{author.BirthYear}}"><br>
+    firstname: <input type="text" name="firstname" value="{{author.FirstName}}"><br>
+    lastname: <input type="text" name="lastname" value="{{author.LastName}}"><br>
+    birthyear: <input type="text" name="birthyear" value="{{author.BirthYear}}"><br>
     <input type="submit" value="Save changes">
   </form>
 {{/if}}

@@ -1,25 +1,31 @@
 {{#if errors.length}}
-	<p>Could not create a book because:</p>
-	<ul>
-		{{#each errors}}
-			<li>{{this}}</li>
-		{{/each}}
-	</ul>
+  <div class="centered">
+    <p>Could not create a book because:</p>
+    <ul>
+      {{#each errors}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
 
 {{#if sessionAdmin}}
-  <form action="/books/create" method="POST">
-    ISBN: <input name="isbn" value="{{book.isbn}}"><br>
-    Title: <input name="title" value="{{book.title}}"><br>
-    SignId: <input name="signid" value="{{book.signId}}"><br>
-    PublicationYear: <input name="publicationyear" value="{{book.publicationYear}}"><br>
-    PublicationInfo: <input name="publicationinfo" value="{{book.publicationInfo}}"><br>
-    Pages: <input name="pages" value="{{book.pages}}"><br>
-    <select multiple class="selectedAuthors" name="selectedAuthors">
-      {{#each authors}}
-        <option value="{{Id}}">{{FirstName}} {{LastName}}</option>
-      {{/each}}
-    </select>
-    <input type="submit" value="Create book">
-  </form>
+  <div class="centered">
+    <form action="/books/create" method="POST">
+      ISBN: <input name="isbn" value="{{book.ISBN}}"><br>
+      Title: <input name="title" value="{{book.Title}}"><br>
+      SignId: <input name="signid" value="{{book.SignId}}"><br>
+      PublicationYear: <input name="publicationyear" value="{{book.PublicationYear}}"><br>
+      PublicationInfo: <input name="publicationinfo" value="{{book.PublicationInfo}}"><br>
+      Pages: <input name="pages" value="{{book.Pages}}"><br>
+      <select multiple class="selectedAuthors" name="selectedAuthors">
+        {{#each authors}}
+          <option value="{{Id}}">{{FirstName}} {{LastName}}</option>
+        {{/each}}
+      </select>
+      <div>
+        <input type="submit" value="Create book">
+      </div>
+    </form>
+  </div>
 {{/if}}
