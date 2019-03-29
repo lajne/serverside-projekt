@@ -10,9 +10,11 @@
 {{/if}}
 
 {{#if sessionAdmin}}
-  <form method="POST" action="/admins/create">
-    Username: <input name="username"><br>
-    Password: <input name="password"><br>
-    <input type="submit" value="Create!">
-  </form>
+  <div class="centered">
+    <form method="POST" action="/admins/create">
+      Username: <input name="username"><br>
+      Password: <input name="password"><br>
+      <input type="submit" value="Create!">
+    </form>
+  </div>
 {{/if}}

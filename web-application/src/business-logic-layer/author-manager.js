@@ -31,11 +31,10 @@ exports.createAuthor = function(sessionAdmin, author, callback) {
     authorRepository.createAuthor(author, function(errors, authorret) {
       callback(errors, authorret)
     })
-  }else{
+  } else {
     callback(["you need to be an admin to do that."], [])
     return
   }
-
 }
 
 exports.getAuthorById = function(id, callback) {

@@ -4,7 +4,6 @@ const {Authors, Author_Books} = require('./models')
 exports.getAllAuthors = function(callback) {
   Authors.findAll()
   .then(function(authors) {
-    console.log(JSON.stringify("authors i createn: " + authors, null, 2))
     callback([], authors)
   }).catch(function(errors) {
     console.log(errors)
@@ -59,11 +58,11 @@ exports.createAuthor = function(author, callback) {
 
 exports.editAuthor = function(author, callback) {
   Authors.update({
-    FirstName: author.firstName,
-    LastName: author.lastName,
-    BirthYear: author.birthYear
+    FirstName: author.FirstName,
+    LastName: author.LastName,
+    BirthYear: author.BirthYear
   }, {
-    where: {Id: author.id}
+    where: {Id: author.Id}
   }).then(function(updatedAuthor) {
     callback([], updatedAuthor)
   }).catch(function(errors) {

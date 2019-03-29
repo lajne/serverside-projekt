@@ -32,9 +32,9 @@ router.get("/create", function(request, response) {
 
 router.post("/create", function(request, response) {
   const admin = {
-    username: request.body.username,
-    salt: "",
-    password: request.body.password
+    Username: request.body.username,
+    Salt: "",
+    Password: request.body.password
   }
 
   adminManager.createAdmin(request.session.sessionAdmin, admin, function(errors, admin) {
@@ -121,7 +121,7 @@ router.post("/:id/edit", function(request, response) {
       Salt: adminReturned.Salt,
       Password: request.body.password
     }
-    adminManager.editAdmin(request.session.sessionAdmin, admin, function(errors, adminret) {
+    adminManager.editAdmin(request.session.sessionAdmin, admin, function(errors, adminReturned) {
       if(0 < errors.length) {
         const model = {
           admin: admin,

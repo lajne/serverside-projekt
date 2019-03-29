@@ -1,5 +1,4 @@
 const {Admins} = require('./models')
-const hash = require('../business-logic-layer/calculations/hash')
 
 exports.getAllAdmins = function(callback) {
   Admins.findAll().then(function(admins) { 
@@ -9,13 +8,11 @@ exports.getAllAdmins = function(callback) {
   })
 }
 
-exports.createAdmin = function(admins, callback) {
-  const salt = String(Math.random().toString(36).substring(2, 15))
-  const hashedPassword = hash(admins.password, salt)
+exports.createAdmin = function(admin, callback) {
   Admins.create({
-    Username: admins.username,
-    Salt: salt,
-    Password: hashedPassword
+    Username: admin.Username,
+    Salt: admin.Salt,
+    Password: admin.Password
   }).then(function(createdAdmin) {
     callback([], createdAdmin)
   }).catch(function(errors) {
@@ -24,11 +21,10 @@ exports.createAdmin = function(admins, callback) {
 }
 
 exports.editAdmin = function(admin, callback) {
-  const hashedPassword = hash(admin.Password, admin.Salt)
   Admins.update({
     Username: admin.Username,
     Salt: admin.Salt,
-    Password: hashedPassword
+    Password: admin.password
   }, {
     where: {id: admin.id}
   }).then(function(updatedAdmin) {

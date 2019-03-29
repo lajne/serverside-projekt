@@ -9,33 +9,29 @@
     <input type="submit" value="Go!">
   </div>
 </form>
+{{#if sessionAdmin}}
+  <div class="centered">
+    <button onclick="window.location.href='/books/create'">Create book</button>
+  </div>
+{{/if}}
 {{#if books.length}}
   {{#each books}}
     <div class="item">
       <a href="/books/{{ISBN}}">{{Title}}</a>
     </div>
   {{/each}}
-  {{#if sessionAdmin}}
-    <button onclick="window.location.href='/books/create'">Create book</button>
-  {{/if}}
 {{else}}
   {{#if searchTerm}}
-    <div>
+    <div class="centered">
       <p>Your search - <b>{{searchTerm}}</b> - did not match any book titles.</p>
-      {{#if sessionAdmin}}
-        <button onclick="window.location.href='/books/create'">Create book</button>
-      {{/if}}
     </div>
   {{else}}
     <div>
       <p>There are no books atm..</p>
-      {{#if sessionAdmin}}
-        <button onclick="window.location.href='/books/create'">Create book</button>
-      {{/if}}
     </div>
   {{/if}}
 {{/if}}
-<div class="pagination">
+<div class="centered">
   {{#if searchPagination}}
     {{#each urlAttributes}}
       <a href="/books/search/{{searchTerm}}/page/{{pageIndex}}">{{pageIndex}}</a>

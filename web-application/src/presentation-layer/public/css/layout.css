@@ -116,10 +116,22 @@ main {
   margin-bottom: 1em;
 }
 
-.pagination {
+.centered {
+  text-align: center;
+}
+
+/* .pagination {
   text-align: center;
 }
 
 .viewClickedItem {
   text-align: center;
 }
+
+.noSearchResult {
+  text-align: center;
+}
+
+#createAdminBtn {
+  text-align: center;
+} */
