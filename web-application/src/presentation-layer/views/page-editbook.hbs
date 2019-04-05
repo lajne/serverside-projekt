@@ -10,13 +10,15 @@
 {{/if}}
 
 {{#if sessionAdmin}}
-  <form method="POST" action="/books/{{book.ISBN}}/edit">
-    ISBN: <input name="isbn" value="{{book.ISBN}}"><br>
-    Title: <input name="title" value="{{book.Title}}"><br>
-    SignId: <input name="signid" value="{{book.SignId}}"><br>
-    PublicationYear: <input name="publicationyear" value="{{book.PublicationYear}}"><br>
-    PublicationInfo: <input name="publicationinfo" value="{{book.PublicationInfo}}"><br>
-    Pages: <input type="text" name="pages" value="{{book.Pages}}"><br>
-    <input type="submit" value="Save changes">
-  </form>
+  <div class="centered">
+    <form method="POST" action="/books/{{book.ISBN}}/edit">
+      ISBN: <input name="isbn" value="{{book.ISBN}}"><br>
+      Title: <input name="title" value="{{book.Title}}"><br>
+      SignId: <input name="signid" value="{{book.SignId}}"><br>
+      PublicationYear: <input name="publicationyear" value="{{book.PublicationYear}}"><br>
+      PublicationInfo: <input name="publicationinfo" value="{{book.PublicationInfo}}"><br>
+      Pages: <input type="text" name="pages" value="{{book.Pages}}"><br>
+      <input type="submit" value="Save changes">
+    </form>
+  </div>
 {{/if}}

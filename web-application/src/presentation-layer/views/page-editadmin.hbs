@@ -10,9 +10,11 @@
 {{/if}}
 
 {{#if sessionAdmin}}
-  <form method="POST" action="/admins/{{admin.id}}/edit">
-    Username: <input name="username" value="{{admin.Username}}"><br>
-    Password: <input name="password"><br>
-    <input type="submit" value="Save changes">
-  </form>
+  <div class="centered">
+    <form method="POST" action="/admins/{{admin.id}}/edit">
+      Username: <input name="username" value="{{admin.Username}}"><br>
+      New Password: <input name="password"><br>
+      <input type="submit" value="Save changes">
+    </form>
+  </div>
 {{/if}}

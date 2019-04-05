@@ -1,12 +1,14 @@
 <h1 id="loginH1">LOGIN</h1>
 
 {{#if errors.length}}
-  <p>Could not log in because:</p>
-  <ul>
-    {{#each errors}}
-      <li>{{this}}</li>
-    {{/each}}
-  </ul>
+  <div class="centered">
+    <p>Could not log in because:</p>
+    <ul>
+      {{#each errors}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
 
 <div class="loginBox">

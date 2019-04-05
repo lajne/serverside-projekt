@@ -47,9 +47,9 @@ exports.createAuthor = function(author, callback) {
     LastName: author.LastName,
     BirthYear: author.BirthYear
   }).then(function(createdAuthor) {
-    createdAuthor.addBooks(author.books).then(function(createdAuthorWithBooks) {
-      callback([], createdAuthorWithBooks)
-    })
+    console.log("createdAuthor: " + JSON.stringify(createdAuthor, null, 2))
+    createdAuthor.addBooks(author.books)
+    callback([], createdAuthor)
   })
   .catch(function(errors) {
     callback(['databaseerror'])

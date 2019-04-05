@@ -10,10 +10,12 @@
 {{/if}}
 
 {{#if sessionAdmin}}
-  <form method="POST" action="/authors/{{author.Id}}/edit">
-    firstname: <input type="text" name="firstname" value="{{author.FirstName}}"><br>
-    lastname: <input type="text" name="lastname" value="{{author.LastName}}"><br>
-    birthyear: <input type="text" name="birthyear" value="{{author.BirthYear}}"><br>
-    <input type="submit" value="Save changes">
-  </form>
+  <div class="centered">
+    <form method="POST" action="/authors/{{author.Id}}/edit">
+      firstname: <input type="text" name="firstname" value="{{author.FirstName}}"><br>
+      lastname: <input type="text" name="lastname" value="{{author.LastName}}"><br>
+      birthyear: <input type="text" name="birthyear" value="{{author.BirthYear}}"><br>
+      <input type="submit" value="Save changes">
+    </form>
+  </div>
 {{/if}}

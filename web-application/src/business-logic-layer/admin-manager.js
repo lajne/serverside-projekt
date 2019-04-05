@@ -10,21 +10,29 @@ exports.getAllAdmins = function(callback) {
 
 exports.createAdmin = function(sessionAdmin, admin, callback) {
   if(sessionAdmin) {
-    const errors = adminValidator.validateNewAccount(admin.Username)
-
-    if(0 < errors.length) {
-      callback(errors)
-      return
-    }
-    const salt = String(Math.random().toString(36).substring(2, 15))
-    const hashedPassword = hash(admin.Password, salt)
-    admin.Salt = salt
-    admin.Password = hashedPassword
-    adminRepository.createAdmin(admin, function(errors, admin) {
-      callback([], admin)
+    
+    adminRepository.getAdminByUsername(admin.Username, function(errors, adminFound) {
+        if(!adminFound) {
+        errors = adminValidator.validateNewAccount(admin.Username)
+  
+        if(0 < errors.length) {
+          callback(errors)
+          return
+        }
+        const salt = String(Math.random().toString(36).substring(2, 15))
+        const hashedPassword = hash(admin.Password, salt)
+        admin.Salt = salt
+        admin.Password = hashedPassword
+        adminRepository.createAdmin(admin, function(errors, admin) {
+          callback([], admin)
+        })
+      } else {
+        callback(["The username is already taken."])
+        return
+      }
     })
   } else {
-    callback([], ["you need to be an admin to do that."])
+    callback(["you need to be an admin to do that."])
     return
   }
 }
@@ -75,14 +83,20 @@ exports.login = function(username, password, callback) {
   }
   
   adminRepository.getAdminByUsername(username, function(error, admin) {
-    const hashedPassword = hash(password, admin.Salt)
     if(0 < error.length) {
-      errors.push(error)
-    } 
-    if(admin.Password != hashedPassword) {
-      errors.push("Wrong password")
+      errors.push(['Wrong username'])
+      callback(errors)
+      return
+    } else {
+      const hashedPassword = hash(password, admin.Salt)
+      console.log(admin.Password + " , " + hashedPassword)
+      if(admin.Password != hashedPassword) {
+        errors.push("Wrong password")
+        callback(errors)
+        return
+      }
+      callback(errors, admin)
     }
-    callback(errors, admin)
   })
 
 }

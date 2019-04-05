@@ -77,7 +77,7 @@ router.post("/login", function(request, response) {
   })
 })
 
-router.get("/logout", function(request, response) {
+router.post("/logout", function(request, response) {
   request.session.sessionAdmin = null
   response.redirect("/")
 })
