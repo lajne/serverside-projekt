@@ -47,7 +47,6 @@ exports.createAuthor = function(author, callback) {
     LastName: author.LastName,
     BirthYear: author.BirthYear
   }).then(function(createdAuthor) {
-    console.log("createdAuthor: " + JSON.stringify(createdAuthor, null, 2))
     createdAuthor.addBooks(author.books)
     callback([], createdAuthor)
   })
@@ -104,7 +103,6 @@ exports.getAuthorsBySearch = function(searchTerm, paginationOptions, callback) {
     }
   })
   .then(function(authors) {
-    console.log("COUNT: " + authors.count)
     let pages
     if(authors.count > 10) {
       pages = Math.ceil(authors.count / paginationOptions.limit)

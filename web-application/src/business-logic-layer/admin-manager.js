@@ -89,7 +89,6 @@ exports.login = function(username, password, callback) {
       return
     } else {
       const hashedPassword = hash(password, admin.Salt)
-      console.log(admin.Password + " , " + hashedPassword)
       if(admin.Password != hashedPassword) {
         errors.push("Wrong password")
         callback(errors)

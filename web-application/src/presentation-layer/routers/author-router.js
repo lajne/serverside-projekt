@@ -144,7 +144,6 @@ router.post("/:id/edit", function(request, response) {
 
   authorManager.editAuthor(request.session.sessionAdmin, author, function(errors, authorReturned) {
     if(0 < errors.length) {
-      console.log("error")
       const model = {
         author: author,
         errors: errors

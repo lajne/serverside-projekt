@@ -63,7 +63,6 @@ router.post("/login", function(request, response) {
   const password = request.body.password
 
   adminManager.login(username, password, function(errors, admin) {
-    console.log("errors: " + errors)
     if(0 < errors.length) {
       const model = {
         username: username,

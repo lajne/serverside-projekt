@@ -54,7 +54,6 @@ exports.createBook = function(book, callback) {
     callback([], createdBook)
   })
   .catch(function(errors) {
-    console.log("error: " + errors)
     callback(['databaseerror'])
   })
 }
@@ -111,7 +110,6 @@ exports.getBooksBySearch = function(searchTerm, paginationOptions, callback) {
     }
   })
   .then(function(books) {
-    console.log("COUNT: " + books.count)
     let pages
     if(books.count > 10) {
       pages = Math.ceil(books.count / paginationOptions.limit)
