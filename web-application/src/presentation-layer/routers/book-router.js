@@ -67,7 +67,7 @@ router.post("/create", function(request, response) {
       bookManager.createBook(request.session.sessionAdmin, book, function(errors, bookReturned) {
         if(0 < errors.length) {
           let model = {
-            authors: "",
+            authors: [],
             book: book,
             errors: errors
           }
@@ -76,7 +76,7 @@ router.post("/create", function(request, response) {
             response.render("page-createbook.hbs", model)
           })
         } else {
-          response.redirect("/books/")
+          response.redirect("/books/" + book.ISBN)
         }
       })
     }

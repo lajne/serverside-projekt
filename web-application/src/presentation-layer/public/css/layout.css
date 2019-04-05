@@ -35,6 +35,24 @@ main {
   flex-grow: 1;
 }
 
+button {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.logout-container button {
+  float: right;
+  font-size: 17px;
+  border: none;
+  background-color: grey;
+  color: black;
+  padding: 14px 16px;
+}
+
+.logout-container button:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
 /* Footer */
 #footer {
   flex-shrink: 0;
@@ -54,14 +72,16 @@ main {
   background-color: grey;
   overflow: hidden;
 }
+.topnav-left a{
+  float: left;
+  text-align: center;
+  font-size: 17px;
+}
 
 .topnav a {
-  float: left;
   color: black;
-  text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
 }
 
 .topnav a:hover {
@@ -74,8 +94,18 @@ main {
   color: black;
 }
 
+.leftie{
+  float:left;
+}
+
 .topnav-right {
   float: right;
+  width: 30%;
+  font-size: 17px;
+}
+
+.topnav-float-right{
+  float:right;
 }
 
 /* Login-page */

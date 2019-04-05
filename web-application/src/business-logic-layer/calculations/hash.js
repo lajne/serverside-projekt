@@ -1,4 +1,5 @@
 module.exports = function(key, salt) {
+  console.log("pass. " + key + " ,salt: " + salt)
   const saltedKey = salt + key
   let charCodes = []
 

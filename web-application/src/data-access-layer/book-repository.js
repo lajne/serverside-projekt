@@ -50,9 +50,8 @@ exports.createBook = function(book, callback) {
     PublicationInfo: book.PublicationInfo,
     Pages: book.Pages,
   }).then(function(createdBook) {
-    createdBook.addAuthors(book.authors).then(function(createdBookWithAuthors) {
-      callback([], createdBookWithAuthors)
-    })
+    createdBook.addAuthors(book.authors)
+    callback([], createdBook)
   })
   .catch(function(errors) {
     console.log("error: " + errors)

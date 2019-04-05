@@ -15,21 +15,33 @@
       </header>
 
       <div class="topnav">
-        <a href="/books">Books</a>
-        <a href="/authors">Authors</a>
-        {{#if sessionAdmin}}
-          <a href="/admins">Administrators</a>
-        {{/if}}
-        <div class="topnav-right">
+        <div class="topnav-left">
+          <a href="/books">Books</a>
+          <a href="/authors">Authors</a>
           {{#if sessionAdmin}}
-            <a href="/admins/{{sessionAdmin.id}}">Logged in as {{sessionAdmin.Username}}</a>
-            <a href="/admins/logout">Logout</a>
-          {{else}}
-            <a href="/admins/login">Login</a> 
+            <a href="/admins">Administrators</a>
           {{/if}}
         </div>
-        
+
+        <div class="topnav-right">
+          {{#if sessionAdmin}}
+            <div class="leftie">
+              <a class="topnav-float-right" href="/admins/">Logged in as {{sessionAdmin.Username}}</a>
+            </div> 
+            <div class="logout-container">
+              <form method="POST" action="/admins/logout">
+                <button type="submit">Logout</button>
+              </form>
+            </div>
+          {{else}}
+            <a class="topnav-float-right" href="/admins/login">Login</a>
+          {{/if}}
+        </div>
+
       </div>
+
+{{!-- -------------------------------------------------------------- --}}
+
       
       <main>
         {{{body}}}
